@@ -1,0 +1,15 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row class="toolbar">
+    <span class="nav-items">Learn SQL</span>
+    <span class="nav-items" *ngIf="this.cookieService.getCookie('uuid') != null">Your UUID: {{this.cookieService.getCookie('uuid')}}</span>
+    <button mat-icon-button color="accent" (click)="openErmDialog()"><mat-icon fontIcon="account_tree"></mat-icon></button>
+  </mat-toolbar-row>
+</mat-toolbar>
+
+<div class="body">
+  <app-init-game *ngIf="cookieService.getCookie('uuid') == null; else game"></app-init-game>
+
+  <ng-template #game>
+    <app-game></app-game>
+  </ng-template>
+</div>

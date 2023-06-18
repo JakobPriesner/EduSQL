@@ -1,0 +1,23 @@
+<h1 mat-dialog-title>ERM of the Database</h1>
+<div mat-dialog-content class="image-container" #imageContainer>
+  <div>
+    <button mat-mini-fab color="primary" (click)="zoomIn()">
+      <mat-icon>zoom_in</mat-icon>
+    </button>
+
+    <button mat-mini-fab color="primary" (click)="zoomOut()">
+      <mat-icon>zoom_out</mat-icon>
+    </button>
+
+    <button mat-mini-fab color="primary" (click)="toggleFullScreen(imageContainer)">
+      <mat-icon>fullscreen</mat-icon>
+    </button>
+  </div>
+  <img src="assets/erm.svg"
+       [style.transform]="'translate(' + xPos + 'px, ' + yPos + 'px) scale(' + zoomLevel + ')'"
+       (wheel)="onWheel($event)"
+       alt="erm">
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">Close</button>
+</div>

@@ -1,0 +1,32 @@
+
+from injector import inject
+from starlette import status
+
+from api.annotations import fastapi_controller
+from api.annotations.base_url import base_url
+from api.annotations.api_tags import api_tags
+from api.annotations.http_methods.get import get
+from api.annotations.http_methods.post import post
+
+from api.endpoints.levels.logic.validation.validate_task import ValidateTask
+from api.endpoints.levels.models.level_validation_result import LevelValidationResult
+from mediator.mediator_interface import IMediator
+
+
+@fastapi_controller
+@base_url("levels")
+@api_tags(["Level Validation"])
+class UsersController:
+    @inject
+    def __init__(self, mediator: IMediator):
+        self._mediator: IMediator = mediator
+
+    @get("/{level_number}/tasks/{task_number}/validate", response_model=LevelValidationResult, status_code=status.HTTP_200_OK)
+    async def get_user(self, level_number: int, task_number: int, uuid: str) -> LevelValidationResult:
+        result = await self._mediator.execute_async(ValidateTask, level_number=level_number, task_number=task_number, db=uuid)
+        return result
+
+    @post("/{level_number}/tasks/{task_number}/validate", response_model=LevelValidationResult, status_code=status.HTTP_200_OK)
+    async def get_user(self, level_number: int, task_number: int, payload, uuid: str) -> LevelValidationResult:
+        result = await self._mediator.execute_async(ValidateTask, level_number=level_number, task_number=task_number, db=uuid)
+        return result

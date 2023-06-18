@@ -1,0 +1,9 @@
+<div class="content">
+  <div class="item">Wenn du bei einem Spiel weiter machen möchtest, gib deine uuid in das folgende Feld ein:</div>
+  <mat-form-field class="item">
+    <mat-label>Deine UUID</mat-label>
+    <input matInput placeholder="" #uuidInput [disabled]="isLoading">
+  </mat-form-field>
+  <button mat-raised-button *ngIf="!isLoading" class="item" color="primary" (click)="submit(uuidInput.value)">Start game</button>
+  <mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
+</div>

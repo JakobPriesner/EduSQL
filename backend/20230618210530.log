@@ -1,0 +1,5 @@
+[18/06/2023 21:05:30] [INFO] [DataGenerator] [create_data_if_not_exist] Data already exists, skipping data generation.
+[18/06/2023 21:05:30] [INFO] [Api] [start] Api is available on http://127.0.0.1:8080
+[18/06/2023 21:22:49] [INFO] [UsersController] [execute_async] Executing command "RegisterUser".
+[18/06/2023 21:29:50] [INFO] [UsersController] [execute_async] Executing command "VerifyIfDbUserExists".
+[18/06/2023 21:30:06] [INFO] [UsersController] [execute_async] Executing command "VerifyIfDbUserExists".

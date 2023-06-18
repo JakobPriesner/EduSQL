@@ -1,0 +1,13 @@
+.body {
+  margin-top: 2rem;
+  display: flex;
+  align-items: center;
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.toolbar {
+  display: flex;
+  justify-content: space-between;
+}

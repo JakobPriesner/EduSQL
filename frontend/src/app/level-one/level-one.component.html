@@ -1,0 +1,32 @@
+<div class="level-body">
+  <h1>Level 1</h1>
+
+  <mat-stepper #stepper>
+
+    <mat-step label="Welcome">
+      <div class="description">
+        Welcome to the game! You applied to study at THWS and were accepted. Now it's time to be enrolled into the system. However, in this university, the enrollment process is not entirely digital. It requires the assistance of a dedicated secretary who handles the task using pure SQL.
+      </div>
+      <div class="description">
+        So let's change the view from the student's perspective to that of the secretary, let's dive into the details of the first task:
+      </div>
+      </mat-step>
+      <mat-step label="ERM">
+        <div>
+          To create the student you have to get an overview of all tables to filter that ones you need. For that so named ERMs are used. ERM is the short form for Entity Relation Model. It is used to visualize a complex Data Model.
+        </div>
+        <app-alert type="info">
+          In the navbar on the right side, you will find a button <mat-icon fontIcon="account_tree"></mat-icon>. By clicking on it, you can display the entire ERM diagram at any time to examine the structure of the database.
+        </app-alert>
+        <app-alert type="danger">
+          <h1>Title</h1>
+        </app-alert>
+      </mat-step>
+      <mat-step label="Login">
+        <app-login (onSuccessfulLogin)="stepper.next()"></app-login>
+      </mat-step>
+      <mat-step label="Create Person">
+
+      </mat-step>
+  </mat-stepper>
+</div>
