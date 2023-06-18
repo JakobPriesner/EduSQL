@@ -8,7 +8,6 @@
 
 <div class="body">
   <app-init-game *ngIf="cookieService.getCookie('uuid') == null; else game"></app-init-game>
-
   <ng-template #game>
     <app-game></app-game>
   </ng-template>

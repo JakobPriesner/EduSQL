@@ -18,14 +18,14 @@
         <app-alert type="info">
           In the navbar on the right side, you will find a button <mat-icon fontIcon="account_tree"></mat-icon>. By clicking on it, you can display the entire ERM diagram at any time to examine the structure of the database.
         </app-alert>
-        <app-alert type="danger">
-          <h1>Title</h1>
-        </app-alert>
       </mat-step>
       <mat-step label="Login">
         <app-login (onSuccessfulLogin)="stepper.next()"></app-login>
       </mat-step>
       <mat-step label="Create Person">
+        <div style="height: 10rem">
+          <app-code-editor></app-code-editor>
+        </div>
 
       </mat-step>
   </mat-stepper>

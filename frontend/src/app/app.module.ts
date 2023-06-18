@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
 import { AppComponent } from './app.component';
 import { InitGameComponent } from './init-game/init-game.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -21,11 +20,13 @@ import { ErmDialogComponent } from './erm-dialog/erm-dialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import {NgxImageZoomModule} from "ngx-image-zoom";
 import { AlertComponent } from './alert/alert.component';
-import {ReactiveFormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {MatFormFieldModule} from "@angular/material/form-field";
 import { LoginComponent } from './login/login.component';
 import {MatCardModule} from "@angular/material/card";
 import { LevelTwoComponent } from './level-two/level-two.component';
+import { CodeEditorComponent } from './code-editor/code-editor.component';
+import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
 
 @NgModule({
     declarations: [
@@ -36,10 +37,12 @@ import { LevelTwoComponent } from './level-two/level-two.component';
         ErmDialogComponent,
         AlertComponent,
         LoginComponent,
-        LevelTwoComponent
+        LevelTwoComponent,
+        CodeEditorComponent
     ],
   imports: [
     HttpClientModule,
+    FormsModule,
     BrowserModule,
     BrowserAnimationsModule,
     CommonModule,
@@ -57,6 +60,7 @@ import { LevelTwoComponent } from './level-two/level-two.component';
     ReactiveFormsModule,
     MatFormFieldModule,
     MatCardModule,
+    MonacoEditorModule.forRoot()
   ],
     providers: [],
     bootstrap: [AppComponent]
