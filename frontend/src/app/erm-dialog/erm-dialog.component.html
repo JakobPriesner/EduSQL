@@ -1,23 +1,26 @@
-<h1 mat-dialog-title>ERM of the Database</h1>
-<div mat-dialog-content class="image-container" #imageContainer>
-  <div>
+<div mat-dialog-title class="dialog-title">
+  <h1 mat-dialog-title>ERM of the Database</h1>
+</div>
+
+<div mat-dialog-content class="image-container" (keydown.escape)="onNoClick()" #imageContainer>
+  <div class="erm-button-group">
     <button mat-mini-fab color="primary" (click)="zoomIn()">
       <mat-icon>zoom_in</mat-icon>
     </button>
-
     <button mat-mini-fab color="primary" (click)="zoomOut()">
       <mat-icon>zoom_out</mat-icon>
     </button>
-
+    <button mat-mini-fab color="primary" (click)="downloadImage()">
+      <mat-icon>download</mat-icon>
+    </button>
     <button mat-mini-fab color="primary" (click)="toggleFullScreen(imageContainer)">
       <mat-icon>fullscreen</mat-icon>
     </button>
   </div>
-  <img src="assets/erm.svg"
-       [style.transform]="'translate(' + xPos + 'px, ' + yPos + 'px) scale(' + zoomLevel + ')'"
-       (wheel)="onWheel($event)"
-       alt="erm">
+  <img ngSrc="assets/erm.svg" class="erm-image"
+       height="2111" width="3422" #ermImage>
 </div>
-<div mat-dialog-actions>
-  <button mat-button (click)="onNoClick()">Close</button>
+
+<div mat-dialog-actions class="close-button-section">
+  <button mat-raised-button color="primary" (click)="onNoClick()">Close</button>
 </div>

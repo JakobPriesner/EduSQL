@@ -1,9 +1,37 @@
-<div class="content">
-  <div class="item">Wenn du bei einem Spiel weiter machen möchtest, gib deine uuid in das folgende Feld ein:</div>
-  <mat-form-field class="item">
-    <mat-label>Deine UUID</mat-label>
-    <input matInput placeholder="" #uuidInput [disabled]="isLoading">
-  </mat-form-field>
-  <button mat-raised-button *ngIf="!isLoading" class="item" color="primary" (click)="submit(uuidInput.value)">Start game</button>
+<div class="content" >
+  <div class="item">If you want to continue in a game, enter your uuid in the following field:</div>
+  <form [formGroup]="existingGameForm">
+    <div fxLayout="column" class="default-user-section">
+      <mat-form-field appearance="fill">
+        <mat-label>Your UUID</mat-label>
+        <input matInput #uuidInput formControlName="uuid" (keydown.enter)="submit()" [disabled]="isLoading">
+      </mat-form-field>
+    </div>
+
+  </form>
+  <div class="item">Else you can insert your data here to start a new one</div>
+
+  <app-alert type="info">
+    Your data is only stored <b>locally on your device</b>. They are only used to make the game a bit more personal. Of course, you can also choose a different name, such as Max Mustermann.
+  </app-alert>
+
+  <form [formGroup]="newGameForm" class="user-data-form">
+    <div fxLayout="column" class="default-user-section">
+      <mat-form-field appearance="fill">
+        <mat-label>First Name</mat-label>
+        <input matInput #firstNameInput formControlName="firstName" (keydown.enter)="submit()" [disabled]="isLoading">
+      </mat-form-field>
+      <mat-form-field appearance="fill">
+        <mat-label>Last Name</mat-label>
+        <input matInput #lastNameInput formControlName="lastName" (keydown.enter)="submit()" [disabled]="isLoading">
+      </mat-form-field>
+    </div>
+  </form>
+
+  <app-alert type="error" *ngIf="showError" class="error-alert">
+    You must provide either a UUID or your data for a new game!
+  </app-alert>
+
+  <button mat-raised-button *ngIf="!isLoading" class="item" color="primary" (click)="submit()">Start game</button>
   <mat-progress-bar *ngIf="isLoading" mode="indeterminate"></mat-progress-bar>
 </div>

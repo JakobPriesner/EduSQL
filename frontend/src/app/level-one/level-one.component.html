@@ -1,32 +1,51 @@
 <div class="level-body">
   <h1>Level 1</h1>
 
-  <mat-stepper #stepper>
+  <mat-stepper linear #stepper>
 
-    <mat-step label="Welcome">
+    <mat-step label="Welcome" [completed]="highestValidatedLevel.localeCompare('1.1') >= 0">
       <div class="description">
-        Welcome to the game! You applied to study at THWS and were accepted. Now it's time to be enrolled into the system. However, in this university, the enrollment process is not entirely digital. It requires the assistance of a dedicated secretary who handles the task using pure SQL.
+        <h3>Welcome, {{userDataStore.firstName}}!</h3>
+        You applied to study at THWS and were accepted. Now it's time to be enrolled into the system. However, in this university, the enrollment process is not entirely digital. It requires the manual action of a secretary who handles the task using pure SQL.
       </div>
       <div class="description">
-        So let's change the view from the student's perspective to that of the secretary, let's dive into the details of the first task:
+        So let's change the view from the student's perspective to that of the secretary...
       </div>
-      </mat-step>
-      <mat-step label="ERM">
+      <app-validate-btn text="next" (click)="updateHighestValidationStep('1.1', stepper)"></app-validate-btn>
+    </mat-step>
+
+    <mat-step label="ERM" [completed]="highestValidatedLevel.localeCompare('1.2') >= 0">
+      <div>
+        To create the student you have to get an overview of all tables to filter that ones you need. For that so named <b>ERM</b>s are used. <b>ERM</b> is the short form for <b>Entity Relation Model</b>. It is used to visualize a complex Data Model.
+      </div>
+      <app-alert type="info" title="Tip">
         <div>
-          To create the student you have to get an overview of all tables to filter that ones you need. For that so named ERMs are used. ERM is the short form for Entity Relation Model. It is used to visualize a complex Data Model.
-        </div>
-        <app-alert type="info">
-          In the navbar on the right side, you will find a button <mat-icon fontIcon="account_tree"></mat-icon>. By clicking on it, you can display the entire ERM diagram at any time to examine the structure of the database.
-        </app-alert>
-      </mat-step>
-      <mat-step label="Login">
-        <app-login (onSuccessfulLogin)="stepper.next()"></app-login>
-      </mat-step>
-      <mat-step label="Create Person">
-        <div style="height: 10rem">
-          <app-code-editor></app-code-editor>
+          <div>
+            In the navbar on the right side, you will find a button
+            <button mat-icon-button color="accent"><mat-icon fontIcon="account_tree"></mat-icon></button>.
+            By clicking on it, you can display the entire ERM diagram at any time to examine the structure of the database.
+          </div>
+          <div>
+            By scrolling you can change the intensity of the zoom.
+          </div>
         </div>
 
-      </mat-step>
+
+
+      </app-alert>
+      <app-validate-btn text="next" (click)="updateHighestValidationStep('1.2', stepper)"></app-validate-btn>
+    </mat-step>
+
+    <mat-step label="Login" [completed]="highestValidatedLevel.localeCompare('1.3') >= 0">
+      <app-login (onSuccessfulLogin)="stepper.next()"></app-login>
+      <app-validate-btn (click)="validateDbUserLoginTask(stepper)" [errorMessage]="errorMessage"></app-validate-btn>
+    </mat-step>
+
+    <mat-step label="Create Person" [completed]="highestValidatedLevel.localeCompare('1.3') >= 0">
+      <div style="height: 10rem">
+        <app-code-editor (onCodeChangeEvent)="$event"></app-code-editor>
+      </div>
+      <app-validate-btn (click)="updateHighestValidationStep('1.4', stepper)"></app-validate-btn>
+    </mat-step>
   </mat-stepper>
 </div>

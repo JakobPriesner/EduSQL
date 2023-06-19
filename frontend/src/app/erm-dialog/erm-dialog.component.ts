@@ -1,32 +1,20 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import { FileSaverService } from 'ngx-filesaver';
 import {MatDialogRef} from "@angular/material/dialog";
-
-class DialogOverviewExampleDialog {
-}
 
 @Component({
   selector: 'app-erm-dialog',
   templateUrl: './erm-dialog.component.html',
-  styleUrls: ['./erm-dialog.component.css']
+  styleUrls: ['./erm-dialog.component.scss']
 })
 export class ErmDialogComponent {
+  zoom = 1;
+  @ViewChild('zoomImage', { static: false }) imageContainer!: ElementRef;
+  @ViewChild("ermImage") ermImage!: ElementRef;
 
-  zoomLevel = 1;
-  xPos = 0;
-  yPos = 0;
+  constructor(private _fileSaverService: FileSaverService,
+              public dialogRef: MatDialogRef<ErmDialogComponent>) {
 
-  constructor(
-    public dialogRef: MatDialogRef<DialogOverviewExampleDialog>
-  ) {}
-
-  zoomIn() {
-    this.zoomLevel += 0.1;
-  }
-
-  zoomOut() {
-    if (this.zoomLevel > 0.1) {
-      this.zoomLevel -= 0.1;
-    }
   }
 
   toggleFullScreen(element: HTMLElement) {
@@ -37,30 +25,46 @@ export class ErmDialogComponent {
     }
   }
 
+  zoomIn() {
+    this.zoom *= 1.1;
+    console.log(this.zoom);
+    this.applyZoom();
+  }
+
+  zoomOut() {
+    this.zoom *= 0.9;
+    console.log(this.zoom);
+    this.applyZoom();
+  }
+
+  private applyZoom() {
+    this.ermImage.nativeElement.style.transform = `scale(${this.zoom})`;
+  }
+
   onNoClick(): void {
     this.dialogRef.close();
   }
 
-  onWheel(event: WheelEvent): void {
-    event.preventDefault();
+  downloadImage() {
+    // Url of the image
+    const imageUrl = 'assets/erm.png';
 
-    const scaleStep = 0.1;
-    const rect = (event.target as HTMLElement).getBoundingClientRect();
-    const x = event.clientX - rect.left; // x position within the element.
-    const y = event.clientY - rect.top;  // y position within the element.
+    // Fetch the image
+    fetch(imageUrl)
+        .then(response => response.blob())
+        .then(blob => {
+          // Use FileSaver to save the image
+          this._fileSaverService.save(blob, 'erm.png');
+        })
+        .catch(err => console.error(err));
+  }
 
-    if (event.deltaY < 0) {
-      // Zoom in
-      this.zoomLevel += scaleStep;
-    } else {
-      // Zoom out
-      this.zoomLevel -= scaleStep;
-      this.zoomLevel = Math.max(this.zoomLevel, scaleStep); // prevent zooming out beyond original size
-    }
+  getMaxWidth() : number {
+    return 300;
+  }
 
-    // Calculate new position
-    this.xPos = x - (x * this.zoomLevel);
-    this.yPos = y - (y * this.zoomLevel);
+  getMaxHeight() : number {
+    return 400;
   }
 
 }

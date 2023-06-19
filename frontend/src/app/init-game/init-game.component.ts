@@ -2,6 +2,9 @@ import { Component } from '@angular/core';
 import {UsersService} from "../../lib/services/api/users.service";
 import {CookieService} from "../../lib/services/cookie.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {UserDataStore} from "../../lib/stores/user-data.store";
+import {first} from "rxjs";
 
 @Component({
   selector: 'app-init-game',
@@ -9,18 +12,35 @@ import {MatSnackBar} from "@angular/material/snack-bar";
   styleUrls: ['./init-game.component.css']
 })
 export class InitGameComponent {
-
   public isLoading: boolean = false;
+  public newGameForm: FormGroup;
+  public existingGameForm: FormGroup;
+  public showError: boolean = false;
 
   constructor(private userService: UsersService,
               private cookieService: CookieService,
-              private snackBar: MatSnackBar) {
+              private snackBar: MatSnackBar,
+              private formBuilder: FormBuilder,
+              private userDataStore: UserDataStore) {
+    this.newGameForm = this.formBuilder.group({
+      firstName: ["", Validators.required],
+      lastName: ["", Validators.required],
+
+    });
+
+    this.existingGameForm = this.formBuilder.group({
+      uuid: ["", Validators.required]
+    })
   }
 
-  submit(uuidInput: string) : void {
+  submit() : void {
+    if (!this.existingGameForm.valid && !this.newGameForm.valid) {
+      this.showError = true;
+      return;
+    }
     this.isLoading = true;
-    if (uuidInput) {
-      this.verifyUser(uuidInput);
+    if (this.existingGameForm.valid) {
+      this.verifyUser(this.existingGameForm.get('uuid')?.value);
     } else {
       this.registerUser();
     }
@@ -28,21 +48,23 @@ export class InitGameComponent {
 
   verifyUser(uuidInput: string) : void {
     this.userService.checkIfUserExists(uuidInput).subscribe(result => {
-      console.log("Check if user exists")
       if (result.exists) {
-        this.cookieService.createCookie("uuid", uuidInput, 7);
+        this.cookieService.createCookie("uuid", uuidInput, 365);
       } else {
-        this.snackBar.open("Kein Projekt mit der UUID gefunden! Versuche es erneut oder beginne ein neues Spiel.")
+        this.snackBar.open("No project found with the UUID \"" + uuidInput + " \"! Try again or start a new game.")
       }
       this.isLoading = false;
     });
   }
 
   registerUser() : void {
+    let firstName = this.newGameForm.get('firstName')!.value;
+    let lastName = this.newGameForm.get('lastName')!.value
     this.userService.registerUser().subscribe(result => {
-      console.log("Create cookie: " + result.userUuid);
       this.cookieService.createCookie("uuid", result.userUuid, 7);
+      this.userDataStore.firstName = firstName;
+      this.userDataStore.lastName = lastName;
       this.isLoading = false;
-    })
+    });
   }
 }

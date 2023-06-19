@@ -5,7 +5,7 @@ from api.endpoints.levels.models.level_validation_result import LevelValidationR
 
 class IConcreteValidation(ABC):
     @abstractmethod
-    async def handle(self, user_uuid: str) -> LevelValidationResult:
+    async def handle(self, user_uuid: str, **kwargs) -> LevelValidationResult:
         ...
 
     @classmethod

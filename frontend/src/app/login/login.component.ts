@@ -2,15 +2,17 @@ import {Component, EventEmitter, Output} from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import {DbUserStore} from "../../lib/stores/db-user.store";
 import {UsersService} from "../../lib/services/api/users.service";
+import {DbUser} from "../../lib/models/dbUser";
 
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
   invalidLoginData: boolean = false;
+  loggedInAs?: DbUser = undefined;
 
   @Output() onSuccessfulLogin: EventEmitter<any> = new EventEmitter<any>();
 
@@ -31,6 +33,7 @@ export class LoginComponent {
     let password = this.passwordFormControl.getRawValue()!;
     this.usersService.checkIfDbUserExists({username: username, password: password}).subscribe(result => {
       if (result.exists) {
+        this.loggedInAs = {username: username, password: password};
         this.dbUserStore.username = username;
         this.dbUserStore.password = password;
         this.onSuccessfulLogin.emit();

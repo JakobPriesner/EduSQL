@@ -23,10 +23,9 @@ class UsersController:
 
     @get("/{level_number}/tasks/{task_number}/validate", response_model=LevelValidationResult, status_code=status.HTTP_200_OK)
     async def get_user(self, level_number: int, task_number: int, uuid: str) -> LevelValidationResult:
-        result = await self._mediator.execute_async(ValidateTask, level_number=level_number, task_number=task_number, db=uuid)
-        return result
+        return await self._mediator.execute_async(ValidateTask, level_number=level_number, task_number=task_number, db=uuid)
 
     @post("/{level_number}/tasks/{task_number}/validate", response_model=LevelValidationResult, status_code=status.HTTP_200_OK)
-    async def get_user(self, level_number: int, task_number: int, payload, uuid: str) -> LevelValidationResult:
+    async def get_user(self, level_number: int, task_number: int, payload: dict, uuid: str) -> LevelValidationResult:
         result = await self._mediator.execute_async(ValidateTask, level_number=level_number, task_number=task_number, db=uuid)
         return result

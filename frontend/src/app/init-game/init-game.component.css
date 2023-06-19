@@ -8,6 +8,16 @@
   align-items: center;
 }
 
+.user-data-form {
+  margin-top: 1rem;
+}
+
 .item {
   margin-top: 1rem;
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+}
+
+.error-alert {
+  margin-bottom: 1rem;
 }

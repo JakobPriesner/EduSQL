@@ -10,7 +10,7 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatInputModule} from "@angular/material/input";
 import {HttpClientModule} from "@angular/common/http";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
-import {CommonModule} from "@angular/common";
+import {CommonModule, NgOptimizedImage} from "@angular/common";
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
 import { GameComponent } from './game/game.component';
@@ -27,6 +27,9 @@ import {MatCardModule} from "@angular/material/card";
 import { LevelTwoComponent } from './level-two/level-two.component';
 import { CodeEditorComponent } from './code-editor/code-editor.component';
 import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
+import { ValidateBtnComponent } from './validate-btn/validate-btn.component';
+import { ValidationErrorsComponent } from './validation-errors/validation-errors.component';
+import {FlexLayoutModule} from "@angular/flex-layout";
 
 @NgModule({
     declarations: [
@@ -38,30 +41,34 @@ import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
         AlertComponent,
         LoginComponent,
         LevelTwoComponent,
-        CodeEditorComponent
+        CodeEditorComponent,
+        ValidateBtnComponent,
+        ValidationErrorsComponent
     ],
-  imports: [
-    HttpClientModule,
-    FormsModule,
-    BrowserModule,
-    BrowserAnimationsModule,
-    CommonModule,
-    RouterOutlet,
-    MatToolbarModule,
-    MatIconModule,
-    MatButtonModule,
-    MatInputModule,
-    MatSnackBarModule,
-    MatProgressSpinnerModule,
-    MatProgressBarModule,
-    MatStepperModule,
-    MatDialogModule,
-    NgxImageZoomModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatCardModule,
-    MonacoEditorModule.forRoot()
-  ],
+    imports: [
+        HttpClientModule,
+        FormsModule,
+        BrowserModule,
+        BrowserAnimationsModule,
+        CommonModule,
+        RouterOutlet,
+        MatToolbarModule,
+        MatIconModule,
+        MatButtonModule,
+        MatInputModule,
+        MatSnackBarModule,
+        MatProgressSpinnerModule,
+        MatProgressBarModule,
+        MatStepperModule,
+        MatDialogModule,
+        NgxImageZoomModule,
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatCardModule,
+        MonacoEditorModule.forRoot(),
+        FlexLayoutModule,
+        NgOptimizedImage
+    ],
     providers: [],
     bootstrap: [AppComponent]
 })
