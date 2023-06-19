@@ -29,8 +29,9 @@ class GeneratePerson:
         results = await asyncio.gather(*tasks, return_exceptions=True)
         return [result for result in results if not isinstance(result, BaseException)]
 
-    async def __csv_to_person(self, first_name, last_name, title_id, date_of_birth, email, k_number, password_hash, salt,
-                              session_token) -> Person:
+    @staticmethod
+    async def __csv_to_person(first_name, last_name, title_id, date_of_birth, email, k_number, password_hash, salt,
+                                            session_token) -> Person:
         int_array = await GeneratePerson.generate_addresses()
         date_as_list: list[str] = date_of_birth.split(".")
 
@@ -50,23 +51,11 @@ class GeneratePerson:
     @staticmethod
     async def generate_addresses() -> list[int]:
         # Man muss die address ID holen und dann einfügen
-        async with await psycopg.AsyncConnection.connect(get_connection_string()) as conn:
-            async with conn.cursor() as cur:
-                await cur.execute("SELECT id from address")
-                rows = await cur.fetchall()
-                return [_id for _id, in rows]
-
-        # int_random_array = array('i')
-        #
-        # for i in int_array:
-        #     rand_index = random.randint(0, len(int_array) - 1)
-        #     rand_int = int_array[rand_index]
-        #     int_random_array.append(rand_int)
-
-        return int_array
+        rows = await DbHandler.query_all("SELECT id from address;")
+        return [_id for _id, in rows]
 
     async def store_persons(self, persons: list[Person]) -> None:
-        sql: str = f""" 
+        sql: str = f"""
                     INSERT INTO person
                     (addressid, firstname, lastname, titleid, dateofbirth, email, knumber, passwordhash, salt, sessiontoken)
                     VALUES {', '.join('(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s)' for _ in persons)};
