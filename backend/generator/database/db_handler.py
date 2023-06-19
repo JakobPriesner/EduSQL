@@ -16,7 +16,6 @@ class DbHandler:
 
     @classmethod
     async def get_pool(cls):
-        print(cls.__waiting_tasks)
         incremented: bool = False
         if cls.__pool.freesize == 0:
             cls.__waiting_tasks += 1

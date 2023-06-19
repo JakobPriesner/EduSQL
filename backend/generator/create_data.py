@@ -20,17 +20,14 @@ from log.logger_interface import ILogger
 
 class DataGenerator:
     @inject
-    def __init__(self, db: IPostgresqlConnection, logger: ILogger, db_user_handler: DbUserHandler):
-        self._db: IPostgresqlConnection = db
+    def __init__(self, logger: ILogger, db_user_handler: DbUserHandler):
         self._logger: ILogger = logger
         self.db_user_handler: DbUserHandler = db_user_handler
 
     async def create_data_if_not_exist(self) -> None:
+        await DbHandler.__async_init__()
         sql: str = "SELECT COUNT(*) FROM Person;"
-        count, = await self._db.load_single_by_sql(
-            user=self.db_user_handler.get_user_by_username("admin"),
-            db="template",
-            sql=sql)
+        count, = await DbHandler.query(sql)
 
         if count == 0:
             self._logger.info("No data found, creating data...")
