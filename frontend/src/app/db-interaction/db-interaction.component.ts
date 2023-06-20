@@ -1,7 +1,5 @@
-import { Component } from '@angular/core';
-
+import {Component} from '@angular/core';
 import {SqlService} from "../../lib/services/api/sql.service";
-
 import {SqlResult} from "../../lib/models/sqlResult";
 
 @Component({

@@ -34,6 +34,10 @@ import { LevelThreeComponent } from './level-three/level-three.component';
 import { DbInteractionComponent } from './db-interaction/db-interaction.component';
 import { UserSqlInputComponent } from './db-interaction/user-sql-input/user-sql-input.component';
 import {MatTableModule} from "@angular/material/table";
+import {MatSelectModule} from "@angular/material/select";
+import {MatListModule} from "@angular/material/list";
+import {MatDividerModule} from "@angular/material/divider";
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 @NgModule({
     declarations: [
@@ -75,7 +79,11 @@ import {MatTableModule} from "@angular/material/table";
         MonacoEditorModule.forRoot(),
         FlexLayoutModule,
         NgOptimizedImage,
-        MatTableModule
+        MatTableModule,
+        MatSelectModule,
+        MatListModule,
+        MatDividerModule,
+        MatCheckboxModule
     ],
     providers: [],
     bootstrap: [AppComponent]
