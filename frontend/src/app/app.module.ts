@@ -30,6 +30,10 @@ import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
 import { ValidateBtnComponent } from './validate-btn/validate-btn.component';
 import { ValidationErrorsComponent } from './validation-errors/validation-errors.component';
 import {FlexLayoutModule} from "@angular/flex-layout";
+import { LevelThreeComponent } from './level-three/level-three.component';
+import { DbInteractionComponent } from './db-interaction/db-interaction.component';
+import { UserSqlInputComponent } from './db-interaction/user-sql-input/user-sql-input.component';
+import {MatTableModule} from "@angular/material/table";
 
 @NgModule({
     declarations: [
@@ -43,7 +47,10 @@ import {FlexLayoutModule} from "@angular/flex-layout";
         LevelTwoComponent,
         CodeEditorComponent,
         ValidateBtnComponent,
-        ValidationErrorsComponent
+        ValidationErrorsComponent,
+        LevelThreeComponent,
+        DbInteractionComponent,
+        UserSqlInputComponent
     ],
     imports: [
         HttpClientModule,
@@ -67,7 +74,8 @@ import {FlexLayoutModule} from "@angular/flex-layout";
         MatCardModule,
         MonacoEditorModule.forRoot(),
         FlexLayoutModule,
-        NgOptimizedImage
+        NgOptimizedImage,
+        MatTableModule
     ],
     providers: [],
     bootstrap: [AppComponent]

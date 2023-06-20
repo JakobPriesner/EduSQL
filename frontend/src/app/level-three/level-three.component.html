@@ -1,0 +1,30 @@
+<div class="level-body">
+    <h1>Level 3</h1>
+
+    <mat-stepper linear #stepper>
+
+        <mat-step label="Select Business Hours" [completed]="highestValidatedLevel.localeCompare('3.1') >= 0">
+            <div class="description">
+                <h3>Hey, {{userDataStore.firstName}}!</h3>
+                you want to go to college to study. What are the business hours of the location with the id 2 on Monday?
+            </div>
+            <div style="height: 10rem">
+                <app-code-editor (onCodeChangeEvent)="$event"></app-code-editor>
+            </div>
+            <app-db-interaction></app-db-interaction>
+            <app-validate-btn (click)="updateHighestValidationStep('3.1', stepper)"></app-validate-btn>
+
+        </mat-step>
+
+        <mat-step label="Select Locations" [completed]="highestValidatedLevel.localeCompare('3.2') >= 0">
+            <div class="description">
+                <h3>Hey, {{userDataStore.firstName}}!</h3>
+                Hey, you want to find literature for your seminar paper. At which locations could you go to the library and research for your term paper?
+            </div>
+            <div style="height: 10rem">
+                <app-code-editor (onCodeChangeEvent)="$event"></app-code-editor>
+            </div>
+            <app-validate-btn (click)="updateHighestValidationStep('3.2', stepper)"></app-validate-btn>
+        </mat-step>
+    </mat-stepper>
+</div>
