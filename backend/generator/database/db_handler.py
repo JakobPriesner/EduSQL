@@ -1,4 +1,5 @@
 import asyncio
+import traceback
 
 import aiopg
 from aiopg import Pool
@@ -33,6 +34,7 @@ class DbHandler:
             async with connection.cursor() as cursor:
                 try:
                     await cursor.execute(query, args)
+                    return cursor.lastrowid;
                 except Exception as e:
                     pass
 
@@ -47,13 +49,17 @@ class DbHandler:
     @classmethod
     async def query_all(cls, query, *args):
         pool = await cls.get_pool()
-        async with pool.acquire() as connection:
-            async with connection.cursor() as cursor:
-                try:
-                    await cursor.execute(query, args)
-                    return await cursor.fetchall()
-                except Exception as e:
-                    return []
+        try:
+            async with pool.acquire() as connection:
+                async with connection.cursor() as cursor:
+                    try:
+                        await cursor.execute(query, args)
+                        return await cursor.fetchall()
+                    except Exception as e:
+                        return []
+        except Exception as e:
+            traceback.print_exc()
+            await cls.query_all(query, args)
 
     @classmethod
     async def close(cls):
