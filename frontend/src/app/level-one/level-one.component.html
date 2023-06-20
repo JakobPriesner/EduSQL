@@ -40,7 +40,7 @@
 
     <mat-step label="Create Address" [completed]="highestValidatedLevel.localeCompare('1.4') >= 0">
       <div>
-        If you've familiarized yourself with ERM, you've probably noticed that a student requires PersonId. However, to generate a person, there must also be an address for that person in the database. So start by creating a new address in the database.
+        If you've familiarized yourself with ERM, you've probably noticed that a student requires PersonId. However, to generate a person, there must also be an address for that person in the database. So start by creating a new address in the database. Please note the generated id of the address, so you can use it in further steps.
       </div>
       <div style="height: 10rem">
         <app-code-editor (onCodeChangeEvent)="$event"></app-code-editor>
@@ -49,6 +49,9 @@
     </mat-step>
 
     <mat-step label="Create Person" [completed]="highestValidatedLevel.localeCompare('1.5') >= 0">
+      <div>
+        Now you have to create a person with the id of the address you just generated.
+      </div>
       <div style="height: 10rem">
         <app-code-editor (onCodeChangeEvent)="$event"></app-code-editor>
       </div>
@@ -56,6 +59,12 @@
     </mat-step>
 
     <mat-step label="Create Student" [completed]="highestValidatedLevel.localeCompare('1.6') >= 0">
+      <div>
+        It's time for the most challenging step in this level. Now you have to create the student itself.
+        <ul>
+          <li></li>
+        </ul>
+      </div>
       <div style="height: 10rem">
         <app-code-editor (onCodeChangeEvent)="$event"></app-code-editor>
       </div>

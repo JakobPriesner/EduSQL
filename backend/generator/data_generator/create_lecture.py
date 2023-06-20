@@ -1,18 +1,13 @@
 import asyncio
-import concurrent
 import time
 import uuid
 from collections import defaultdict
 from dataclasses import fields
-from functools import lru_cache
-
-import psycopg
 from aiocache import cached
 from dotenv import load_dotenv
 
 from generator.data.csv_loader import load_csv_file_as_generator
 from generator.database.db_handler import DbHandler
-from generator.database.connection_string import get_connection_string
 from generator.models.enums.lecture_type_enum import LectureType
 from generator.models.lecture import Lecture
 from generator.models.restriction import Restriction
