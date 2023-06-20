@@ -298,7 +298,7 @@ async def create_exam_attempts() -> None:
     rooms: list[Room] = await load_all_rooms_async()
     lectures: list[Lecture] = await load_all_lectures_async()
     degree_id_to_exams: dict[int, list[Exam]] = await load_all_exams()
-    batch_size: int = 5
+    batch_size: int = 25
     tasks = [ProcessHandler.submit_async(handle_single_batch, batch, degree_id_to_exams, lectures, rooms)
              for i, batch in enumerate([students[i:i + batch_size] for i in range(0, len(students), batch_size)],
                                        start=1)]
