@@ -1,4 +1,5 @@
 <div *ngFor="let entry of history">
+    <div>{{entry[0]}}</div>
     <div *ngIf="entry[1].operation == 'selectAll'">
         <table mat-table [dataSource]="history">
 <!--            <ng-container *ngFor="let key of entry[1]."-->
@@ -9,7 +10,7 @@
         </table>
     </div>
 </div>
-<app-code-editor (onCodeChangeEvent)="onCodeChange($event)"></app-code-editor>
+
 <div class="next-button-section">
-    <button mat-raised-button color="primary" (click)="executeSql()">execute answer</button>
+    <button mat-raised-button color="primary" (click)="executeSql()">execute sql</button>
 </div>

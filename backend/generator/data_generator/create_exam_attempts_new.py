@@ -23,20 +23,18 @@ from generator.processing.process_handler import ProcessHandler
 # normal: 259s, 611 ohne ladekabel
 
 class GenerateExamAttempt:
-    def __init__(self, students: list[Student]):
+    def __init__(self, students: list[Student], degree_id_to_exams: dict[int, list[Exam]], lectures: list[Lecture], rooms: list[Room]):
         self.exam_attempts: list[ExamAttempt] = []
         self.students: list[Student] = students
-
-    async def __async_init__(self):
-        self.exams: list[Exam] = await self.__load_all_exams_async()
-        self.rooms: list[Room] = await self.__load_all_rooms_async()
-        self.lectures: list[Lecture] = await self.__load_all_lectures_async()
-        # self.module_number_to_minimum_semester: dict[str, int] = await self.__load_all_module_number_to_minimum_semester()
+        self.degree_id_to_exams: dict[int, list[Exam]] = degree_id_to_exams
+        self.lectures: list[Lecture] = lectures
+        self.rooms: list[Room] = rooms
 
     async def generate_all_exam_attempts_async(self) -> None:
         for student in self.students:
-            exams = await self.__load_exams_for_student(student.degree_id)
-            tasks = [ProcessHandler.submit(self.generate_exam_attempts_for_single_exam_for_single_student, student, exam) for exam in exams if exam]
+            exams = self.degree_id_to_exams[student.degree_id]
+            tasks = [ProcessHandler.submit(self.generate_exam_attempts_for_single_exam_for_single_student, student, exam)
+                     for exam in exams if exam]
             ProcessHandler.wait(tasks)
 
             # [self.__generate_exam_attempts_for_single_exam_for_single_student(student, exam) for exam in exams]
@@ -47,8 +45,7 @@ class GenerateExamAttempt:
         for exam in exams:
             yield student, exam
 
-    def generate_exam_attempts_for_single_exam_for_single_student(self, student: Student,
-                                                                  exam: Exam) -> None:
+    def generate_exam_attempts_for_single_exam_for_single_student(self, student: Student, exam: Exam) -> None:
         first_exam_attempt_semester: str = self.__get_first_exam_attempt_semester(student, exam)
 
         last_exam_attempt: ExamAttempt = self.__generate_random_exam_attempt_async(student, exam,
@@ -91,19 +88,6 @@ class GenerateExamAttempt:
     def __get_first_exam_attempt_semester(self, student: Student, exam: Exam) -> Optional[str]:
         min_semester: int = next(le.semester for le in self.lectures if exam.lecture_id == le.id)
         return self.__get_written_in_semester(student.enrolled_at, min_semester)
-
-    # @staticmethod
-    # async def __get_exam_semester_by_lecture_async(exam_id: int) -> int:
-    #     sql: str = f"""
-    #                 SELECT semester FROM exam
-    #                 LEFT JOIN lecture l on exam.lectureid = l.id
-    #                 WHERE exam.id = ?
-    #                 """
-    #     async with await psycopg.AsyncConnection.connect(get_connection_string()) as conn:
-    #         async with conn.cursor() as cur:
-    #             await cur.execute(sql, (exam_id,))
-    #             _id, = await cur.fetchone()
-    #             return _id
 
     def __semester_to_date(self, semester: str) -> datetime:
         if len(semester) == 4:
@@ -199,8 +183,9 @@ class GenerateExamAttempt:
         for attempts in exam_attempts_by_student.values():
             attempts.sort(key=lambda x: x.written_in_semester)
 
-        for student_attempts in exam_attempts_by_student.values():
-            for exam in self.exams:
+        for matriculation_number, student_attempts in exam_attempts_by_student.items():
+            degree_id: int = next(student.degree_id for student in self.students if student.matriculation_number == matriculation_number)
+            for exam in self.degree_id_to_exams[degree_id]:
                 exam_attempts_for_exam: list[ExamAttempt] = [att for att in student_attempts if att.exam_id == exam.id]
                 if len(exam_attempts_for_exam) == exam.allowed_attempts and exam_attempts_for_exam[-1].grade > 4:
                     semester_to_remove: str = exam_attempts_for_exam[-1].written_in_semester
@@ -225,52 +210,14 @@ class GenerateExamAttempt:
             student_passed_exam_attempts = [ea for ea in self.exam_attempts
                                             if ea.student_matriculation_number == student.matriculation_number
                                             and ea.grade < 5]
-            passed_lecture_ids = [exam.lecture_id for ea in student_passed_exam_attempts for exam in self.exams if
+            passed_lecture_ids = [exam.lecture_id for ea in student_passed_exam_attempts for exam in self.degree_id_to_exams[student.degree_id] if
                                   exam.id == ea.exam_id]
             student.etc_score = sum(le.earned_etcs for le in self.lectures if le.id in passed_lecture_ids)
         # todo: test
 
-    async def __load_all_exams_async(self) -> list[Exam]:
-        sql: str = "SELECT * from exam"
-        results: list[tuple] = await DbHandler.query_all(sql)
-        return [
-            Exam(lecture_id, allowed_attempts, id)
-            for id, lecture_id, allowed_attempts in results
-        ]
-
-    async def __load_all_rooms_async(self) -> list[Room]:
-        sql: str = "SELECT * from room"
-        results: list[tuple] = await DbHandler.query_all(sql)
-        return [
-            Room(room_name, location_id, description, number_of_seats)
-            for room_name, location_id, description, number_of_seats in results
-        ]
-
-    async def __load_all_lectures_async(self) -> list[Lecture]:
-        sql: str = "SELECT * from lecture"
-        results: list[tuple] = await DbHandler.query_all(sql)
-        return [
-            Lecture(name, description, modulenumber, required_etcs, earned_etcs, semester, type, id)
-            for id, name, description, modulenumber, required_etcs, earned_etcs, semester, type in results
-        ]
-
     async def __update_student_ect(self, student_mat_number: int, ect_score: int) -> None:
         sql: str = "UPDATE student SET etcsscore = %s where matriculationnumber = %s"
         await DbHandler.execute(sql, (ect_score, student_mat_number))
-
-    @staticmethod
-    async def __load_exams_for_student(degree_id: int) -> list[Exam]:
-        sql: str = """
-                   SELECT e.* from Exam as e
-                   INNER JOIN Lecture as l ON e.LectureId = l.Id
-                   INNER JOIN LectureToDegree as ltd ON ltd.LectureId = l.Id
-                   WHERE ltd.DegreeId = %s;
-                   """
-        results: list[tuple] = await DbHandler.query_all(sql, degree_id)
-        return [
-            Exam(id=_id, lecture_id=lecture_id, allowed_attempts=allowed_attempts)
-            for _id, lecture_id, allowed_attempts in results
-        ]
 
     # async def __load_all_module_number_to_minimum_semester(self) -> dict:
     #     # todo: test
@@ -284,7 +231,7 @@ class GenerateExamAttempt:
     #     return module_number_to_minimum_semester
 
 
-async def __load_all_students_async() -> list[Student]:
+async def load_all_students_async() -> list[Student]:
     sql: str = "SELECT * from student"
     results: list[tuple] = await DbHandler.query_all(sql)
     return [
@@ -296,17 +243,65 @@ async def __load_all_students_async() -> list[Student]:
     ]
 
 
-async def handle_single_batch(batch):
-    exam_attempts: GenerateExamAttempt = GenerateExamAttempt(batch)
-    await exam_attempts.__async_init__()
+async def load_all_exams_async() -> list[Exam]:
+    sql: str = "SELECT * from exam"
+    results: list[tuple] = await DbHandler.query_all(sql)
+    return [
+        Exam(lecture_id, allowed_attempts, id)
+        for id, lecture_id, allowed_attempts in results
+    ]
+
+
+async def load_all_rooms_async() -> list[Room]:
+    sql: str = "SELECT * from room"
+    results: list[tuple] = await DbHandler.query_all(sql)
+    return [
+        Room(room_name, location_id, description, number_of_seats)
+        for room_name, location_id, description, number_of_seats in results
+    ]
+
+
+async def load_all_lectures_async() -> list[Lecture]:
+    sql: str = "SELECT * from lecture"
+    results: list[tuple] = await DbHandler.query_all(sql)
+    return [
+        Lecture(name, description, modulenumber, required_etcs, earned_etcs, semester, type, id)
+        for id, name, description, modulenumber, required_etcs, earned_etcs, semester, type in results
+    ]
+
+async def load_all_exams() -> dict[int, list[Exam]]:
+    sql: str = """
+               SELECT ltd.DegreeId, e.* from Exam as e
+               INNER JOIN Lecture as l ON e.LectureId = l.Id
+               INNER JOIN LectureToDegree as ltd ON ltd.LectureId = l.Id;
+               """
+    results: list[tuple] = await DbHandler.query_all(sql)
+
+    if not results:
+        return {}
+    dictionary = defaultdict(list)
+    for item in results:
+        key = item[0]
+        values = item[1:]
+        dictionary[key].extend(values)
+    return dictionary
+
+
+async def handle_single_batch(batch, exams, lectures, rooms):
+    exam_attempts: GenerateExamAttempt = GenerateExamAttempt(batch, exams, lectures, rooms)
     await exam_attempts.generate_all_exam_attempts_async()
 
 
 async def create_exam_attempts() -> None:
-    return
-    students: list[Student] = await __load_all_students_async()
+    students: list[Student] = await load_all_students_async()
+    exams: list[Exam] = await load_all_exams_async()
+    rooms: list[Room] = await load_all_rooms_async()
+    lectures: list[Lecture] = await load_all_lectures_async()
+    degree_id_to_exams: dict[int, list[Exam]] = await load_all_exams()
     batch_size: int = 25
-    tasks = [ProcessHandler.submit_async(handle_single_batch, batch) for i, batch in enumerate([students[i:i + batch_size] for i in range(0, len(students), batch_size)], start=1)]
+    tasks = [ProcessHandler.submit_async(handle_single_batch, batch, degree_id_to_exams, lectures, rooms)
+             for i, batch in enumerate([students[i:i + batch_size] for i in range(0, len(students), batch_size)],
+                                       start=1)]
     if tasks:
         await asyncio.gather(*tasks)
 

@@ -29,9 +29,6 @@
             By scrolling you can change the intensity of the zoom.
           </div>
         </div>
-
-
-
       </app-alert>
       <app-validate-btn text="next" (click)="updateHighestValidationStep('1.2', stepper)"></app-validate-btn>
     </mat-step>
@@ -41,11 +38,28 @@
       <app-validate-btn (click)="validateDbUserLoginTask(stepper)" [errorMessage]="errorMessage"></app-validate-btn>
     </mat-step>
 
-    <mat-step label="Create Person" [completed]="highestValidatedLevel.localeCompare('1.3') >= 0">
+    <mat-step label="Create Address" [completed]="highestValidatedLevel.localeCompare('1.4') >= 0">
+      <div>
+        If you've familiarized yourself with ERM, you've probably noticed that a student requires PersonId. However, to generate a person, there must also be an address for that person in the database. So start by creating a new address in the database.
+      </div>
       <div style="height: 10rem">
         <app-code-editor (onCodeChangeEvent)="$event"></app-code-editor>
       </div>
       <app-validate-btn (click)="updateHighestValidationStep('1.4', stepper)"></app-validate-btn>
+    </mat-step>
+
+    <mat-step label="Create Person" [completed]="highestValidatedLevel.localeCompare('1.5') >= 0">
+      <div style="height: 10rem">
+        <app-code-editor (onCodeChangeEvent)="$event"></app-code-editor>
+      </div>
+      <app-validate-btn (click)="updateHighestValidationStep('1.5', stepper)"></app-validate-btn>
+    </mat-step>
+
+    <mat-step label="Create Student" [completed]="highestValidatedLevel.localeCompare('1.6') >= 0">
+      <div style="height: 10rem">
+        <app-code-editor (onCodeChangeEvent)="$event"></app-code-editor>
+      </div>
+      <app-validate-btn (click)="updateHighestValidationStep('1.6', stepper)"></app-validate-btn>
     </mat-step>
   </mat-stepper>
 </div>
