@@ -29,7 +29,7 @@ class PostgresqlConnection(IPostgresqlConnection):
                 return cur.lastrowid
 
     @retry(stop_max_attempt_number=4, wait_fixed=500)
-    async def _execute_query(self, user, db, sql: str, args: Optional[tuple] = None) -> list[dict]:
+    async def execute_query(self, user, db, sql: str, args: Optional[tuple] = None) -> list[dict]:
         async with await aiopg.connect(self.get_connection_string(user, db)) as conn:
             async with conn.cursor() as cur:
                 await cur.execute(sql, args)

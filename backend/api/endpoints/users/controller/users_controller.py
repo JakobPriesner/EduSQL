@@ -9,6 +9,7 @@ from api.annotations.http_methods.post import post
 from api.endpoints.users.logic.check_if_user_exists import CheckIfUserExists
 from api.endpoints.users.logic.register_user import RegisterUser
 from api.endpoints.users.logic.verify_if_db_user_exists import VerifyIfDbUserExists
+from api.endpoints.users.models.register_user_payload import RegisterUserPayload
 from api.endpoints.users.models.get_user_response import GetUserResponse
 from api.endpoints.users.models.register_user_response import RegisterUserResponse
 from database.models.db_user import DbUser
@@ -33,5 +34,5 @@ class UsersController:
         return await self._mediator.execute_async(VerifyIfDbUserExists, payload=payload, db=uuid)
 
     @post("/register", response_model=RegisterUserResponse, status_code=status.HTTP_201_CREATED)
-    async def register_user(self) -> RegisterUserResponse:
-        return await self._mediator.execute_async(RegisterUser)
+    async def register_user(self, payload: RegisterUserPayload) -> RegisterUserResponse:
+        return await self._mediator.execute_async(RegisterUser, payload=payload)

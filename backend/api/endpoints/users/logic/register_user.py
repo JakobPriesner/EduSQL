@@ -1,7 +1,11 @@
+import asyncio
 import uuid
+from typing import Generator
 
+import aiofiles
 from injector import inject
 
+from api.endpoints.users.models.register_user_payload import RegisterUserPayload
 from api.endpoints.users.models.register_user_response import RegisterUserResponse
 from command_interface import ICommand
 from database.db_user_handler import DbUserHandler
@@ -18,14 +22,30 @@ class RegisterUser(ICommand[RegisterUserResponse]):
         self._admin_user: DbUser = self._db_user_handler.get_user_by_username("admin")
         self._mediator: IMediator = mediator
 
-    async def handle(self) -> RegisterUserResponse:
+    async def handle(self, payload: RegisterUserPayload) -> RegisterUserResponse:
         user_uuid: str = uuid.uuid4().hex
         print("created user with uuid: " + user_uuid)
-        await self.create_database(user_uuid)
-        # await self._mediator.execute_async(CreateAllTablesForSchema, user_uuid=user_uuid)
+        await self._create_database(user_uuid)
         return RegisterUserResponse(user_uuid=user_uuid)
 
-    async def create_database(self, user_uuid: str) -> None:
+    async def _create_database(self, user_uuid: str) -> None:
         await self._db.create_database(self._admin_user, "postgres", user_uuid)
+        await self._create_roles(user_uuid)
+        await self._create_users(user_uuid)
 
+    async def _create_roles(self, user_uuid: str) -> None:
+        await asyncio.gather(*[
+            self._db.execute_query(self._admin_user, user_uuid, statement)
+            for statement in await self._load_sql_statements("create_roles_for_new_schema.sql")
+        ])
 
+    async def _create_users(self, user_uuid: str) -> None:
+        await asyncio.gather(*[
+            self._db.execute_query(self._admin_user, user_uuid, statement)
+            for statement in await self._load_sql_statements("create_users_for_new_schema.sql")
+        ])
+
+    async def _load_sql_statements(self, file_name: str) -> list[str]:
+        async with aiofiles.open(f"../sqls/{file_name}", "r") as file:
+            file_content: str = await file.read()
+            return file_content.split("\n")

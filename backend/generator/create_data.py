@@ -34,6 +34,7 @@ class DataGenerator:
             await self.create_data_async()
         else:
             self._logger.info("Data already exists, skipping data generation.")
+        await DbHandler.close()
 
     async def create_data_async(self):
         await DbHandler.__async_init__()

@@ -32,3 +32,7 @@ class IPostgresqlConnection(ABC):
     @abstractmethod
     async def delete_by_sql(self, user: DbUser, db: str, sql: str, args: tuple = ()) -> int:
         ...
+
+    @abstractmethod
+    async def execute_query(self, user, db, sql: str, args: Optional[tuple] = None) -> list[dict]:
+        ...
