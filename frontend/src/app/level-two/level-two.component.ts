@@ -5,6 +5,7 @@ import {LocalDbUserValidator} from "../../lib/validator/local-db-user.validator"
 import {UserDataStore} from "../../lib/stores/user-data.store";
 import {AbstractControl} from "@angular/forms";
 import {MatStepper} from "@angular/material/stepper";
+import {LevelValidationResult} from "../../lib/models/levelValidationResult";
 
 @Component({
   selector: 'app-level-two',
@@ -14,6 +15,7 @@ import {MatStepper} from "@angular/material/stepper";
 export class LevelTwoComponent {
   errorMessage: string = "";
   highestValidatedLevel: string = "0.0";
+  countProf?: number = undefined;
 
   constructor(private cookieService: CookieService,
               private validationService: ValidationService,
@@ -22,37 +24,16 @@ export class LevelTwoComponent {
 
   }
 
-  ngOnInit() {
+  validateDbUserLoginTask(stepper: MatStepper) {
+    // let dbUser: string = (this.userDataStore.firstName.at(0) + "_" + this.userDataStore.lastName).toLowerCase();
+    // console.log(dbUser)
+    // let validationResult = this.localDbUserValidator.validateLoggedInAsUser(2, 2, dbUser);
+    // this.errorMessage = validationResult.message;
+    // if (validationResult.isValid) {
+    //   this.updateHighestValidationStep(validationResult.level, stepper);
+    // }
 
-  }
-
-  cookieValidator(control: AbstractControl): { [key: string]: any } | null {
-    const formValue = control.value;
-    const cookieValue = this.cookieService.getCookie('cookieName');
-    if (cookieValue == null) {
-      return { 'cookieExists': false };
-    }
-    return cookieValue.localeCompare(formValue) >= 0 ? null : { 'stepValidated': false };
-  }
-
-  validateStep(task: number, stepper: MatStepper) : void {
-    this.validationService.validateTask(2, task).subscribe(result => {
-      if (result.isValid && this.highestValidatedLevel.localeCompare(result.level)) {
-        this.highestValidatedLevel =  result.level;
-      }
-      if (result.isValid) {
-        this.errorMessage = "";
-        stepper.next();
-      }
-    });
-  }
-
-  validateDbUserLoginTask(stepper: MatStepper) { // todo: welcher stepper wird verwendt? Wie wird der Task gesetzt? mit .next im HTML?
-    let validationResult = this.localDbUserValidator.validateLoggedInAsUser(2, 2, this.userDataStore.firstName); // todo: welcher Name?
-    this.errorMessage = validationResult.message;
-    if (validationResult.isValid) {
-      this.updateHighestValidationStep(validationResult.level, stepper);
-    }
+    this.updateHighestValidationStep("2.2", stepper); // todo: delete
   }
 
   updateHighestValidationStep(to: string, stepper: MatStepper) : void {
@@ -61,5 +42,26 @@ export class LevelTwoComponent {
     }
     this.errorMessage = "";
     stepper.next();
+  }
+
+  validateCountProfTask(to: string, stepper: MatStepper) {
+    if (this.countProf == undefined)
+    {
+      this.errorMessage += "The input field is empty!";
+      return;
+    }
+    let payload = new Map<string, number>([
+      ["answer", this.countProf]
+    ]);
+    this.validationService.validateTaskWithPayload(3, 1, payload).subscribe(result => {
+      if(result.isValid)
+      {
+        if (this.highestValidatedLevel.localeCompare(to)) {
+          this.highestValidatedLevel =  to;
+        }
+        this.errorMessage = "";
+        stepper.next();
+      }
+    });
   }
 }
