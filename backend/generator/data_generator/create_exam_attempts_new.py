@@ -193,7 +193,6 @@ class GenerateExamAttempt:
                     self.exam_attempts = [att for att in self.exam_attempts if att not in attempts_to_remove]
 
     async def __store_all_exam_attempts(self) -> None:
-        print(f"Store {len(self.exam_attempts)} ExamAttempts")
         if len(self.exam_attempts) == 0:
             return
         sql: str = f"""
@@ -308,7 +307,6 @@ async def create_exam_attempts() -> None:
     counter: int = 0
     for batch in [students[i:i+batch_size] for i in range(0, len(students), batch_size)]:
         counter += 1
-        print(f"Create batch for {counter}. Batch.")
         exam_attempts: GenerateExamAttempt = GenerateExamAttempt(batch)
         await exam_attempts.__async_init__()
         await exam_attempts.generate_all_exam_attempts_async()
