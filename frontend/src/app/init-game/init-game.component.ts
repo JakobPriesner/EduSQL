@@ -4,7 +4,6 @@ import {CookieService} from "../../lib/services/cookie.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {UserDataStore} from "../../lib/stores/user-data.store";
-import {first} from "rxjs";
 
 @Component({
   selector: 'app-init-game',
@@ -60,7 +59,7 @@ export class InitGameComponent {
   registerUser() : void {
     let firstName = this.newGameForm.get('firstName')!.value;
     let lastName = this.newGameForm.get('lastName')!.value
-    this.userService.registerUser().subscribe(result => {
+    this.userService.registerUser({firstName: firstName, lastName: lastName}).subscribe(result => {
       this.cookieService.createCookie("uuid", result.userUuid, 7);
       this.userDataStore.firstName = firstName;
       this.userDataStore.lastName = lastName;

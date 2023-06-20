@@ -5,6 +5,7 @@ import {CookieService} from "../cookie.service";
 import {RegisterUserResponse} from "../../models/registerUserResponse";
 import {GetUserResponse} from "../../models/getUserResponse";
 import {DbUser} from "../../models/dbUser";
+import {RegisterUserPayload} from "../../models/registerUserPayload";
 
 @Injectable({
   providedIn: 'root'
@@ -21,8 +22,8 @@ export class UsersService {
     return this.httpClient.post<GetUserResponse>("/api/users/db-user?uuid=" + this.cookieService.getCookie("uuid"), dbUser);
   }
 
-  registerUser(): Observable<RegisterUserResponse> {
-    return this.httpClient.post<RegisterUserResponse>("/api/users/register", {}).pipe(
+  registerUser(payload: RegisterUserPayload): Observable<RegisterUserResponse> {
+    return this.httpClient.post<RegisterUserResponse>("/api/users/register", {...payload}).pipe(
       tap((response: RegisterUserResponse) => {
         const userUuid = response.userUuid;
         this.cookieService.createCookie('uuid', userUuid, 7);
