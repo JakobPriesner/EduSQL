@@ -242,6 +242,7 @@ async def load_all_students_async() -> list[Student]:
         in results
     ]
 
+
 async def load_all_exams_async() -> list[Exam]:
     sql: str = "SELECT * from exam"
     results: list[tuple] = await DbHandler.query_all(sql)
