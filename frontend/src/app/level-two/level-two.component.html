@@ -1,1 +1,47 @@
-<p>level-two works!</p>
+<div class="level-body">
+    <h1>Level 2</h1>
+
+    <mat-stepper linear #stepper>
+
+        <mat-step label="Student´s Perspective" [completed]="highestValidatedLevel.localeCompare('2.1') >= 0">
+            <div class="description">
+                <h3>Hello student {{userDataStore.firstName}}!</h3>
+                Now that you are enrolled in the system as a student, we can continue working with the appropriate permissions, but now from the student's point of view.
+            </div>
+            <div class="description">
+                As a student at THWS, you embark on your educational journey, eager to learn and grow. You start exploring the vast campus, interacting with professors, and immersing yourself in various academic activities.
+            </div>
+            <app-validate-btn text="next" (click)="updateHighestValidationStep('2.1', stepper)"></app-validate-btn>
+        </mat-step>
+
+        <mat-step label="Login as Student" [completed]="highestValidatedLevel.localeCompare('2.2') >= 0">
+            <app-login (onSuccessfulLogin)="stepper.next()"></app-login>
+            <app-validate-btn (click)="validateDbUserLoginTask(stepper)" [errorMessage]="errorMessage"></app-validate-btn>
+        </mat-step>
+
+        <mat-step label="Count Professors" [completed]="highestValidatedLevel.localeCompare('2.3') >= 0">
+            <div class="step-body">
+                <div>
+                    While navigating the campus, you realize the importance of professors in your education. You're curious to know the total count of professors at THWS.
+                    <br>
+                    To satisfy your curiosity, write an SQL query to retrieve the total count of professors at THWS. This will give you a better understanding of the academic community you're a part of.
+                </div>
+                <div style="height: 10rem">
+                    <app-code-editor (onCodeChangeEvent)="$event"></app-code-editor>
+                </div>
+                <mat-form-field>
+                    <mat-label>Number of Professors</mat-label>
+                    <input matInput type="number" id="profCount" name="profCount">
+                </mat-form-field>
+            </div>
+            <app-validate-btn text="next" (click)="updateHighestValidationStep('2.3', stepper)"></app-validate-btn>
+        </mat-step>
+
+        <mat-step label="Create Person" [completed]="highestValidatedLevel.localeCompare('1.3') >= 0">
+            <div style="height: 10rem">
+                <app-code-editor (onCodeChangeEvent)="$event"></app-code-editor>
+            </div>
+            <app-validate-btn (click)="updateHighestValidationStep('1.4', stepper)"></app-validate-btn>
+        </mat-step>
+    </mat-stepper>
+</div>
