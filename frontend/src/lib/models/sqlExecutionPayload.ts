@@ -1,6 +1,6 @@
 
 export interface SqlExecutionPayload {
-  userName: string
+  username: string
   password: string
   sqlStatement: string
 }

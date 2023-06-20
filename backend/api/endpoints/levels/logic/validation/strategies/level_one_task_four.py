@@ -18,9 +18,10 @@ class LevelOneTaskFourValidator(IConcreteValidation):
         first_name: str = kwargs.get("firstName")
         last_name: str = kwargs.get("lastName")
         statement: str = "SELECT * FROM person WHERE FirstName = %s AND LastName = %s;"
-        person_in_db: dict = await self._db.load_single_by_sql(self._admin_user, user_uuid, statement, (first_name, last_name))
+        person_in_db: dict = await self._db.load_single_by_sql(self._admin_user, user_uuid, statement,
+                                                               (first_name, last_name))
         if not person_in_db:
-            return LevelValidationResult(level="1.4",
+            return LevelValidationResult(level="1.5",
                                          is_valid=False,
                                          message=f"Person \"{self._first_name} {self._last_name}\" does not exist in the Table \"Person\".")
 

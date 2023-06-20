@@ -61,7 +61,7 @@ class DataGenerator:
         total_tasks = len(tasks)
         progress = 0
 
-        print("Data generation in progress:")
+        self._logger.info("Data generation in progress:")
 
         start_time = time.time()
 
@@ -78,11 +78,11 @@ class DataGenerator:
             elapsed_time = end_task_time - start_task_time
             time_str = f"completed within {elapsed_time:.2f} seconds."
 
-            print(f"{progress_str: <8} {task_name: <35} {percentage_str: <8} {time_str}")
+            self._logger.info(f"{progress_str: <8} {task_name: <35} {percentage_str: <8} {time_str}")
 
         end_time = time.time()
         total_elapsed_time = end_time - start_time
-        print(f"\nData generation completed. Total time: {total_elapsed_time:.2f} seconds.")
+        self._logger.info(f"\nData generation completed. Total time: {total_elapsed_time:.2f} seconds.")
 
         await DbHandler.close()
         ProcessHandler.close()
@@ -109,7 +109,7 @@ class DataGenerator:
                 create_vacation_semesters_task
             )
         except Exception as e:
-            traceback.print_exc()
+            traceback.self._logger.info_exc()
         finally:
             await asyncio.sleep(10)
             await DbHandler.close()

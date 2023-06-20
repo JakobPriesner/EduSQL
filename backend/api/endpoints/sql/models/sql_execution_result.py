@@ -5,5 +5,5 @@ from api.camel_model import CamelModel
 
 class SqlExecutionResult(CamelModel):
     result_as_dict: Optional[dict | list]
-    errors: str
+    errors: str = ""
     

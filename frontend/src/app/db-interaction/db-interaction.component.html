@@ -1,0 +1,16 @@
+<div *ngFor="let entry of history">
+    <div>{{entry[0]}}</div>
+    <div *ngIf="entry[1].operation == 'selectAll'">
+        <table mat-table [dataSource]="history">
+<!--            <ng-container *ngFor="let key of entry[1]."-->
+            <ng-container matColumnDef="demo-position">
+                <th mat-header-cell *matHeaderCellDef>  </th>
+                <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+            </ng-container>
+        </table>
+    </div>
+</div>
+
+<div class="next-button-section">
+    <button mat-raised-button color="primary" (click)="executeSql()">execute sql</button>
+</div>

@@ -1,6 +1,6 @@
 import asyncio
 import uuid
-from typing import Generator
+from pathlib import Path
 
 import aiofiles
 from injector import inject
@@ -24,28 +24,28 @@ class RegisterUser(ICommand[RegisterUserResponse]):
 
     async def handle(self, payload: RegisterUserPayload) -> RegisterUserResponse:
         user_uuid: str = uuid.uuid4().hex
-        print("created user with uuid: " + user_uuid)
         await self._create_database(user_uuid)
         return RegisterUserResponse(user_uuid=user_uuid)
 
     async def _create_database(self, user_uuid: str) -> None:
         await self._db.create_database(self._admin_user, "postgres", user_uuid)
-        await self._create_roles(user_uuid)
-        await self._create_users(user_uuid)
+        # await self._create_roles(user_uuid)
+        # await self._create_users(user_uuid)
 
     async def _create_roles(self, user_uuid: str) -> None:
-        await asyncio.gather(*[
-            self._db.execute_query(self._admin_user, user_uuid, statement)
-            for statement in await self._load_sql_statements("create_roles_for_new_schema.sql")
-        ])
+        for statement in await self._load_sql_statements("create_roles_for_new_schema.sql"):
+            if not statement.startswith("--") and statement != "":
+                await self._db.execute_without_response(self._admin_user, user_uuid, statement.replace("<db_name>", f"'{user_uuid}'"))
 
     async def _create_users(self, user_uuid: str) -> None:
         await asyncio.gather(*[
-            self._db.execute_query(self._admin_user, user_uuid, statement)
+            self._db.execute_without_response(self._admin_user, user_uuid, statement.replace("<db_name>", f"\"{user_uuid}\""))
             for statement in await self._load_sql_statements("create_users_for_new_schema.sql")
+            if not statement.startswith("--") and statement != ""
         ])
 
     async def _load_sql_statements(self, file_name: str) -> list[str]:
-        async with aiofiles.open(f"../sqls/{file_name}", "r") as file:
+        file_path: Path = Path(__file__).parent.parent / "sqls" / file_name
+        async with aiofiles.open(file_path, "r") as file:
             file_content: str = await file.read()
             return file_content.split("\n")

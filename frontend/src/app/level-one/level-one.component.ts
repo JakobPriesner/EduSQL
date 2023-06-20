@@ -20,7 +20,7 @@ import {UserDataStore} from "../../lib/stores/user-data.store";
 })
 export class LevelOneComponent implements OnInit{
   errorMessage: string = "";
-  highestValidatedLevel: string = "0.0";
+  highestValidatedLevel: string = this.cookieService.getCookie("uuid")!;
 
   constructor(private cookieService: CookieService,
               private validationService: ValidationService,
@@ -55,7 +55,7 @@ export class LevelOneComponent implements OnInit{
   }
 
   validateDbUserLoginTask(stepper: MatStepper) {
-    let validationResult = this.localDbUserValidator.validateLoggedInAsUser(1, 3, 'admin');
+    let validationResult = this.localDbUserValidator.validateLoggedInAsUser(1, 3, 's_krause');
     this.errorMessage = validationResult.message;
     if (validationResult.isValid) {
       this.updateHighestValidationStep(validationResult.level, stepper);
