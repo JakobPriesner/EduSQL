@@ -25,4 +25,18 @@ export class ValidationService {
     )
   }
 
+  validateTaskWithPayload(level: number, task: number, payload: Map<string, any>): Observable<LevelValidationResult> {
+    return this.httpClient.post<LevelValidationResult>("/api/levels/" + level + "/tasks/" + task + "/validate", {...payload}).pipe(
+        tap((response: LevelValidationResult) => {
+          if (response.isValid) {
+            let highestLevel = response.level != "1.1" ? this.cookieService.getCookie("highestValidatedLevel") : "0.0";
+            if (highestLevel == null) highestLevel = "0.0";
+            if (response.level.localeCompare(highestLevel) > 0) {
+              this.cookieService.createCookie("highestValidatedLevel", response.level, 365)
+            }
+          }
+        })
+    )
+  }
+
 }
