@@ -34,6 +34,8 @@ import { LevelThreeComponent } from './level-three/level-three.component';
 import { DbInteractionComponent } from './db-interaction/db-interaction.component';
 import { UserSqlInputComponent } from './db-interaction/user-sql-input/user-sql-input.component';
 import {MatTableModule} from "@angular/material/table";
+import { LevelSixComponent } from './level-six/level-six.component';
+import {MatSelectModule} from "@angular/material/select";
 
 @NgModule({
     declarations: [
@@ -50,7 +52,8 @@ import {MatTableModule} from "@angular/material/table";
         ValidationErrorsComponent,
         LevelThreeComponent,
         DbInteractionComponent,
-        UserSqlInputComponent
+        UserSqlInputComponent,
+        LevelSixComponent
     ],
     imports: [
         HttpClientModule,
@@ -75,7 +78,8 @@ import {MatTableModule} from "@angular/material/table";
         MonacoEditorModule.forRoot(),
         FlexLayoutModule,
         NgOptimizedImage,
-        MatTableModule
+        MatTableModule,
+        MatSelectModule
     ],
     providers: [],
     bootstrap: [AppComponent]
