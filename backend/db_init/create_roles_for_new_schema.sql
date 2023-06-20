@@ -1,12 +1,12 @@
-CREATE ROLE sys_admin IN <db_name>;
-CREATE ROLE db_admin IN <db_name>;
-CREATE ROLE dekan IN <db_name>;
-CREATE ROLE professor IN <db_name>;
-CREATE ROLE research_assistant IN <db_name>;
-CREATE ROLE extern_assistant IN <db_name>;
-CREATE ROLE student IN <db_name>;
-CREATE ROLE secretary IN <db_name>;
-CREATE ROLE enrollement_secretary IN <db_name>;
+CREATE ROLE sys_admin;
+CREATE ROLE db_admin;
+CREATE ROLE dekan;
+CREATE ROLE professor;
+CREATE ROLE research_assistant;
+CREATE ROLE extern_assistant;
+CREATE ROLE student;
+CREATE ROLE secretary;
+CREATE ROLE enrollment_secretary;
 -- student
 GRANT SELECT ON Person, Address, Location, BusinessHours, DailyBusinessHours, PersonToPermission, Permission, Staff, Degree, LectureToDegree, Lecture, Exam, SemesterSpecificLecture, Room, LectureToRestriction, Restriction TO student;
 -- enrollment_secretary
