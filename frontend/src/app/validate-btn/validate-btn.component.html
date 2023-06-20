@@ -1,0 +1,16 @@
+<div *ngIf="errorMessage != ''">
+    <app-alert type="error" title="Validation Error!">
+        <div>It seems that you have missed some step.</div>
+        <div class="error-section">
+            {{errorMessage}}
+        </div>
+        <div>If you need some more hints, you can use the regarding button to get additional tips.</div>
+    </app-alert>
+</div>
+
+<div class="next-button-section">
+    <button mat-raised-button [color]="color" (click)="click.emit()">
+        <span *ngIf="text != ''">{{text}}</span>
+        <ng-content></ng-content>
+    </button>
+</div>

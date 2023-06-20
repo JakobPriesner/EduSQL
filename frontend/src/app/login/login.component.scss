@@ -1,0 +1,27 @@
+.login-card {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+  padding: 20px;
+  box-sizing: border-box;
+  box-shadow: 0px 0px 8px #888888;
+}
+
+
+.login-field {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-btn {
+  margin-top: 1rem;
+}
+
+mat-card-header {
+  margin-bottom: 1rem;
+}
+
+mat-card-title {
+  font-size: 1.25rem;
+  color: darkblue;
+}

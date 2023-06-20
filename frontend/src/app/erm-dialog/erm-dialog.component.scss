@@ -1,0 +1,31 @@
+.dialog-title {
+
+}
+
+.erm-button-group {
+    margin-top: 10px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.close-button-section {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 2rem;
+}
+
+.image-container {
+    position: relative;
+    overflow: auto;
+    background-color: white;
+}
+
+.image-container img {
+    width: 100%;
+    height: 100%;
+}
+
+.erm-image {
+    transform-origin: center center;
+    transition: transform 0.2s;
+}
