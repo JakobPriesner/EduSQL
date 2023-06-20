@@ -2,7 +2,6 @@ import asyncio
 import os
 from typing import Optional
 
-import aiopg
 from injector import inject
 from retrying import retry
 
@@ -11,6 +10,8 @@ from database.postgresql_connection_interface import IPostgresqlConnection
 
 import aiopg
 
+from log.logger_interface import ILogger
+
 
 class PostgresqlConnection(IPostgresqlConnection):
     @staticmethod
@@ -18,11 +19,20 @@ class PostgresqlConnection(IPostgresqlConnection):
         return f"postgresql://{user.username}:{user.password}@{os.getenv('PG_HOST')}:{os.getenv('PG_PORT')}/{db_name}"
 
     @inject
-    def __init__(self):
+    def __init__(self, logger: ILogger):
         self._connection_string = os.getenv("PG_URL")
+        self._logger = logger
+
+    @retry(stop_max_attempt_number=4, wait_fixed=500)
+    async def execute_without_response(self, user, db, sql: str, args: Optional[tuple] = None) -> None:
+        self._logger.info(f"Executing SQL statement: {sql} with args {args}")
+        async with await aiopg.connect(self.get_connection_string(user, db)) as conn:
+            async with await conn.cursor() as cur:
+                await cur.execute(sql, args)
 
     @retry(stop_max_attempt_number=4, wait_fixed=500)
     async def _execute_sql(self, user, db, sql: str, args: Optional[tuple] = None) -> int:
+        self._logger.info(f"Executing SQL statement: {sql} with args {args}")
         async with await aiopg.connect(self.get_connection_string(user, db)) as conn:
             async with await conn.cursor() as cur:
                 await cur.execute(sql, args)
@@ -30,6 +40,7 @@ class PostgresqlConnection(IPostgresqlConnection):
 
     @retry(stop_max_attempt_number=4, wait_fixed=500)
     async def execute_query(self, user, db, sql: str, args: Optional[tuple] = None) -> list[dict]:
+        self._logger.info(f"Executing SQL statement: {sql} with args {args}")
         async with await aiopg.connect(self.get_connection_string(user, db)) as conn:
             async with conn.cursor() as cur:
                 await cur.execute(sql, args)
@@ -38,6 +49,7 @@ class PostgresqlConnection(IPostgresqlConnection):
 
     @retry(stop_max_attempt_number=4, wait_fixed=500)
     async def _execute_query_single(self, user, db, sql: str, args: Optional[tuple] = None) -> Optional[dict]:
+        self._logger.info(f"Executing SQL statement: {sql} with args {args}")
         async with await aiopg.connect(self.get_connection_string(user, db)) as conn:
             async with conn.cursor() as cur:
                 await cur.execute(sql, args)
@@ -53,7 +65,7 @@ class PostgresqlConnection(IPostgresqlConnection):
         return []  # todo
 
     async def load_all_by_sql(self, user: DbUser, db: str, sql: str, args: tuple = ()) -> list[dict]:
-        return await self._execute_query(user, db, sql, args)
+        return await self.execute_query(user, db, sql, args)
 
     async def load_single_by_sql(self, user: DbUser, db: str, sql: str, args: tuple = ()) -> Optional[dict]:
         return await self._execute_query_single(user, db, sql, args)
@@ -72,6 +84,7 @@ class PostgresqlConnection(IPostgresqlConnection):
                 ENCODING 'UTF8' 
                 CONNECTION LIMIT = -1;
         """
+        self._logger.info(f"Executing SQL statement: {sql}")
         async with await aiopg.connect(self.get_connection_string(user, db)) as conn:
             async with await conn.cursor() as cur:
                 await cur.execute(sql)

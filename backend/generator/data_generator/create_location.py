@@ -14,7 +14,6 @@ from generator.models.location import Location
 
 
 class GenerateLocation:
-
     def __init__(self):
         self.generate_address = GenerateAddress()
         self.generate_business_hours = GenerateBusinessHours()

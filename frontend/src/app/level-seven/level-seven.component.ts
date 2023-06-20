@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {CookieService} from "../../lib/services/cookie.service";
 import {ValidationService} from "../../lib/services/api/validation.service";
 import {AbstractControl} from '@angular/forms';
@@ -8,9 +8,9 @@ import {LocalDbUserValidator} from "../../lib/validator/local-db-user.validator"
 import {UserDataStore} from "../../lib/stores/user-data.store";
 
 @Component({
-  selector: 'app-level-one',
-  templateUrl: './level-one.component.html',
-  styleUrls: ['./level-one.component.scss'],
+  selector: 'app-level-seven',
+  templateUrl: './level-seven.component.html',
+  styleUrls: ['./level-seven.component.scss'],
   providers: [
     {
       provide: STEPPER_GLOBAL_OPTIONS,
@@ -18,9 +18,10 @@ import {UserDataStore} from "../../lib/stores/user-data.store";
     },
   ]
 })
-export class LevelOneComponent implements OnInit{
+export class LevelSevenComponent {
+
   errorMessage: string = "";
-  highestValidatedLevel: string = this.cookieService.getCookie("uuid")!;
+  highestValidatedLevel: string = "0.0";
 
   constructor(private cookieService: CookieService,
               private validationService: ValidationService,
@@ -55,7 +56,7 @@ export class LevelOneComponent implements OnInit{
   }
 
   validateDbUserLoginTask(stepper: MatStepper) {
-    let validationResult = this.localDbUserValidator.validateLoggedInAsUser(1, 3, 's_krause');
+    let validationResult = this.localDbUserValidator.validateLoggedInAsUser(1, 3, 'admin');
     this.errorMessage = validationResult.message;
     if (validationResult.isValid) {
       this.updateHighestValidationStep(validationResult.level, stepper);

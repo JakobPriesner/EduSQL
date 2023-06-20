@@ -24,25 +24,22 @@ class RegisterUser(ICommand[RegisterUserResponse]):
 
     async def handle(self, payload: RegisterUserPayload) -> RegisterUserResponse:
         user_uuid: str = uuid.uuid4().hex
-        print("created user with uuid: " + user_uuid)
         await self._create_database(user_uuid)
         return RegisterUserResponse(user_uuid=user_uuid)
 
     async def _create_database(self, user_uuid: str) -> None:
         await self._db.create_database(self._admin_user, "postgres", user_uuid)
-        await self._create_roles(user_uuid)
-        await self._create_users(user_uuid)
+        # await self._create_roles(user_uuid)
+        # await self._create_users(user_uuid)
 
     async def _create_roles(self, user_uuid: str) -> None:
-        await asyncio.gather(*[
-            self._db.execute_without_response(self._admin_user, user_uuid, statement)
-            for statement in await self._load_sql_statements("create_roles_for_new_schema.sql")
-            if not statement.startswith("--") and statement != ""
-        ])
+        for statement in await self._load_sql_statements("create_roles_for_new_schema.sql"):
+            if not statement.startswith("--") and statement != "":
+                await self._db.execute_without_response(self._admin_user, user_uuid, statement.replace("<db_name>", f"'{user_uuid}'"))
 
     async def _create_users(self, user_uuid: str) -> None:
         await asyncio.gather(*[
-            self._db.execute_without_response(self._admin_user, user_uuid, statement)
+            self._db.execute_without_response(self._admin_user, user_uuid, statement.replace("<db_name>", f"\"{user_uuid}\""))
             for statement in await self._load_sql_statements("create_users_for_new_schema.sql")
             if not statement.startswith("--") and statement != ""
         ])

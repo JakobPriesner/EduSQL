@@ -7,7 +7,7 @@ from database.models.db_user import DbUser
 from database.postgresql_connection_interface import IPostgresqlConnection
 
 
-class LevelOneTaskFourValidator(IConcreteValidation):
+class LevelOneTaskFiveValidator(IConcreteValidation):
     @inject
     def __init__(self, db: IPostgresqlConnection, db_user_handler: DbUserHandler):
         self._db: IPostgresqlConnection = db
@@ -21,10 +21,11 @@ class LevelOneTaskFourValidator(IConcreteValidation):
         person_in_db: dict = await self._db.load_single_by_sql(self._admin_user, user_uuid, statement,
                                                                (first_name, last_name))
         if not person_in_db:
-            return LevelValidationResult(level="1.5",
+            return LevelValidationResult(level="1.4",
                                          is_valid=False,
                                          message=f"Person \"{self._first_name} {self._last_name}\" does not exist in the Table \"Person\".")
+        return LevelValidationResult(level="1.4", is_valid=True, message="")
 
     @classmethod
     def can_handle(cls, level_number: int, task_number: int) -> bool:
-        return level_number == 1 and task_number == 4
+        return level_number == 1 and task_number == 5

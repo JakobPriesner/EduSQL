@@ -6,6 +6,10 @@ from database.models.db_user import DbUser
 
 class IPostgresqlConnection(ABC):
     @abstractmethod
+    async def execute_without_response(self, user, db, sql: str, args: Optional[tuple] = None) -> None:
+        ...
+
+    @abstractmethod
     async def create_database(self, user: DbUser, db: str, new_db_name: str) -> None:
         ...
 
