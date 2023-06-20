@@ -9,7 +9,7 @@ export class CodeEditorComponent implements OnInit {
   @Output() onCodeChangeEvent: EventEmitter<string> = new EventEmitter<string>();
 
   editorOptions = {theme: 'vs-dark', language: 'sql'};
-  code: string = 'SELECT * FROM student;';
+  code: string = '';
 
   ngOnInit(): void {
   }
