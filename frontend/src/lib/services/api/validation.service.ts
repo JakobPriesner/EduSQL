@@ -25,7 +25,7 @@ export class ValidationService {
     )
   }
 
-  validateTaskWithPayload(level: number, task: number, payload: Map<string, any>): Observable<LevelValidationResult> {
+  validateTaskWithPayload(level: number, task: number, payload: {[key: string]: any }): Observable<LevelValidationResult> {
     return this.httpClient.post<LevelValidationResult>("/api/levels/" + level + "/tasks/" + task + "/validate?uuid="+this.cookieService.getCookie("uuid"), {...payload}).pipe(
         tap((response: LevelValidationResult) => {
           if (response.isValid) {

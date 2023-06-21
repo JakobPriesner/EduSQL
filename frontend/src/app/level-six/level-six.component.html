@@ -35,7 +35,7 @@
                     </mat-form-field>
                 </div>
             </div>
-            <app-validate-btn text="next" [errorMessage]="errorMessage" (click)="validateRestrictionTask('6.3', stepper)"></app-validate-btn>
+            <app-validate-btn [errorMessage]="errorMessage" (click)="validateRestrictionTask('6.3', stepper)"></app-validate-btn>
         </mat-step>
 
         <mat-step label="Use The Information Obtained" [completed]="highestValidatedLevel.localeCompare('6.3') >= 0">

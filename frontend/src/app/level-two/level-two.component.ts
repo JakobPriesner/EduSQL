@@ -26,14 +26,14 @@ export class LevelTwoComponent {
 
   validateDbUserLoginTask(stepper: MatStepper) {
     // let dbUser: string = (this.userDataStore.firstName.at(0) + "_" + this.userDataStore.lastName).toLowerCase();
-    // console.log(dbUser)
-    // let validationResult = this.localDbUserValidator.validateLoggedInAsUser(2, 2, dbUser);
-    // this.errorMessage = validationResult.message;
-    // if (validationResult.isValid) {
-    //   this.updateHighestValidationStep(validationResult.level, stepper);
-    // }
+    let dbUser: string = "p_braun";
+    let validationResult = this.localDbUserValidator.validateLoggedInAsUser(2, 2, dbUser);
+    this.errorMessage = validationResult.message;
+    if (validationResult.isValid) {
+      this.updateHighestValidationStep(validationResult.level, stepper);
+    }
 
-    this.updateHighestValidationStep("2.2", stepper); // todo: delete
+    // this.updateHighestValidationStep("2.2", stepper); // todo: delete
   }
 
   updateHighestValidationStep(to: string, stepper: MatStepper) : void {
@@ -50,10 +50,10 @@ export class LevelTwoComponent {
       this.errorMessage += "The input field is empty!";
       return;
     }
-    let payload = new Map<string, number>([
-      ["answer", this.countProf]
-    ]);
-    this.validationService.validateTaskWithPayload(3, 1, payload).subscribe(result => {
+    let payload: { [key: string]: any } = {
+      answer: this.countProf
+    };
+    this.validationService.validateTaskWithPayload(2, 3, payload).subscribe(result => {
       if(result.isValid)
       {
         if (this.highestValidatedLevel.localeCompare(to)) {

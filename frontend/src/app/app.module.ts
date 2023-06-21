@@ -55,7 +55,8 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
         ValidationErrorsComponent,
         LevelThreeComponent,
         DbInteractionComponent,
-        UserSqlInputComponent
+        UserSqlInputComponent,
+        LevelSixComponent
     ],
     imports: [
         HttpClientModule,
@@ -80,7 +81,9 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
         MonacoEditorModule.forRoot(),
         FlexLayoutModule,
         NgOptimizedImage,
-        MatTableModule
+        MatTableModule,
+        MatSelectModule,
+        MatCheckboxModule
     ],
     providers: [],
     bootstrap: [AppComponent]
