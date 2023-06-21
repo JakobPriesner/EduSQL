@@ -1,0 +1,61 @@
+<div class="level-body">
+    <h1>Level 6</h1>
+
+    <mat-stepper linear #stepper>
+
+        <mat-step label="Student´s Perspective" [completed]="highestValidatedLevel.localeCompare('6.1') >= 0">
+            <div class="description">
+                <h3>Great Job!</h3>
+                As a professor, you have access to various rooms and facilities on campus. However, you need to ensure that you have the necessary permissions to reserve a specific room, labeled "xy." If not, you must add the required permission.
+            </div>
+            <app-validate-btn text="next" (click)="updateHighestValidationStep('6.1', stepper)"></app-validate-btn>
+        </mat-step>
+
+        <mat-step label="Get Restriction" [completed]="highestValidatedLevel.localeCompare('6.2') >= 0">
+            <div fxLayout="column" class="step-body">
+                <div>
+                    Write an SQL query to check if you have the necessary permissions to reserve the room with the name "H.1.1".
+                </div>
+                <div style="height: 10rem">
+                    <app-code-editor (onCodeChangeEvent)="$event"></app-code-editor>
+                </div>
+                <div>
+
+                    <mat-form-field>
+                        <mat-label>Restriction available</mat-label>
+                        <select matNativeControl required [(ngModel)]="restrictionGuess">
+                            <option value="true">True</option>
+                            <option value="false">False</option>
+                        </select>
+<!--                        <mat-select>-->
+<!--                            <mat-option *ngFor="let bool of boolValue">-->
+<!--                                {{bool}}-->
+<!--                            </mat-option>-->
+<!--                        </mat-select>-->
+                    </mat-form-field>
+                </div>
+            </div>
+            <app-validate-btn [errorMessage]="errorMessage" (click)="validateRestrictionTask('6.3', stepper)"></app-validate-btn>
+        </mat-step>
+
+        <mat-step label="Use The Information Obtained" [completed]="highestValidatedLevel.localeCompare('6.3') >= 0">
+<!--            <div fxLayout="column" class="step-body">-->
+<!--                <div>-->
+<!--                    While navigating the campus, you realize the importance of professors in your education. You're curious to know the total count of professors at THWS.-->
+<!--                    <br>-->
+<!--                    To satisfy your curiosity, write an SQL query to retrieve the total count of professors at THWS. This will give you a better understanding of the academic community you're a part of.-->
+<!--                </div>-->
+<!--                <div style="height: 10rem">-->
+<!--                    <app-code-editor (onCodeChangeEvent)="$event"></app-code-editor>-->
+<!--                </div>-->
+<!--                <div>-->
+<!--                    <mat-form-field>-->
+<!--                        <mat-label>Number of Professors</mat-label>-->
+<!--                        <input matInput type="number" id="profCount" name="profCount">-->
+<!--                    </mat-form-field>-->
+<!--                </div>-->
+<!--            </div>-->
+<!--            <app-validate-btn text="next" (click)="validateRestrictionTask('6.3', stepper)"></app-validate-btn>-->
+        </mat-step>
+    </mat-stepper>
+</div>

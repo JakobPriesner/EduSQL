@@ -31,10 +31,10 @@ import { ValidateBtnComponent } from './validate-btn/validate-btn.component';
 import { ValidationErrorsComponent } from './validation-errors/validation-errors.component';
 import {FlexLayoutModule} from "@angular/flex-layout";
 import { LevelThreeComponent } from './level-three/level-three.component';
-import { LevelSevenComponent } from './level-seven/level-seven.component';
 import { DbInteractionComponent } from './db-interaction/db-interaction.component';
 import { UserSqlInputComponent } from './db-interaction/user-sql-input/user-sql-input.component';
 import {MatTableModule} from "@angular/material/table";
+import { LevelSixComponent } from './level-six/level-six.component';
 import {MatSelectModule} from "@angular/material/select";
 import {MatListModule} from "@angular/material/list";
 import {MatDividerModule} from "@angular/material/divider";
@@ -54,9 +54,9 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
         ValidateBtnComponent,
         ValidationErrorsComponent,
         LevelThreeComponent,
-        LevelSevenComponent,
         DbInteractionComponent,
-        UserSqlInputComponent
+        UserSqlInputComponent,
+        LevelSixComponent
     ],
     imports: [
         HttpClientModule,
@@ -83,8 +83,6 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
         NgOptimizedImage,
         MatTableModule,
         MatSelectModule,
-        MatListModule,
-        MatDividerModule,
         MatCheckboxModule
     ],
     providers: [],

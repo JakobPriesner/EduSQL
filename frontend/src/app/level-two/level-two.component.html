@@ -20,7 +20,7 @@
         </mat-step>
 
         <mat-step label="Count Professors" [completed]="highestValidatedLevel.localeCompare('2.3') >= 0">
-            <div class="step-body">
+            <div fxLayout="column" class="step-body">
                 <div>
                     While navigating the campus, you realize the importance of professors in your education. You're curious to know the total count of professors at THWS.
                     <br>
@@ -29,19 +29,14 @@
                 <div style="height: 10rem">
                     <app-code-editor (onCodeChangeEvent)="$event"></app-code-editor>
                 </div>
-                <mat-form-field>
-                    <mat-label>Number of Professors</mat-label>
-                    <input matInput type="number" id="profCount" name="profCount">
-                </mat-form-field>
+                <div>
+                    <mat-form-field>
+                        <mat-label>Number of Professors</mat-label>
+                        <input matInput type="number" id="profCount" name="profCount" [(ngModel)]="countProf">
+                    </mat-form-field>
+                </div>
             </div>
-            <app-validate-btn text="next" (click)="updateHighestValidationStep('2.3', stepper)"></app-validate-btn>
-        </mat-step>
-
-        <mat-step label="Create Person" [completed]="highestValidatedLevel.localeCompare('1.3') >= 0">
-            <div style="height: 10rem">
-                <app-code-editor (onCodeChangeEvent)="$event"></app-code-editor>
-            </div>
-            <app-validate-btn (click)="updateHighestValidationStep('1.4', stepper)"></app-validate-btn>
+            <app-validate-btn [errorMessage]="errorMessage" (click)="validateCountProfTask('2.3', stepper)"></app-validate-btn>
         </mat-step>
     </mat-stepper>
 </div>

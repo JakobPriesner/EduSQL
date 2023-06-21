@@ -6,6 +6,7 @@ from api.endpoints.levels.logic.validation.strategies.concrete_validation_interf
 from api.endpoints.levels.logic.validation.strategies.level_one_task_five import LevelOneTaskFiveValidator
 from api.endpoints.levels.logic.validation.strategies.level_one_task_four import LevelOneTaskFourValidator
 from api.endpoints.levels.logic.validation.strategies.level_one_task_six import LevelOneTaskSixValidator
+from api.endpoints.levels.logic.validation.strategies.level_two_task_three import LevelTwoTaskThreeValidator
 from api.endpoints.levels.models.level_validation_result import LevelValidationResult
 from command_interface import ICommand
 from database.db_user_handler import DbUserHandler
@@ -42,5 +43,6 @@ class ValidateTask(ICommand[LevelValidationResult]):
         return [
             LevelOneTaskFourValidator,
             LevelOneTaskFiveValidator,
-            LevelOneTaskSixValidator
+            LevelOneTaskSixValidator,
+            LevelTwoTaskThreeValidator
         ]
