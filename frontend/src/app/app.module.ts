@@ -26,7 +26,6 @@ import { LoginComponent } from './login/login.component';
 import {MatCardModule} from "@angular/material/card";
 import { LevelTwoComponent } from './level-two/level-two.component';
 import { CodeEditorComponent } from './code-editor/code-editor.component';
-import { MonacoEditorModule } from 'ngx-monaco-editor-v2';
 import { ValidateBtnComponent } from './validate-btn/validate-btn.component';
 import { ValidationErrorsComponent } from './validation-errors/validation-errors.component';
 import {FlexLayoutModule} from "@angular/flex-layout";
@@ -42,8 +41,9 @@ import { SelectAllResultTableComponent } from './db-interaction/select-all-resul
 import {MatExpansionModule} from "@angular/material/expansion";
 import {MatTabsModule} from "@angular/material/tabs";
 import {LevelFourComponent} from "./level-four/level-four.component";
-import {LevelNineComponent} from "./level-nine/level-nine.component";
-import { LevelElevenComponent } from './level-eleven/level-eleven.component';
+import { LevelThirteenComponent } from './level-thirteen/level-thirteen.component';
+import { LevelTenComponent } from './level-ten/level-ten.component';
+import {MonacoEditorModule} from "ngx-monaco-editor-v2";
 
 @NgModule({
     declarations: [
@@ -65,8 +65,8 @@ import { LevelElevenComponent } from './level-eleven/level-eleven.component';
         LevelSixComponent,
         SelectAllResultTableComponent,
         LevelFourComponent,
-        LevelNineComponent,
-        LevelElevenComponent
+        LevelThirteenComponent,
+        LevelTenComponent
     ],
     imports: [
         HttpClientModule,
