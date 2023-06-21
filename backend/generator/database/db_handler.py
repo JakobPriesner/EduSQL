@@ -34,6 +34,9 @@ class DbHandler:
             async with connection.cursor() as cursor:
                 try:
                     await cursor.execute(query, args)
+                    if "returning id" in query.lower():
+                        _id, = await cursor.fetchone()
+                        return _id
                     return cursor.lastrowid
                 except Exception as e:
                     pass

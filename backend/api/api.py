@@ -27,7 +27,7 @@ class Api:
         self._setup_routes()
 
     def start(self):
-        config = Config(self._app, host="127.0.0.1", port=8080, log_level="debug")
+        config = Config(self._app, host="127.0.0.1", port=8080, log_level="warning")
         self._server = Server(config=config)
         self._logger.info(f"Api is available on http://{config.host}:{config.port}")
         self._server.run()
@@ -46,7 +46,7 @@ class Api:
 
         @self._app.get("/")
         def redirect_to_latest_docs(request: Request):
-            return RedirectResponse(request.scope.get("path").lstrip("/") + "/api/v1/docs")
+            return RedirectResponse(request.scope.get("path").lstrip("/") + "/api/docs")
 
         controllers = self._get_controller_classes(self._module_path)
 

@@ -32,6 +32,12 @@ class RegisterUser(ICommand[RegisterUserResponse]):
         # await self._create_roles(user_uuid)
         # await self._create_users(user_uuid)
 
+    async def _create_user(self, user_uuid: str) -> None:
+        await self._db.execute_without_response(self._admin_user, user_uuid, f"CREATE USER \"{user_uuid}\" WITH LOGIN PASSWORD 's5HHdC3SKK7q9T';")
+        await self._db.execute_without_response(self._admin_user, user_uuid, f"GRANT student TO \"{user_uuid}\";")
+        await self._db.execute_without_response(self._admin_user, user_uuid, self.__get_sql_statement_for_sequence_schema(user_uuid))
+
+
     async def _create_roles(self, user_uuid: str) -> None:
         for statement in await self._load_sql_statements("create_roles_for_new_schema.sql"):
             if not statement.startswith("--") and statement != "":
@@ -49,3 +55,17 @@ class RegisterUser(ICommand[RegisterUserResponse]):
         async with aiofiles.open(file_path, "r") as file:
             file_content: str = await file.read()
             return file_content.split("\n")
+
+    def __get_sql_statement_for_sequence_schema(self, user_name: str) -> str:
+        return f"""
+                DO $$ DECLARE
+    sequence RECORD;
+BEGIN
+    FOR sequence IN (SELECT sequence_schema || '.' || sequence_name as sequence_full_name
+                     FROM information_schema.sequences
+                     WHERE sequence_schema = 'public')  -- change 'public' to your schema name
+    LOOP
+        EXECUTE 'GRANT ALL ON SEQUENCE ' || sequence.sequence_full_name || ' TO {user_name};';
+    END LOOP;
+END $$;
+                """

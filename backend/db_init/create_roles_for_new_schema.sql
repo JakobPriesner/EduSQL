@@ -22,3 +22,14 @@ GRANT INSERT, UPDATE ON Exam, ExamAttempt, SemesterSpecificLecture TO professor,
 -- sys_admin, db_admin, dekan
 GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA public TO sys_admin, db_admin, dekan;
 GRANT admin TO sys_admin, db_admin, dekan WITH ADMIN OPTION;
+
+DO $$ DECLARE
+    sequence RECORD;
+BEGIN
+    FOR sequence IN (SELECT sequence_schema || '.' || sequence_name as sequence_full_name
+                     FROM information_schema.sequences
+                     WHERE sequence_schema = 'public')
+    LOOP
+        EXECUTE 'GRANT ALL ON SEQUENCE ' || sequence.sequence_full_name || ' TO PUBLIC;';
+    END LOOP;
+END $$;

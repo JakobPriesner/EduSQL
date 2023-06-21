@@ -1,5 +1,6 @@
 import asyncio
 import os
+import traceback
 from typing import Optional
 
 from injector import inject
@@ -28,14 +29,23 @@ class PostgresqlConnection(IPostgresqlConnection):
         self._logger.info(f"Executing SQL statement: {sql} with args {args}")
         async with await aiopg.connect(self.get_connection_string(user, db)) as conn:
             async with await conn.cursor() as cur:
-                await cur.execute(sql, args)
+                if args:
+                    await cur.execute(sql, args)
+                else:
+                    await cur.execute(sql)
 
     @retry(stop_max_attempt_number=4, wait_fixed=500)
     async def _execute_sql(self, user, db, sql: str, args: Optional[tuple] = None) -> int:
         self._logger.info(f"Executing SQL statement: {sql} with args {args}")
         async with await aiopg.connect(self.get_connection_string(user, db)) as conn:
             async with await conn.cursor() as cur:
-                await cur.execute(sql, args)
+                if args:
+                    await cur.execute(sql, args)
+                else:
+                    await cur.execute(sql)
+                if "returning id" in sql.lower():
+                    _id, = await cur.fetchone()
+                    return _id
                 return cur.lastrowid
 
     @retry(stop_max_attempt_number=4, wait_fixed=500)
@@ -43,8 +53,13 @@ class PostgresqlConnection(IPostgresqlConnection):
         self._logger.info(f"Executing SQL statement: {sql} with args {args}")
         async with await aiopg.connect(self.get_connection_string(user, db)) as conn:
             async with conn.cursor() as cur:
-                await cur.execute(sql, args)
+                if args:
+                    await cur.execute(sql, args)
+                else:
+                    await cur.execute(sql)
                 result = await cur.fetchall()
+                if not result:
+                    return []
                 return [self.result_to_dict(row, cur) for row in result]
 
     @retry(stop_max_attempt_number=4, wait_fixed=500)
@@ -52,7 +67,10 @@ class PostgresqlConnection(IPostgresqlConnection):
         self._logger.info(f"Executing SQL statement: {sql} with args {args}")
         async with await aiopg.connect(self.get_connection_string(user, db)) as conn:
             async with conn.cursor() as cur:
-                await cur.execute(sql, args)
+                if args:
+                    await cur.execute(sql, args)
+                else:
+                    await cur.execute(sql)
                 result = await cur.fetchone()
                 if not result:
                     return None
