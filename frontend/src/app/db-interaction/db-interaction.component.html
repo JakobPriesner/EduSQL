@@ -2,7 +2,10 @@
     <div>{{ entry[0] }}</div>
 
     <ng-container>
-        {{ entry[1].result }}
+        <app-select-all-result-table *ngIf="entry[1].result" [sqlResult]="castToSelectAllSqlResult(entry[1])">
+
+        </app-select-all-result-table>
+
     </ng-container>
 
     <ng-container *ngIf="entry[1].operation === 'insert'">

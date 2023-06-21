@@ -34,13 +34,11 @@ import { LevelThreeComponent } from './level-three/level-three.component';
 import { LevelSevenComponent } from './level-seven/level-seven.component';
 import { LevelEightComponent } from './level-eight/level-eight.component';
 import { DbInteractionComponent } from './db-interaction/db-interaction.component';
-import { UserSqlInputComponent } from './db-interaction/user-sql-input/user-sql-input.component';
 import {MatTableModule} from "@angular/material/table";
 import { LevelSixComponent } from './level-six/level-six.component';
 import {MatSelectModule} from "@angular/material/select";
-import {MatListModule} from "@angular/material/list";
-import {MatDividerModule} from "@angular/material/divider";
 import {MatCheckboxModule} from "@angular/material/checkbox";
+import { SelectAllResultTableComponent } from './db-interaction/select-all-result-table/select-all-result-table.component';
 
 @NgModule({
     declarations: [
@@ -59,8 +57,8 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
         LevelSevenComponent,
         LevelEightComponent,
         DbInteractionComponent,
-        UserSqlInputComponent,
-        LevelSixComponent
+        LevelSixComponent,
+        SelectAllResultTableComponent
     ],
     imports: [
         HttpClientModule,

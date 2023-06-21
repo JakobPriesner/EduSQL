@@ -35,8 +35,9 @@ class GenerateAddress:
                     VALUES (%s, %s, %s, %s, %s, %s)
                     RETURNING id;
                     """
-        return await DbHandler.execute(sql, address.street, address.house_number, address.address_addition, address.city,
+        id, = await DbHandler.query(sql, address.street, address.house_number, address.address_addition, address.city,
                                      address.country, address.postal_code)
+        return id
 
     async def store_address_from_scv(self, addresses: list[Address]) -> None:
         sql: str = f""" 

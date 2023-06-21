@@ -34,7 +34,7 @@ class DbHandler:
             async with connection.cursor() as cursor:
                 try:
                     await cursor.execute(query, args)
-                    return cursor.lastrowid;
+                    return cursor.lastrowid
                 except Exception as e:
                     pass
 

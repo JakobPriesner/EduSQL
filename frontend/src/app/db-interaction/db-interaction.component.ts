@@ -37,4 +37,8 @@ export class DbInteractionComponent {
     return Array.isArray(arr) ? arr[0] : null;
   }
 
+  castToSelectAllSqlResult(sqlResult: SqlResult): SelectAllSqlResult{
+    return sqlResult as SelectAllSqlResult;
+  }
+
 }
