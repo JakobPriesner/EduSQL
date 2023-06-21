@@ -6,25 +6,25 @@
         <mat-step label="Create Lecture" [completed]="highestValidatedLevel.localeCompare('7.1') >= 0">
             <div class="description">
                 <h3>Hey, {{userDataStore.firstName}}!</h3>
-                you have reached level 7 and are now a professor. That gives you certain rights.<br>
-                You have the permission to access semester-specific lectures, exam attempts, and the lecture schedule.<br>
-                This allows you to manage lectures, conduct exams and update the lecture schedule.<br><br>
+                You have reached level 7 and are now a professor. This gives you certain rights.<br>
+                You have permission to access semester-specific lectures, exam attempts, and the lecture schedule.<br>
+                This allows you to manage lectures, conduct exams, and update the lecture schedule.<br><br>
                 Now you want to create your own lecture.<br>
-                Please write the generated id of the lecture down, so you can use it in further steps! <br><br>
+                Please make a note of the generated ID for the lecture, so you can use it in subsequent steps!<br><br>
                 <b>Additional information about lectures:</b><br><br>
-                The required etcs define how many etcs a student needs to be allowed to participate in this lecture.<br>
-                The earned etcs define how many etcs a students gets, if he passes the exam of this lecture.<br>
+                The required ECTS define how many ECTS credits a student needs to be allowed to participate in this lecture.<br>
+                The earned ECTS define how many ECTS credits a student gets if they pass the exam for this lecture.<br>
                 The lecture type needs to be one of the following:<br>
                 <ul>
                     <li>"AWPF" - this means the lecture is a general education elective</li>
                     <li>"FWPM" - this means the lecture is an elective course</li>
-                    <li>"VL" - this means it is a normal lecture</li>
+                    <li>"VL" - this means it is a regular lecture</li>
                     <li>"SU" - this means the lecture is held as a seminar class</li>
                     <li>"P" - this means the lecture is a project</li>
-                    <li>"Exercise" - this means the lecture is a exercise</li>
+                    <li>"Exercise" - this means the lecture is an exercise</li>
                 </ul><br>
-                You want to create an <b>elective course</b> called <b>"IT Security"</b>, teaching <b>"Aspects of secure systems"</b>. The modul number is: <b>"5104211"</b><br>
-                Students participating in this lecture need to be in the <b>sixth semester</b> and have a minimum number of <b>125</b> etcs. Students passing the exam of this lecture earn <b>5</b> etcs.<br><br>
+                You want to create an <b>elective course</b> called <b>"IT Security"</b> teaching <b>"Aspects of secure systems"</b>. The module number is: <b>"5104211"</b><br>
+                Students participating in this lecture need to be in their <b>sixth semester</b> and have a minimum of <b>125</b> ECTS credits. Students passing the exam of this lecture will earn <b>5</b> ECTS credits.<br><br>
             </div>
             <app-db-interaction></app-db-interaction>
             <app-validate-btn (click)="updateHighestValidationStep('7.1', stepper)"></app-validate-btn>
@@ -33,9 +33,9 @@
         <mat-step label="Create Restriction" [completed]="highestValidatedLevel.localeCompare('7.2') >= 0">
             <div class="description">
                 <h3>Hey, {{userDataStore.firstName}}!</h3>
-                because your lecture "IT Security" will be held in english, you need to add a restriction to it.<br>
-                Please create a <b>restriction "Language Skills"</b> with the <b>description "Good english skills"</b><br>
-                Write the generated id of the restriction down, so you can use it in further steps! <br><br>
+                Because your lecture "IT Security" will be held in English, you need to add a restriction to it.<br>
+                Please create a <b>restriction called "Language Skills"</b> with the <b>description "Good english skills".</b><br>
+                Write down the generated ID of the restriction, so you can use it in further steps!<br><br>
             </div>
             <app-db-interaction></app-db-interaction>
             <app-validate-btn (click)="updateHighestValidationStep('7.2', stepper)"></app-validate-btn>
@@ -44,11 +44,11 @@
         <mat-step label="Junction Table" [completed]="highestValidatedLevel.localeCompare('7.3') >= 0">
             <div class="description">
                 <h3>Hey, {{userDataStore.firstName}}!</h3>
-                did you know that when you have a many-to-many relationship between tables, the connection between those two tables is established by a junction table.<br>
+                Did you know that when you have a many-to-many relationship between tables, the connection between those two tables is established by a junction table?<br>
                 This junction table includes the primary keys of both tables as foreign keys and may also store additional information specific to the relationship between the two tables.<br><br>
-                One lecture can have multiple restriction and a single restriction can be linked to multiple lectures. This means that there is a many-to-many relationship between the two tables <b>"Lecture"</b> and <b>"Restriction"</b>.<br>
+                One lecture can have multiple restrictions, and a single restriction can be linked to multiple lectures. This means that there is a many-to-many relationship between the two tables, <b>"Lecture"</b> and <b>"Restriction"</b>.<br>
                 The connection between those two tables is established by a junction table called <b>"LectureToRestriction"</b>.<br><br>
-                Please link your <b>lecture "IT Security"</b> to new created <b>restriction "Language Skills"</b>.<br><br>
+                Please link your <b>lecture "IT Security"</b> to newly created <b>restriction, "Language Skills"</b>.<br><br>
             </div>
             <app-db-interaction></app-db-interaction>
             <app-validate-btn (click)="updateHighestValidationStep('7.3', stepper)"></app-validate-btn>
