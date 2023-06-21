@@ -7,7 +7,7 @@ from database.models.db_user import DbUser
 from database.postgresql_connection_interface import IPostgresqlConnection
 
 
-class LevelThreeTaskTwoValidator(IConcreteValidation):
+class LevelFourTaskTwoValidator(IConcreteValidation):
     @inject
     def __init__(self, db: IPostgresqlConnection, db_user_handler: DbUserHandler):
         self._db: IPostgresqlConnection = db
@@ -16,13 +16,18 @@ class LevelThreeTaskTwoValidator(IConcreteValidation):
 
     async def handle(self, user_uuid: str, **kwargs) -> LevelValidationResult:
         payload: dict = kwargs.get("payload")
-        statement: str = "SELECT COUNT(*)" \
-                         "FROM Location" \
-                         "WHERE library = true;"
+        statement: str = "SELECT A.addressaddition as name " \
+                         "FROM Location L " \
+                         "JOIN Address A ON L.addressid = a.id " \
+                         "WHERE L.library = true;"
         result: dict = await self._db.load_single_by_sql(self._admin_user, user_uuid, statement)
-        if result != payload:
-            return LevelValidationResult
+
+        if result.get('name') != payload.get('answer')[0]:
+            return LevelValidationResult(level="4.2",
+                                         is_valid=False,
+                                         message="False Locations")
+        return LevelValidationResult(level="4.2", is_valid=True, message="")
 
     @classmethod
     def can_handle(cls, level_number: int, task_number: int) -> bool:
-        return level_number == 3 and task_number == 2
+        return level_number == 4 and task_number == 2

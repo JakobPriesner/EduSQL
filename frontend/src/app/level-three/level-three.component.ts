@@ -39,9 +39,9 @@ export class LevelThreeComponent {
 
 
   selectBusinessHours(to: string, stepper: MatStepper, answer: string) : void {
-    let payload = new Map<string, string>([
-      ["answer", answer]
-    ]);
+    let payload: { [key: string]: any } = {
+      answer: answer
+    };
     this.validationService.validateTaskWithPayload(3, 1, payload).subscribe(result => {
       if(result.isValid)
       {
@@ -54,13 +54,16 @@ export class LevelThreeComponent {
     });
   }
 
-  checkedTasks: string[] = [];
+  checkedTasksNames: string[] = [];
 
-  selectLocationsWithLibary(to: string, stepper: MatStepper, answer: string[]) : void {
-    let payload = new Map<string, string[]>([
-      ["answer", answer]
-    ]);
+  selectLocationsWithLibary(to: string, stepper: MatStepper) : void {
+    this.checkedTasks();
+
+    let payload: { [key: string]: any } = {
+      answer: this.checkedTasksNames
+    };
     this.validationService.validateTaskWithPayload(3, 2, payload).subscribe(result => {
+      console.log(result)
       if(result.isValid)
       {
         if (this.highestValidatedLevel.localeCompare(to)) {
@@ -104,5 +107,33 @@ export class LevelThreeComponent {
       return;
     }
     this.task.subtasks.forEach(t => (t.completed = completed));
+  }
+
+  onSuccessfulLogin(stepper: MatStepper) : void {
+    this.errorMessage="";
+    stepper.next();
+  }
+
+  validateDbUserLoginTask(stepper: MatStepper) {
+    let validationResult = this.localDbUserValidator.validateLoggedInAsUser(3, 0, 'p_braun');
+    this.errorMessage = validationResult.message;
+    if (validationResult.isValid) {
+      this.updateHighestValidationStep(validationResult.level, stepper);
+    }
+  }
+
+  updateHighestValidationStep(to: string, stepper: MatStepper) : void {
+    if (this.highestValidatedLevel.localeCompare(to)) {
+      this.highestValidatedLevel =  to;
+    }
+    this.errorMessage = "";
+    stepper.next();
+  }
+
+  checkedTasks(){
+    // @ts-ignore
+    this.checkedTasksNames = this.task.subtasks
+        .filter(subtask => subtask.completed)
+        .map(subtask => subtask.name);
   }
 }

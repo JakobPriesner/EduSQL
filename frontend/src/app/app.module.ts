@@ -40,6 +40,7 @@ import {MatSelectModule} from "@angular/material/select";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import { SelectAllResultTableComponent } from './db-interaction/select-all-result-table/select-all-result-table.component';
 import {MatExpansionModule} from "@angular/material/expansion";
+import {MatTabsModule} from "@angular/material/tabs";
 
 @NgModule({
     declarations: [
@@ -88,6 +89,8 @@ import {MatExpansionModule} from "@angular/material/expansion";
         MatSelectModule,
         MatCheckboxModule,
         MatExpansionModule,
+        MatCheckboxModule,
+        MatTabsModule
     ],
     providers: [],
     bootstrap: [AppComponent]
