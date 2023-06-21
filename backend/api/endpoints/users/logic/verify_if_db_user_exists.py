@@ -1,3 +1,6 @@
+import traceback
+
+import psycopg2
 from injector import inject
 
 from api.endpoints.users.models.get_user_response import GetUserResponse
@@ -12,10 +15,12 @@ class VerifyIfDbUserExists(ICommand[GetUserResponse]):
         self._db = db
 
     async def handle(self, payload: DbUser, db: str) -> GetUserResponse:
-        statement: str = "SELECT COUNT(*) FROM person;"
+        statement: str = "SELECT COUNT(*) FROM Address;"
         try:
             await self._db.load_single_by_sql(payload, db, statement)
             return GetUserResponse(exists=True)
-        except Exception:
+        except Exception as e:
+            if "permission denied for table address" in str(e):
+                return GetUserResponse(exists=True)
             return GetUserResponse(exists=False)
 
