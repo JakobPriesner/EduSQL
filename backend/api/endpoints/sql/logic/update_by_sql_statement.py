@@ -19,7 +19,7 @@ class UpdateBySqlStatement(ICommand[UpdateSqlResult]):
             row_count: int = await self._db.update_by_sql(DbUser(payload.username, payload.password), uuid, payload.sql_statement)
             return UpdateSqlResult(
                 operation="update",
-                result={"affectedRows": row_count},
+                result=row_count,
                 errors=""
             )
         except Exception as e:

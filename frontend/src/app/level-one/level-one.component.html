@@ -4,14 +4,22 @@
     <mat-step label="Welcome" [completed]="highestValidatedLevel.localeCompare('1.1') >= 0">
       <div class="description">
         <h3>Welcome, {{userDataStore.firstName}}!</h3>
-        You applied to study at THWS and were accepted. Now it's time to be enrolled into the system. However, in this university, the enrollment process is not entirely digital. It requires the manual action of a secretary who handles the task using pure SQL.
+
+        Congratulations on your acceptance to THWS, a significant milestone in your academic journey. <br/><br/>
+        The next crucial step is to officially become part of the university's community through the enrollment process.
+
+        However, it's worth noting that the enrollment procedure at THWS is not fully digitized. It involves an element of human intervention, placing significant reliance on the expertise of an administrative secretary. In a unique approach, this secretary performs the enrollment operations using traditional SQL commands. This process, while seemingly antiquated, ensures an added layer of verification and maintains a personal touch in the university's administrative functions.
       </div>
       <app-validate-btn text="next" (click)="updateHighestValidationStep('1.1', stepper)"></app-validate-btn>
     </mat-step>
 
     <mat-step label="ERM" [completed]="highestValidatedLevel.localeCompare('1.2') >= 0">
       <div>
-        To create the student you have to get an overview of all tables to filter that ones you need. For that so named <b>ERM</b>s are used. <b>ERM</b> is the short form for <b>Entity Relation Model</b>. It is used to visualize a complex Data Model.
+        In the process of creating a student record in the system, it is imperative to have a comprehensive understanding of all the available tables to effectively identify those that are pertinent to your task. This exercise is not merely about choosing the correct tables, but also discerning the relationships and dependencies between them.
+        <br/><br/>
+        This is where Entity Relation Models, commonly abbreviated as ERMs, come into play. ERMs serve as a valuable tool in the realm of data modeling, providing a graphical representation of the entire data schema. With ERMs, you can effectively dissect complex data models, transforming them into digestible visual structures. This graphical representation aids in understanding the relationships between different entities and how they interact with each other.
+        <br/><br/>
+        By using ERMs, you can navigate through the intricacies of the data model, ensuring that the student record creation process is accurate and efficient. The ERM functions as a roadmap, guiding you through the database landscape and enabling you to effectively carry out your tasks.
       </div>
       <app-alert type="info" title="Tip">
         <div>
@@ -40,6 +48,7 @@
           </div>
         </div>
       </app-alert>
+      <br>
       <app-login (onSuccessfulLogin)="onSuccessfulLogin(stepper)"></app-login>
       <app-validate-btn (click)="validateDbUserLoginTask(stepper)" [errorMessage]="errorMessage"></app-validate-btn>
     </mat-step>
@@ -48,6 +57,7 @@
       <div>
         If you've familiarized yourself with ERM, you've probably noticed that a student requires PersonId. However, to generate a person, there must also be an address for that person in the database. So start by creating a new address in the database. Please write the generated id of the address down, so you can use it in further steps.
       </div>
+      <br>
       <div class="address-container">
         <h2>Address Details:</h2>
         <div class="address-detail">
@@ -80,6 +90,13 @@
       <div>
         Now you have to create a person with the id of the address you just generated. Please write the generated id of the person down, so you can use it in further steps.
       </div>
+      <br>
+      <app-alert type="info" title="Tip">
+        <div>
+          In the most databases including Postgres a date can be represented as a string in the format "YYY-MM-DD". So if you want to create a person with the birthday "01.01.2000" you have to write "2000-01-01" in the input field.
+        </div>
+      </app-alert>
+      <br>
       <div class="address-container">
         <h2>Person Details:</h2>
         <div class="address-detail">
@@ -100,9 +117,40 @@
         It's time for the most challenging step in this level. Now you have to create the student itself.
         <ul>
           <li>Get the Id of the Degree "BIN"</li>
-          <li>Use this Id to create a new Student. Use the PersonId of the previous step.</li>
+          <li>Use this Id to create a new Student. Use the PersonId of the previous step. If you forgot the PersonId try to get it by using Select Statements.</li>
         </ul>
       </div>
+      <br>
+      <app-alert type="info" title="Tip">
+        <div>
+          To use a default value, you can specify the column names, that you want to insert. Leave out the column names, that should use the default value.
+        </div>
+      </app-alert>
+      <br>
+      <div class="address-container">
+        <h2>Student Details:</h2>
+        <div class="address-detail">
+          <span class="address-label">Matriculation Number:</span>
+          <span class="address-value">5120001</span>
+        </div>
+        <div class="address-detail">
+          <span class="address-label">EtcsScore:</span>
+          <span class="address-value">0</span>
+        </div>
+        <div class="address-detail">
+          <span class="address-label">InStudentCouncil:</span>
+          <span class="address-value">No</span>
+        </div>
+        <div class="address-detail">
+          <span class="address-label">EnrolledAt:</span>
+          <span class="address-value">default value</span>
+        </div>
+        <div class="address-detail">
+          <span class="address-label">ExmatriculatedAt:</span>
+          <span class="address-value">default value</span>
+        </div>
+      </div>
+      <br>
       <app-db-interaction></app-db-interaction>
       <app-validate-btn (click)="validateWithPersonInfoAsPayload(6, stepper)"></app-validate-btn>
     </mat-step>

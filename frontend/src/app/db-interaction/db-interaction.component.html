@@ -29,7 +29,6 @@
                     <app-alert type="error">{{ entry[1].errors }}</app-alert>
                 </div>
             </div>
-            <app-select-all-result-table *ngIf="entry[1].operation === 'selectAll' && entry[1].errors == ''" [sqlResult]="entry[1].result"></app-select-all-result-table>
         </mat-expansion-panel>
     </mat-accordion>
 

@@ -53,8 +53,8 @@ export class LevelOneComponent implements OnInit{
       this.errorMessage = result.message;
       if (result.isValid) {
         this.highestValidatedLevel = result.level;
-        stepper.next();
         this.errorMessage = "";
+        stepper.next();
       }
     });
   }
@@ -70,7 +70,7 @@ export class LevelOneComponent implements OnInit{
   updateHighestValidationStep(to: string, stepper: MatStepper) : void {
     if (to == "1.2") {
       this.inboxService.addMessage({message:
-            "Access data for the secretaryare as follows:\n" +
+            "Access data for the secretary are as follows:\n" +
             "Username = s_krause\n" +
             "Password = uZN3G6eMR5yr9pyq", isSelected: true});
     }

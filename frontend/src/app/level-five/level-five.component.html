@@ -1,6 +1,6 @@
 <div class="level-body">
     <mat-stepper linear #stepper>
-        <mat-step label="Welcome" [completed]="highestValidatedLevel.localeCompare('5.1') >= 0">
+        <mat-step label="Change user" [completed]="highestValidatedLevel.localeCompare('5.1') >= 0">
             <div class="description">
                 You have done your study and now a professor. You came back to you old university. Now you should get the correct role. For that you have asked the db_admin to help you.
             </div>
@@ -11,18 +11,26 @@
             <app-validate-btn (click)="validateDbUserLoginTask(stepper, 1, 'm_rott')"></app-validate-btn>
         </mat-step>
 
-        <mat-step label="Welcome" [completed]="highestValidatedLevel.localeCompare('5.2') >= 0">
+        <mat-step label="Grant permission" [completed]="highestValidatedLevel.localeCompare('5.2') >= 0">
             <div class="description">
-                Grant the role professor to the user with the username "{{cookieService.getCookie('uuid')}}".
+                Grant the role "professor" to the user with the username "{{cookieService.getCookie('uuid')}}".
             </div>
+            <br/>
+            <app-alert type="info" title="Tip">
+                <div>
+                    In Postgresql you have to specify the username within "", otherwise it will be interpreted as a variable.
+                </div>
+            </app-alert>
+            <br/>
             <app-db-interaction></app-db-interaction>
             <app-validate-btn (click)="validateLevel(stepper)"></app-validate-btn>
         </mat-step>
 
-        <mat-step label="Welcome" [completed]="highestValidatedLevel.localeCompare('5.3') >= 0">
+        <mat-step label="Change user" [completed]="highestValidatedLevel.localeCompare('5.3') >= 0">
             <div class="description">
-                Now login as your user.
+                Now login as your user "{{cookieService.getCookie('uuid')}}".
             </div>
+            <br>
             <app-login></app-login>
             <app-validate-btn (click)="validateDbUserLoginTask(stepper, 3, cookieService.getCookie('uuid') ?? '')"></app-validate-btn>
         </mat-step>
