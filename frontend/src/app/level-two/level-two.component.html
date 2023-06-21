@@ -58,5 +58,16 @@
             </div>
             <app-validate-btn [errorMessage]="errorMessage" (click)="validateCountProfTask('2.3', stepper)"></app-validate-btn>
         </mat-step>
+
+        <mat-step label="Level Complete" [completed]="highestValidatedLevel.localeCompare('2.4') >= 0">
+            <div class="description">
+                <h3>Congratulation!</h3>
+                You have completed the level. But don't despair, keep leveling...
+            </div>
+            <div class="description">
+                For level 3 just click on "Level 3" at the top of the tabs :D
+            </div>
+        </mat-step>
+
     </mat-stepper>
 </div>

@@ -22,5 +22,15 @@
             <app-validate-btn [errorMessage]="errorMessage" (click)="validateUpdateExamAttemptGradeTask('11.2', stepper)"></app-validate-btn>
         </mat-step>
 
+        <mat-step label="Level Complete" [completed]="highestValidatedLevel.localeCompare('11.3') >= 0">
+            <div class="description">
+                <h3>Congratulation!</h3>
+                You have completed the level. But don't despair, keep leveling...
+            </div>
+            <div class="description">
+                For level 12 just click on "Level 12" at the top of the tabs :D
+            </div>
+        </mat-step>
+
     </mat-stepper>
 </div>

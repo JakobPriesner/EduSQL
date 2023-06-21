@@ -71,6 +71,9 @@ export class LevelTwoComponent {
     this.validationService.validateTaskWithPayload(2, 3, payload).subscribe(result => {
       if(result.isValid)
       {
+        if (this.highestValidatedLevel.localeCompare(to) <= 0) {
+          this.highestValidatedLevel =  to;
+        }
         this.errorMessage = "";
         stepper.next();
       } else {

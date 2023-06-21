@@ -31,6 +31,9 @@ export class LevelElevenComponent {
     this.validationService.validateTask(11, 2).subscribe(result => {
       if(result.isValid)
       {
+        if (this.highestValidatedLevel.localeCompare(to) <= 0) {
+          this.highestValidatedLevel =  to;
+        }
         this.errorMessage = "";
         stepper.next();
       } else {
