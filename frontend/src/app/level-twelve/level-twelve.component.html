@@ -1,15 +1,15 @@
 <div class="level-body">
     <mat-stepper linear #stepper>
 
-        <mat-step label="Login" [completed]="highestValidatedLevel.localeCompare('12.1') >= 0">
-            <div class="description">
-                <h3>Hey, {{userDataStore.firstName}}!</h3>
-                now you get a fat update. You are now a great DBAdmin:
-                log in with the following data: m_rott, C9WS2sHyarDjA8dz
-            </div>
-            <app-login (onSuccessfulLogin)="onSuccessfulLogin(stepper)"></app-login>
-            <app-validate-btn (click)="validateDbUserLoginTask(stepper)" [errorMessage]="errorMessage"></app-validate-btn>
-        </mat-step>
+<!--        <mat-step label="Login" [completed]="highestValidatedLevel.localeCompare('12.1') >= 0">-->
+<!--            <div class="description">-->
+<!--                <h3>Hey, {{userDataStore.firstName}}!</h3>-->
+<!--                now you get a fat update. You are now a great DBAdmin:-->
+<!--                log in with the following data: m_rott, C9WS2sHyarDjA8dz-->
+<!--            </div>-->
+<!--            <app-login (onSuccessfulLogin)="onSuccessfulLogin(stepper)"></app-login>-->
+<!--            <app-validate-btn (click)="validateDbUserLoginTask(stepper)" [errorMessage]="errorMessage"></app-validate-btn>-->
+<!--        </mat-step>-->
 
         <mat-step label="Select Business Hours" [completed]="highestValidatedLevel.localeCompare('12.2') >= 0">
             <div class="description">
@@ -35,7 +35,7 @@
         <mat-step label="Level Complete" [completed]="highestValidatedLevel.localeCompare('12.3') >= 0">
             <div class="description">
                 <h3>Congratulation {{userDataStore.firstName}}!</h3>
-                You have completed the level. But don't despair, keep leveling...
+                You have completed the level. But don't despair, keep learning..
             </div>
 
 <!--            <app-validate-btn text="next" (click)="updateHighestValidationStep('12.3', stepper)"></app-validate-btn>-->

@@ -2,14 +2,14 @@
 
     <mat-stepper linear #stepper>
 
-        <mat-step label="Login" [completed]="highestValidatedLevel.localeCompare('9.1') >= 0">
-            <div class="description">
-                <h3>Hey, {{userDataStore.firstName}}!</h3>
-                log in with the following data: s_biedermann, KuFzw7uFGvLHe4
-            </div>
-            <app-login (onSuccessfulLogin)="onSuccessfulLogin(stepper)"></app-login>
-            <app-validate-btn (click)="validateDbUserLoginTask(stepper)" [errorMessage]="errorMessage"></app-validate-btn>
-        </mat-step>
+<!--        <mat-step label="Login" [completed]="highestValidatedLevel.localeCompare('9.1') >= 0">-->
+<!--            <div class="description">-->
+<!--                <h3>Hey, {{userDataStore.firstName}}!</h3>-->
+<!--                log in with the following data: s_biedermann, KuFzw7uFGvLHe4-->
+<!--            </div>-->
+<!--            <app-login (onSuccessfulLogin)="onSuccessfulLogin(stepper)"></app-login>-->
+<!--            <app-validate-btn (click)="validateDbUserLoginTask(stepper)" [errorMessage]="errorMessage"></app-validate-btn>-->
+<!--        </mat-step>-->
 
 
         <mat-step label="Count Students" [completed]="highestValidatedLevel.localeCompare('9.2') >= 0">

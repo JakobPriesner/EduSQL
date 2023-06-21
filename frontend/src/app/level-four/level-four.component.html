@@ -2,14 +2,14 @@
 
     <mat-stepper linear #stepper>
 
-        <mat-step label="Login" [completed]="highestValidatedLevel.localeCompare('4.1') >= 0">
-            <div class="description">
-                <h3>Hey, {{userDataStore.firstName}}!</h3>
-                log in with the following data: p_braun, d5pND8nqT5BbZiUC
-            </div>
-            <app-login (onSuccessfulLogin)="onSuccessfulLogin(stepper)"></app-login>
-            <app-validate-btn (click)="validateDbUserLoginTask(stepper)" [errorMessage]="errorMessage"></app-validate-btn>
-        </mat-step>
+<!--        <mat-step label="Login" [completed]="highestValidatedLevel.localeCompare('4.1') >= 0">-->
+<!--            <div class="description">-->
+<!--                <h3>Hey, {{userDataStore.firstName}}!</h3>-->
+<!--                log in with the following data: p_braun, d5pND8nqT5BbZiUC-->
+<!--            </div>-->
+<!--            <app-login (onSuccessfulLogin)="onSuccessfulLogin(stepper)"></app-login>-->
+<!--            <app-validate-btn (click)="validateDbUserLoginTask(stepper)" [errorMessage]="errorMessage"></app-validate-btn>-->
+<!--        </mat-step>-->
 
 
         <mat-step label="Select Locations" [completed]="highestValidatedLevel.localeCompare('4.2') >= 0">
