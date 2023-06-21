@@ -41,6 +41,7 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
 import { SelectAllResultTableComponent } from './db-interaction/select-all-result-table/select-all-result-table.component';
 import {MatExpansionModule} from "@angular/material/expansion";
 import {MatTabsModule} from "@angular/material/tabs";
+import {LevelFourComponent} from "./level-four/level-four.component";
 
 @NgModule({
     declarations: [
@@ -60,7 +61,8 @@ import {MatTabsModule} from "@angular/material/tabs";
         LevelEightComponent,
         DbInteractionComponent,
         LevelSixComponent,
-        SelectAllResultTableComponent
+        SelectAllResultTableComponent,
+        LevelFourComponent
     ],
     imports: [
         HttpClientModule,
