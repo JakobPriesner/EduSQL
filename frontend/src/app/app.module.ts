@@ -39,6 +39,7 @@ import { LevelSixComponent } from './level-six/level-six.component';
 import {MatSelectModule} from "@angular/material/select";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import { SelectAllResultTableComponent } from './db-interaction/select-all-result-table/select-all-result-table.component';
+import {MatExpansionModule} from "@angular/material/expansion";
 
 @NgModule({
     declarations: [
@@ -85,7 +86,8 @@ import { SelectAllResultTableComponent } from './db-interaction/select-all-resul
         NgOptimizedImage,
         MatTableModule,
         MatSelectModule,
-        MatCheckboxModule
+        MatCheckboxModule,
+        MatExpansionModule,
     ],
     providers: [],
     bootstrap: [AppComponent]
