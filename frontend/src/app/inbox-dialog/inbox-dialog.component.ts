@@ -21,6 +21,10 @@ export class InboxDialogComponent {
 
   }
 
+  getMessageWithLineBreaks(message: string): string {
+    return message.replace(/\n/g, '<br>');
+  }
+
   onNoClick(): void {
     this.dialogRef.close();
   }

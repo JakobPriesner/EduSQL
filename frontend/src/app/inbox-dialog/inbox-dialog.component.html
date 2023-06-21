@@ -23,7 +23,7 @@
 <mat-dialog-content>
     <div class="inbox-container">
         <div *ngFor="let message of messages; let i = index">
-            <span (click)="selectMessage(i)">{{ message.message }}</span>
+            <span [innerHTML]="getMessageWithLineBreaks(message.message)"></span>
             <hr>
         </div>
     </div>
