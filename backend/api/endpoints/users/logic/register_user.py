@@ -26,7 +26,6 @@ class RegisterUser(ICommand[RegisterUserResponse]):
         user_uuid: str = uuid.uuid4().hex
         await self._create_database(user_uuid)
         await self._create_user(user_uuid)
-        await self._create_roles(user_uuid)
         return RegisterUserResponse(user_uuid=user_uuid)
 
     async def _create_database(self, user_uuid: str) -> None:
@@ -39,27 +38,8 @@ class RegisterUser(ICommand[RegisterUserResponse]):
         await self._db.execute_without_response(self._admin_user, user_uuid,
                                                 self.__get_sql_statement_for_sequence_schema(user_uuid))
 
-    async def _create_roles(self, user_uuid: str) -> None:
-        for statement in await self._load_sql_statements("create_roles_for_new_schema.sql"):
-            if not statement.startswith("--") and statement != "":
-                await self._db.execute_without_response(self._admin_user, user_uuid,
-                                                        statement.replace("<db_name>", f"'{user_uuid}'"))
-
-    async def _create_users(self, user_uuid: str) -> None:
-        await asyncio.gather(*[
-            self._db.execute_without_response(self._admin_user, user_uuid,
-                                              statement.replace("<db_name>", f"\"{user_uuid}\""))
-            for statement in await self._load_sql_statements("create_users_for_new_schema.sql")
-            if not statement.startswith("--") and statement != ""
-        ])
-
-    async def _load_sql_statements(self, file_name: str) -> list[str]:
-        file_path: Path = Path(__file__).parent.parent / "sqls" / file_name
-        async with aiofiles.open(file_path, "r") as file:
-            file_content: str = await file.read()
-            return file_content.split("\n")
-
-    def __get_sql_statement_for_sequence_schema(self, user_name: str) -> str:
+    @staticmethod
+    def __get_sql_statement_for_sequence_schema(user_name: str) -> str:
         return f"""
                 DO $$ DECLARE
     sequence RECORD;
