@@ -6,14 +6,14 @@
         <mat-step label="Create Exam" [completed]="highestValidatedLevel.localeCompare('8.1') >= 0">
             <div class="description">
                 <h3>Hey, {{userDataStore.firstName}}!</h3>
-                in the previous level you have created your own lecture <b>"IT Security"</b>.<br>
-                In this level you want to create a <b>exam</b> to this specific lecture. Students will be allowed to try to pass the exam <b>three times</b>.<br>
-                Please write the generated id of the exam down, so you can use it in further steps!<br><br>
-                Please take a look at the ERM diagram to get all the information you need to accomplish this task.<br>
-                In the navbar on the right side, you will find a button
+                In the previous level, you created your own lecture called <b>"IT Security"</b>.<br>
+                In this level, you want to create an <b>exam</b> for this specific lecture. Students will be allowed to attempt the exam <b>three times</b>.<br>
+                Please write down the generated ID of the exam, so you can use it in further steps!<br><br>
+                Please refer to the ERM diagram to obtain all the information you need to complete this task.<br>
+                On the right side of the navbar, you will find a button
                 <button mat-icon-button color="accent"><mat-icon fontIcon="account_tree"></mat-icon></button>.<br>
-                By clicking on it, you can display the entire ERM diagram at any time to examine the structure of the database.<br>
-                By scrolling you can change the intensity of the zoom.<br><br>
+                By clicking on it, you can display the entire ERM diagram at any time to examine the database structure.<br>
+                You can adjust the zoom intensity by scrolling.<br><br>
             </div>
             <app-db-interaction></app-db-interaction>
             <app-validate-btn (click)="updateHighestValidationStep('8.1', stepper)"></app-validate-btn>
@@ -22,9 +22,9 @@
         <mat-step label="Create Exam Attempts" [completed]="highestValidatedLevel.localeCompare('8.2') >= 0">
             <div class="description">
                 <h3>Hey, {{userDataStore.firstName}}!</h3>
-                it is time for the students in your lecture <b>"IT Security"</b> to participate in the created exam.<br>
-                As a professor you need to validate all exam attempts of the participating students. The results of your validation will be stored in the table <b>"ExamAttempt"</b>.<br><br>
-                In this task you want to create three exam attempts in only one sql statement.<br><br>
+                It is time for the students in your lecture <b>"IT Security"</b> to participate in the created exam.<br>
+                As a professor, you need to validate all exam attempts of the participating students. The results of your validation will be stored in the table <b>"ExamAttempt"</b>.<br><br>
+                In this task, you want to create three exam attempts in only one SQL statement.<br><br>
                 <b>Necessary information about your exam and the three exam attempts:</b><br>
                 <ul>
                     <li>Your exam will be written in the Room <b>"H.1.1"</b>.</li>
@@ -39,12 +39,12 @@
                     <li>The student with the matriculation number 4005213 will achieve a score of <b>110</b> points and get the resulting grade <b>1.3</b>.</li>
                     <li>The student with the matriculation number 5002417 will achieve a score of <b>60</b> points and get the resulting grade <b>4.0</b>.</li>
                 </ul><br>
-                Please take a look at the ERM diagram to get all the information you need to accomplish this task.<br>
-                In the navbar on the right side, you will find a button
+                Please take a look at the ERM diagram to gather all the information you need to complete this task.<br>
+                On the right side of the navbar, you will find a button
                 <button mat-icon-button color="accent"><mat-icon fontIcon="account_tree"></mat-icon></button>.<br>
-                By clicking on it, you can display the entire ERM diagram at any time to examine the structure of the database.<br>
-                By scrolling you can change the intensity of the zoom.<br><br>
-                To create three records simultaneously in a single SQL query, you can use the INSERT INTO statement with a VALUES block containing the values for the new records.<br><br>
+                Clicking on it will display the complete ERM diagram, allowing you to examine the database structure.<br>
+                You can adjust the zoom intensity by scrolling.<br><br>
+                To create three records simultaneously using a single SQL query, you can utilize the INSERT INTO statement with a VALUES block that contains the values for the new records.<br><br>
                 Here is an example:<br><br>
                 <mat-card>
                     <mat-card-content>
