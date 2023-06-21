@@ -1,0 +1,30 @@
+<div class="level-body">
+    <mat-stepper linear #stepper>
+        <mat-step label="Welcome" [completed]="highestValidatedLevel.localeCompare('5.1') >= 0">
+            <div class="description">
+                You have done your study and now a professor. You came back to you old university. Now you should get the correct role. For that you have asked the db_admin to help you.
+            </div>
+            <div class="description">
+                So login as the db_admin.
+            </div>
+            <app-login></app-login>
+            <app-validate-btn (click)="validateDbUserLoginTask(stepper, 1, 'm_rott')"></app-validate-btn>
+        </mat-step>
+
+        <mat-step label="Welcome" [completed]="highestValidatedLevel.localeCompare('5.2') >= 0">
+            <div class="description">
+                Grant the role professor to the user with the username "{{cookieService.getCookie('uuid')}}".
+            </div>
+            <app-db-interaction></app-db-interaction>
+            <app-validate-btn (click)="validateLevel(stepper)"></app-validate-btn>
+        </mat-step>
+
+        <mat-step label="Welcome" [completed]="highestValidatedLevel.localeCompare('5.3') >= 0">
+            <div class="description">
+                Now login as your user.
+            </div>
+            <app-login></app-login>
+            <app-validate-btn (click)="validateDbUserLoginTask(stepper, 3, cookieService.getCookie('uuid') ?? '')"></app-validate-btn>
+        </mat-step>
+    </mat-stepper>
+</div>
