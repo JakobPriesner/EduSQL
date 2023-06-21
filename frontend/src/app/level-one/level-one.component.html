@@ -34,6 +34,9 @@
     </mat-step>
 
     <mat-step label="Login" [completed]="highestValidatedLevel.localeCompare('1.3') >= 0">
+      <div class="description">
+        Please login as the secretary with the username "s_krause"
+      </div>
       <app-login (onSuccessfulLogin)="onSuccessfulLogin(stepper)"></app-login>
       <app-validate-btn (click)="validateDbUserLoginTask(stepper)" [errorMessage]="errorMessage"></app-validate-btn>
     </mat-step>

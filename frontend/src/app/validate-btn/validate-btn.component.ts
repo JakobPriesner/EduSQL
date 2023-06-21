@@ -9,6 +9,5 @@ export class ValidateBtnComponent {
   @Input() text: string = "validate Step";
   @Input() color: string = "primary";
   @Input() errorMessage: string = "";
-  @Output() click: EventEmitter<any> = new EventEmitter;
 
 }

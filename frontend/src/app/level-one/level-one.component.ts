@@ -5,6 +5,7 @@ import {STEPPER_GLOBAL_OPTIONS} from "@angular/cdk/stepper";
 import {MatStepper} from "@angular/material/stepper";
 import {LocalDbUserValidator} from "../../lib/validator/local-db-user.validator";
 import {UserDataStore} from "../../lib/stores/user-data.store";
+import {InboxService} from "../../lib/services/api/inbox.service";
 
 @Component({
   selector: 'app-level-one',
@@ -24,7 +25,8 @@ export class LevelOneComponent implements OnInit{
   constructor(private cookieService: CookieService,
               private validationService: ValidationService,
               public localDbUserValidator: LocalDbUserValidator,
-              public userDataStore: UserDataStore) {
+              public userDataStore: UserDataStore,
+              public inboxService: InboxService) {
     this.highestValidatedLevel = this.cookieService.getCookie("highestValidatedLevel") ?? "0.0";
   }
 
@@ -66,10 +68,17 @@ export class LevelOneComponent implements OnInit{
   }
 
   updateHighestValidationStep(to: string, stepper: MatStepper) : void {
-    if (this.highestValidatedLevel.localeCompare(to)) {
+    if (to == "1.2") {
+      this.inboxService.addMessage({message:
+            "Access data for the secretaryare as follows:\n" +
+            "Username = s_krause\n" +
+            "Password = uZN3G6eMR5yr9pyq", isSelected: false});
+    }
+    if (this.highestValidatedLevel.localeCompare(to) <= 0) {
       this.highestValidatedLevel =  to;
     }
     this.errorMessage = "";
+    console.log("highest validated level: " + this.highestValidatedLevel);
     stepper.next();
   }
 

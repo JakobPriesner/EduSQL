@@ -45,7 +45,7 @@ export class LevelNineComponent {
     this.validationService.validateTaskWithPayload(9, 2, payload).subscribe(result => {
       if(result.isValid)
       {
-        if (this.highestValidatedLevel.localeCompare(to)) {
+        if (this.highestValidatedLevel.localeCompare(to) <= 0) {
           this.highestValidatedLevel =  to;
         }
         this.errorMessage = "";
@@ -69,7 +69,7 @@ export class LevelNineComponent {
   }
 
   updateHighestValidationStep(to: string, stepper: MatStepper) : void {
-    if (this.highestValidatedLevel.localeCompare(to)) {
+    if (this.highestValidatedLevel.localeCompare(to) <= 0) {
       this.highestValidatedLevel =  to;
     }
     this.errorMessage = "";
