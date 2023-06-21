@@ -1,0 +1,50 @@
+<div class="level-body">
+    <h1>Level 9</h1>
+
+    <mat-stepper linear #stepper>
+
+        <mat-step label="Login" [completed]="highestValidatedLevel.localeCompare('9.1') >= 0">
+            <div class="description">
+                <h3>Hey, {{userDataStore.firstName}}!</h3>
+                log dich mit folgenden Daten ein: s_biedermann, KuFzw7uFGvLHe4
+            </div>
+            <app-login (onSuccessfulLogin)="onSuccessfulLogin(stepper)"></app-login>
+            <app-validate-btn (click)="validateDbUserLoginTask(stepper)" [errorMessage]="errorMessage"></app-validate-btn>
+        </mat-step>
+
+
+        <mat-step label="Count Students" [completed]="highestValidatedLevel.localeCompare('9.2') >= 0">
+            <div class="description">
+                <h3>Hey, {{userDataStore.firstName}}!</h3>
+                wie viele Studenten haben in ihrem Vornamen Max enthalten. Gib die Anzahl an.
+            </div>
+
+            <app-db-interaction></app-db-interaction>
+
+            <div class="description">
+                Hier kannst du dein Ergebnis auswählen und abschicken
+            </div>
+
+            <div>
+                <mat-form-field>
+                    <mat-label>Number of Students</mat-label>
+                    <input matInput type="number" id="profCount" name="profCount" [(ngModel)]="countStudents">
+                </mat-form-field>
+            </div>
+
+            <app-validate-btn (click)="countStudentsWithMax('9.2', stepper, countStudents)"></app-validate-btn>
+        </mat-step>
+
+        <mat-step label="Level Complete" [completed]="highestValidatedLevel.localeCompare('9.3') >= 0">
+            <div class="description">
+                <h3>Congratulation {{userDataStore.firstName}}!</h3>
+                Du hast das Level geschafft. Aber nicht verzagen, weiter leveln..
+            </div>
+            <div class="description">
+                Zum level 5 Einfach auf next klicken :D
+            </div>
+            <app-validate-btn text="next" (click)="updateHighestValidationStep('9.3', stepper)"></app-validate-btn>
+        </mat-step>
+
+    </mat-stepper>
+</div>

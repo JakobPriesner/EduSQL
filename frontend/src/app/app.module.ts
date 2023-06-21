@@ -42,6 +42,7 @@ import { SelectAllResultTableComponent } from './db-interaction/select-all-resul
 import {MatExpansionModule} from "@angular/material/expansion";
 import {MatTabsModule} from "@angular/material/tabs";
 import {LevelFourComponent} from "./level-four/level-four.component";
+import {LevelNineComponent} from "./level-nine/level-nine.component";
 
 @NgModule({
     declarations: [
@@ -62,7 +63,8 @@ import {LevelFourComponent} from "./level-four/level-four.component";
         DbInteractionComponent,
         LevelSixComponent,
         SelectAllResultTableComponent,
-        LevelFourComponent
+        LevelFourComponent,
+        LevelNineComponent
     ],
     imports: [
         HttpClientModule,
