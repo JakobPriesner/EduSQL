@@ -20,13 +20,13 @@ import {UserDataStore} from "../../lib/stores/user-data.store";
 })
 export class LevelOneComponent implements OnInit{
   errorMessage: string = "";
-  highestValidatedLevel: string = this.cookieService.getCookie("uuid")!;
+  highestValidatedLevel: string;
 
   constructor(private cookieService: CookieService,
               private validationService: ValidationService,
               public localDbUserValidator: LocalDbUserValidator,
               public userDataStore: UserDataStore) {
-
+    this.highestValidatedLevel = this.cookieService.getCookie("highestValidatedLevel") ?? "0.0";
   }
 
   ngOnInit() {

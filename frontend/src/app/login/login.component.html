@@ -1,4 +1,4 @@
-<mat-card class="login-card" *ngIf="loggedInAs == undefined; else loginSuccessful;">
+<mat-card class="login-card" *ngIf="showLoginFrame">
   <mat-card-header>
     <mat-card-title>Login</mat-card-title>
   </mat-card-header>
@@ -28,8 +28,12 @@
   </mat-card-content>
 </mat-card>
 
-<ng-template #loginSuccessful>
-  <app-alert type="success" title="Login successfull!">
-    You are now logged in into the database as: <b>{{loggedInAs!.username}}</b>
+<div #loginSuccessful *ngIf="loggedInAs != undefined">
+  <app-alert type="success" title="Login successfull!" class="">
+    <span>
+      You are now logged in into the database as: <b>{{loggedInAs!.username}}</b>
+    </span>
+    <br />
+    <button mat-raised-button color="accent" (click)="showLoginFrame = true;">change user</button>
   </app-alert>
-</ng-template>
+</div>
