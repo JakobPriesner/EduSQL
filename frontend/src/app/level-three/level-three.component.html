@@ -30,7 +30,7 @@
                     </mat-select>
                 </mat-form-field>
             </div>
-            <app-validate-btn (click)="updateHighestValidationStep('3.1', stepper)"></app-validate-btn>
+            <app-validate-btn (click)="selectBusinessHours('3.1', stepper, dailyBusinessHours)"></app-validate-btn>
         </mat-step>
 
         <mat-step label="Select Locations" [completed]="highestValidatedLevel.localeCompare('3.3') >= 0">
@@ -69,12 +69,8 @@
                 </span>
             </section>
 
-            <app-validate-btn (click)="updateHighestValidationStep('3.3', stepper)"></app-validate-btn>
+            <app-validate-btn (click)="selectLocationsWithLibary('3.3', stepper, checkedTasks)"></app-validate-btn>
         </mat-step>
 
-        <mat-step label="Login" [completed]="highestValidatedLevel.localeCompare('3.4') >= 0">
-            <app-login (onSuccessfulLogin)="stepper.next()"></app-login>
-            <app-validate-btn (click)="validateDbUserLoginTask(stepper)" [errorMessage]="errorMessage"></app-validate-btn>
-        </mat-step>
     </mat-stepper>
 </div>

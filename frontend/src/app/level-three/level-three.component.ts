@@ -1,20 +1,11 @@
 import {Component} from '@angular/core';
 import {CookieService} from "../../lib/services/cookie.service";
 import {ValidationService} from "../../lib/services/api/validation.service";
-import {AbstractControl} from '@angular/forms';
 import {STEPPER_GLOBAL_OPTIONS} from "@angular/cdk/stepper";
 import {MatStepper} from "@angular/material/stepper";
 import {LocalDbUserValidator} from "../../lib/validator/local-db-user.validator";
 import {UserDataStore} from "../../lib/stores/user-data.store";
-import {ThemePalette} from "@angular/material/core";
-
-export interface Task {
-  name: string;
-  completed: boolean;
-  color: ThemePalette;
-  subtasks?: Task[];
-}
-
+import {Task} from "../../lib/models/task";
 
 @Component({
   selector: 'app-level-three',
@@ -45,41 +36,40 @@ export class LevelThreeComponent {
 
   }
 
-  cookieValidator(control: AbstractControl): { [key: string]: any } | null {
-    const formValue = control.value;
-    const cookieValue = this.cookieService.getCookie('cookieName');
-    if (cookieValue == null) {
-      return { 'cookieExists': false };
-    }
-    return cookieValue.localeCompare(formValue) >= 0 ? null : { 'stepValidated': false };
-  }
 
-  validateStep(task: number, stepper: MatStepper) : void {
-    this.validationService.validateTask(1, task).subscribe(result => {
-      if (result.isValid && this.highestValidatedLevel.localeCompare(result.level)) {
-        this.highestValidatedLevel =  result.level;
-      }
-      if (result.isValid) {
+
+  selectBusinessHours(to: string, stepper: MatStepper, answer: string) : void {
+    let payload = new Map<string, string>([
+      ["answer", answer]
+    ]);
+    this.validationService.validateTaskWithPayload(3, 1, payload).subscribe(result => {
+      if(result.isValid)
+      {
+        if (this.highestValidatedLevel.localeCompare(to)) {
+          this.highestValidatedLevel =  to;
+        }
         this.errorMessage = "";
         stepper.next();
       }
     });
   }
 
-  validateDbUserLoginTask(stepper: MatStepper) {
-    let validationResult = this.localDbUserValidator.validateLoggedInAsUser(3, 2, 'admin');
-    this.errorMessage = validationResult.message;
-    if (validationResult.isValid) {
-      this.updateHighestValidationStep(validationResult.level, stepper);
-    }
-  }
+  checkedTasks: string[] = [];
 
-  updateHighestValidationStep(to: string, stepper: MatStepper) : void {
-    if (this.highestValidatedLevel.localeCompare(to)) {
-      this.highestValidatedLevel =  to;
-    }
-    this.errorMessage = "";
-    stepper.next();
+  selectLocationsWithLibary(to: string, stepper: MatStepper, answer: string[]) : void {
+    let payload = new Map<string, string[]>([
+      ["answer", answer]
+    ]);
+    this.validationService.validateTaskWithPayload(3, 2, payload).subscribe(result => {
+      if(result.isValid)
+      {
+        if (this.highestValidatedLevel.localeCompare(to)) {
+          this.highestValidatedLevel =  to;
+        }
+        this.errorMessage = "";
+        stepper.next();
+      }
+    });
   }
 
   task: Task = {

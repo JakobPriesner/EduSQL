@@ -3,7 +3,10 @@ from typing import Type
 from injector import inject, Injector
 
 from api.endpoints.levels.logic.validation.strategies.concrete_validation_interface import IConcreteValidation
+from api.endpoints.levels.logic.validation.strategies.level_one_task_five import LevelOneTaskFiveValidator
 from api.endpoints.levels.logic.validation.strategies.level_one_task_four import LevelOneTaskFourValidator
+from api.endpoints.levels.logic.validation.strategies.level_one_task_six import LevelOneTaskSixValidator
+from api.endpoints.levels.logic.validation.strategies.level_two_task_three import LevelTwoTaskThreeValidator
 from api.endpoints.levels.models.level_validation_result import LevelValidationResult
 from command_interface import ICommand
 from database.db_user_handler import DbUserHandler
@@ -39,4 +42,7 @@ class ValidateTask(ICommand[LevelValidationResult]):
     def _get_all_validator() -> list[Type[IConcreteValidation]]:
         return [
             LevelOneTaskFourValidator,
+            LevelOneTaskFiveValidator,
+            LevelOneTaskSixValidator,
+            LevelTwoTaskThreeValidator
         ]
