@@ -5,10 +5,6 @@ import {Observable} from "rxjs";
 import {SqlExecutionPayload} from "../../models/sqlExecutionPayload";
 import {DbUserStore} from "../../stores/db-user.store";
 import {SqlResult} from "../../models/sqlResult";
-import {UpdateSqlResult} from "../../models/updateSqlResult";
-import {DeleteSqlResult} from "../../models/deleteSqlResult";
-import {InsertSqlResult} from "../../models/insertSqlResult";
-import {SelectAllSqlResult} from "../../models/selectAllSqlResult";
 import {CookieService} from "../cookie.service";
 
 @Injectable({

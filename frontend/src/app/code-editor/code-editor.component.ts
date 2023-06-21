@@ -25,4 +25,6 @@ export class CodeEditorComponent implements OnInit {
     console.log(this.editor);
     editor.layout();
   }
+
+
 }
