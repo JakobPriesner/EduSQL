@@ -45,7 +45,7 @@ class PostgresqlConnection(IPostgresqlConnection):
             async with conn.cursor() as cur:
                 await cur.execute(sql, args)
                 result = await cur.fetchall()
-                return [dict(row) for row in result]
+                return [self.result_to_dict(row, cur) for row in result]
 
     @retry(stop_max_attempt_number=4, wait_fixed=500)
     async def _execute_query_single(self, user, db, sql: str, args: Optional[tuple] = None) -> Optional[dict]:
@@ -56,7 +56,7 @@ class PostgresqlConnection(IPostgresqlConnection):
                 result = await cur.fetchone()
                 if not result:
                     return None
-                return dict(result)
+                return self.result_to_dict(result, cur)
 
     async def create_by_sql(self, user: DbUser, db: str, sql: str, args: tuple = ()) -> int:
         return await self._execute_sql(user, db, sql, args)
