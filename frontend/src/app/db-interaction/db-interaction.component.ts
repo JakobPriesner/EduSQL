@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
 import {SqlService} from "../../lib/services/api/sql.service";
 import {SqlResult} from "../../lib/models/sqlResult";
 import {SelectAllSqlResult} from "../../lib/models/selectAllSqlResult";
@@ -6,7 +6,7 @@ import {SelectAllSqlResult} from "../../lib/models/selectAllSqlResult";
 @Component({
   selector: 'app-db-interaction',
   templateUrl: './db-interaction.component.html',
-  styleUrls: ['./db-interaction.component.scss']
+  styleUrls: ['./db-interaction.component.scss'],
 })
 export class DbInteractionComponent {
   code: string = '';
@@ -17,9 +17,18 @@ export class DbInteractionComponent {
   }
 
   executeSql():void{
-    this.sqlService.executeSql(this.code).subscribe(result => {
-        this.history.push([this.code, result]);
-        this.code = '';
-    });
+    let singleCodeSnippets = this.code.split(';');
+    for (let snippet of singleCodeSnippets) {
+      if (snippet.trim() === '') {
+        continue;
+      }
+      this.sqlService.executeSql(snippet).subscribe(result => {
+        this.history.push([snippet, result]);
+      });
+    }
+  }
+
+  trackByFn(index: any, item: any) {
+    return item.id;
   }
 }

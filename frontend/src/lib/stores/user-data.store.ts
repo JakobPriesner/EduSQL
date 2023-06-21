@@ -19,7 +19,6 @@ export class UserDataStore {
         }
     }
 
-
     get firstName(): string {
         return this._firstName;
     }

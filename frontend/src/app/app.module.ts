@@ -38,10 +38,9 @@ import {MatTableModule} from "@angular/material/table";
 import { LevelSixComponent } from './level-six/level-six.component';
 import {MatSelectModule} from "@angular/material/select";
 import {MatCheckboxModule} from "@angular/material/checkbox";
+import { SelectAllResultTableComponent } from './db-interaction/select-all-result-table/select-all-result-table.component';
+import {MatExpansionModule} from "@angular/material/expansion";
 import {MatTabsModule} from "@angular/material/tabs";
-import { LevelFourComponent } from './level-four/level-four.component';
-import { LevelNineComponent } from './level-nine/level-nine.component';
-
 
 @NgModule({
     declarations: [
@@ -61,8 +60,7 @@ import { LevelNineComponent } from './level-nine/level-nine.component';
         LevelEightComponent,
         DbInteractionComponent,
         LevelSixComponent,
-        LevelFourComponent,
-        LevelNineComponent
+        SelectAllResultTableComponent
     ],
     imports: [
         HttpClientModule,
@@ -89,6 +87,8 @@ import { LevelNineComponent } from './level-nine/level-nine.component';
         NgOptimizedImage,
         MatTableModule,
         MatSelectModule,
+        MatCheckboxModule,
+        MatExpansionModule,
         MatCheckboxModule,
         MatTabsModule
     ],

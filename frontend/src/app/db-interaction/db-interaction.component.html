@@ -1,22 +1,40 @@
-<div *ngFor="let entry of history">
-    <div>{{ entry[0] }}</div>
+<div class="db-interaction">
+    <mat-accordion>
+        <mat-expansion-panel *ngFor="let entry of history; trackBy: trackByFn">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    <h3>{{ entry[0] }}</h3>
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <div>
+                <div *ngIf="entry[1].errors == ''">
+                    <app-alert type="success" title="Successfully executed SQL">
+                        <ng-container *ngIf="entry[1].operation === 'selectAll'">
+                            <app-select-all-result-table [sqlResult]="entry[1].result"></app-select-all-result-table>
+                        </ng-container>
 
-    <ng-container *ngIf="entry[1].operation === 'selectAll'">
-        <app-select-all-result-table [sqlResult]="entry[1].result"></app-select-all-result-table>
-    </ng-container>
+                        <ng-container *ngIf="entry[1].operation === 'insert'">
+                            <div>Successfully inserted the entry. The new entry takes the id {{ entry[1].result }}.</div>
+                        </ng-container>
+                        <ng-container *ngIf="entry[1].operation === 'update'">
+                            <div>Successfully updated {{ entry[1].result }} entries.</div>
+                        </ng-container>
+                        <ng-container>
+                            {{ entry[1].errors }}
+                        </ng-container>
+                    </app-alert>
+                </div>
 
-    <ng-container *ngIf="entry[1].operation === 'insert'">
-        <div>Successfully inserted the entry. The new entry takes the id {{ entry[1].result }}.</div>
-    </ng-container>
-    <ng-container *ngIf="entry[1].operation === 'update'">
-        <div>Successfully updated {{ entry[1].result }} entries.</div>
-    </ng-container>
-    <ng-container>
-        {{ entry[1].errors }}
-    </ng-container>
+                <div *ngIf="entry[1].errors != ''">
+                    <app-alert type="error">{{ entry[1].errors }}</app-alert>
+                </div>
+            </div>
+            <app-select-all-result-table *ngIf="entry[1].operation === 'selectAll' && entry[1].errors == ''" [sqlResult]="entry[1].result"></app-select-all-result-table>
+        </mat-expansion-panel>
+    </mat-accordion>
+
+    <app-code-editor (onCodeChangeEvent)="code = $event"></app-code-editor>
 </div>
-
-<app-code-editor (onCodeChangeEvent)="code = $event"></app-code-editor>
 
 <div class="next-button-section">
     <button mat-raised-button color="primary" (click)="executeSql()">execute sql</button>
