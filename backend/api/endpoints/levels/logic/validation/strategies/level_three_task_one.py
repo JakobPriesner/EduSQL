@@ -16,17 +16,17 @@ class LevelThreeTaskOneValidator(IConcreteValidation):
 
     async def handle(self, user_uuid: str, **kwargs) -> LevelValidationResult:
         payload: dict = kwargs.get("payload")
-        statement: str = "SELECT DBH.starttime as starttime, DBH.endtime as endtime" \
-                         "FROM location L " \
-                         "JOIN BusinessHours BH ON L.businesshours_id = BH.id " \
-                         "JOIN DailyBusinessHours DBH ON BH.monday_id = DBH.id " \
+        statement: str = "SELECT DBH.starttime as starttime, DBH.endtime as endtime FROM location L " \
+                         "JOIN BusinessHours BH ON L.businesshoursid = BH.id " \
+                         "JOIN DailyBusinessHours DBH ON BH.mondayid = DBH.id " \
                          "WHERE L.id = %s;"
         result: dict = await self._db.load_single_by_sql(self._admin_user, user_uuid, statement, (2,))
         answer_times: list[str] = payload["answer"].split("-")
-        if result["starttime"] != answer_times[0] or result["endtime"] != answer_times[1]:
+        if result["starttime"].strftime("%H:%M:%S") != answer_times[0] or result["endtime"].strftime("%H:%M:%S") != answer_times[1]:
             return LevelValidationResult(level="3.1",
                                          is_valid=False,
                                          message="False DailyBusinessHours")
+        return LevelValidationResult(level="3.1", is_valid=True, message="")
 
     @classmethod
     def can_handle(cls, level_number: int, task_number: int) -> bool:
