@@ -11,10 +11,22 @@
             <div class="description">
                 As a student at THWS, you embark on your educational journey, eager to learn and grow. You start exploring the vast campus, interacting with professors, and immersing yourself in various academic activities.
             </div>
-            <app-validate-btn text="next" (click)="updateHighestValidationStep('2.1', stepper)"></app-validate-btn>
+            <app-validate-btn text="next" (click)="updateHighestValidationStepWithInbox('2.1', stepper)"></app-validate-btn>
         </mat-step>
 
         <mat-step label="Login as Student" [completed]="highestValidatedLevel.localeCompare('2.2') >= 0">
+            <app-alert type="info" title="Tip">
+                <div>
+                    <div>
+                        In the navbar on the middle-right side, you will find a button
+                        <button mat-icon-button color="accent"><mat-icon>inbox</mat-icon></button>.
+                        By clicking on it, you can display your Inbox diagram at any time with the newest messages.
+                    </div>
+                    <div>
+                        By When you open the inbox, the message is marked as read!
+                    </div>
+                </div>
+            </app-alert>
             <app-login (onSuccessfulLogin)="stepper.next()"></app-login>
             <app-validate-btn (click)="validateDbUserLoginTask(stepper)" [errorMessage]="errorMessage"></app-validate-btn>
         </mat-step>

@@ -6,6 +6,8 @@ import {UserDataStore} from "../../lib/stores/user-data.store";
 import {AbstractControl} from "@angular/forms";
 import {MatStepper} from "@angular/material/stepper";
 import {LevelValidationResult} from "../../lib/models/levelValidationResult";
+import {Message} from "../../lib/models/message.interface";
+import {InboxService} from "../../lib/services/api/inbox.service";
 
 @Component({
   selector: 'app-level-two',
@@ -20,7 +22,8 @@ export class LevelTwoComponent {
   constructor(private cookieService: CookieService,
               private validationService: ValidationService,
               public localDbUserValidator: LocalDbUserValidator,
-              public userDataStore: UserDataStore) {
+              public userDataStore: UserDataStore,
+              public inboxService: InboxService) {
 
   }
 
@@ -39,6 +42,23 @@ export class LevelTwoComponent {
     }
     this.errorMessage = "";
     stepper.next();
+  }
+
+  updateHighestValidationStepWithInbox(to: string, stepper: MatStepper) : void {
+    if (this.highestValidatedLevel.localeCompare(to)) {
+      this.highestValidatedLevel =  to;
+    }
+    this.errorMessage = "";
+    stepper.next();
+    let message: Message = {
+      message:
+          "A warm welcome!\n" +
+          "Your access data for the registration window are as follows:\n" +
+          "Username = " + this.cookieService.getCookie("uuid") + "\n" +
+          "Password = s5HHdC3SKK7q9T",
+      isSelected: true
+    }
+    this.inboxService.addMessage(message);
   }
 
   validateCountProfTask(to: string, stepper: MatStepper) {

@@ -45,6 +45,9 @@ import { LevelTenComponent } from './level-ten/level-ten.component';
 import {MonacoEditorModule} from "ngx-monaco-editor-v2";
 import {LevelNineComponent} from "./level-nine/level-nine.component";
 import {LevelElevenComponent} from "./level-eleven/level-eleven.component";
+import { InboxDialogComponent } from './inbox-dialog/inbox-dialog.component';
+import {MatListModule} from "@angular/material/list";
+import {MatBadgeModule} from "@angular/material/badge";
 import { LevelTwelveComponent } from './level-twelve/level-twelve.component';
 import { LevelFiveComponent } from './level-five/level-five.component';
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
@@ -74,7 +77,9 @@ import {MatSlideToggleModule} from "@angular/material/slide-toggle";
         LevelElevenComponent,
         LevelTwelveComponent,
         LevelElevenComponent,
-        LevelFiveComponent
+        LevelFiveComponent,
+        LevelElevenComponent,
+        InboxDialogComponent
     ],
     imports: [
         HttpClientModule,
@@ -104,6 +109,9 @@ import {MatSlideToggleModule} from "@angular/material/slide-toggle";
         MatCheckboxModule,
         MatExpansionModule,
         MatCheckboxModule,
+        MatTabsModule,
+        MatListModule,
+        MatBadgeModule,
         MatTabsModule,
         MatSlideToggleModule
     ],

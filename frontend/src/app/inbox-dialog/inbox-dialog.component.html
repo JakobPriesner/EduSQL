@@ -1,0 +1,33 @@
+<!--<mat-dialog-content>-->
+<!--    <h2>Inbox</h2>-->
+<!--    <mat-list>-->
+<!--        <mat-list-item *ngFor="let message of messages" (click)="selectMessage(message)">-->
+<!--            {{ message }}-->
+<!--        </mat-list-item>-->
+<!--    </mat-list>-->
+<!--</mat-dialog-content>-->
+<!--<mat-dialog-actions align="end">-->
+<!--    <button mat-button (click)="clearSelection()">Close</button>-->
+<!--</mat-dialog-actions>-->
+
+<!--<div class="inbox-container-container">-->
+<!--    <h2>Inbox</h2>-->
+<!--    <div *ngFor="let message of messages; let i = index">-->
+<!--        <span>{{ message.message }}</span>-->
+<!--&lt;!&ndash;        <input type="checkbox" [(ngModel)]="message.isSelected" (change)="selectMessage(i)">&ndash;&gt;-->
+<!--    </div>-->
+<!--&lt;!&ndash;    <button (click)="clearSelection()">Clear Selection</button>&ndash;&gt;-->
+<!--</div>-->
+
+<h2 mat-dialog-title>Inbox</h2>
+<mat-dialog-content>
+    <div class="inbox-container">
+        <div *ngFor="let message of messages; let i = index">
+            <span (click)="selectMessage(i)">{{ message.message }}</span>
+            <hr>
+        </div>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button mat-button (click)="onNoClick()">Close</button>
+</mat-dialog-actions>
