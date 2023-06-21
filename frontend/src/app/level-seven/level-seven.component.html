@@ -9,7 +9,8 @@
                 you have reached level 7 and are now a professor. That gives you certain rights.<br>
                 You have the permission to access semester-specific lectures, exam attempts, and the lecture schedule.<br>
                 This allows you to manage lectures, conduct exams and update the lecture schedule.<br><br>
-                Now you want to create your own lecture.<br><br>
+                Now you want to create your own lecture.<br>
+                Please write the generated id of the lecture down, so you can use it in further steps! <br><br>
                 <b>Additional information about lectures:</b><br><br>
                 The required etcs define how many etcs a student needs to be allowed to participate in this lecture.<br>
                 The earned etcs define how many etcs a students gets, if he passes the exam of this lecture.<br>
@@ -29,22 +30,28 @@
             <app-validate-btn (click)="updateHighestValidationStep('7.1', stepper)"></app-validate-btn>
         </mat-step>
 
-        <mat-step label="Junction Table" [completed]="highestValidatedLevel.localeCompare('7.2') >= 0">
+        <mat-step label="Create Restriction" [completed]="highestValidatedLevel.localeCompare('7.2') >= 0">
+            <div class="description">
+                <h3>Hey, {{userDataStore.firstName}}!</h3>
+                because your lecture "IT Security" will be held in english, you need to add a restriction to it.<br>
+                Please create a <b>restriction "Language Skills"</b> with the <b>description "Good english skills"</b><br>
+                Write the generated id of the restriction down, so you can use it in further steps! <br><br>
+            </div>
+            <app-db-interaction></app-db-interaction>
+            <app-validate-btn (click)="updateHighestValidationStep('7.2', stepper)"></app-validate-btn>
+        </mat-step>
+
+        <mat-step label="Junction Table" [completed]="highestValidatedLevel.localeCompare('7.3') >= 0">
             <div class="description">
                 <h3>Hey, {{userDataStore.firstName}}!</h3>
                 did you know that when you have a many-to-many relationship between tables, the connection between those two tables is established by a junction table.<br>
                 This junction table includes the primary keys of both tables as foreign keys and may also store additional information specific to the relationship between the two tables.<br><br>
-                One lecture can have multiple restriction and a single restriction can be linked to multiple lectures. This meens that there is a many-to-many relationship beween the two tables <b>"Lecture"</b> and <b>"Restriction"</b>.<br>
+                One lecture can have multiple restriction and a single restriction can be linked to multiple lectures. This means that there is a many-to-many relationship between the two tables <b>"Lecture"</b> and <b>"Restriction"</b>.<br>
                 The connection between those two tables is established by a junction table called <b>"LectureToRestriction"</b>.<br><br>
-                <ol>
-                    <li> Get the <b>ID</b> of the <b>lecture</b> <b>"IT Security"</b></li>
-                    <li> Create a <b>restriction "Language Skills"</b> with the <b>description "Good english skills"</b></li>
-                    <li> Get the <b>ID</b> of the <b>restriction</b> with the description <b>"Good english skills"</b></li>
-                    <li> Link the <b>lecture </b> <b>"IT Security"</b> to the <b>restriction</b> with the description <b>"Good english skills"</b></li>
-                </ol><br><br>
+                Please link your <b>lecture "IT Security"</b> to new created <b>restriction "Language Skills"</b>.<br><br>
             </div>
             <app-db-interaction></app-db-interaction>
-            <app-validate-btn (click)="updateHighestValidationStep('7.2', stepper)"></app-validate-btn>
+            <app-validate-btn (click)="updateHighestValidationStep('7.3', stepper)"></app-validate-btn>
         </mat-step>
     </mat-stepper>
 </div>
