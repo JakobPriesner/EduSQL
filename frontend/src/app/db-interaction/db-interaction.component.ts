@@ -15,30 +15,11 @@ export class DbInteractionComponent {
   constructor(private sqlService: SqlService){
 
   }
-  onCodeChange(code: string): void{
-    this.code = code;
-  }
 
   executeSql():void{
     this.sqlService.executeSql(this.code).subscribe(result => {
         this.history.push([this.code, result]);
+        this.code = '';
     });
   }
-
-  isArray(obj : any) : boolean {
-    return Array.isArray(obj);
-  }
-
-  getRowValue(row: {[key: string]: any}, columnKey: string): any {
-    return row[columnKey];
-  }
-
-  getFirstElement(arr: any): any {
-    return Array.isArray(arr) ? arr[0] : null;
-  }
-
-  castToSelectAllSqlResult(sqlResult: SqlResult): SelectAllSqlResult{
-    return sqlResult as SelectAllSqlResult;
-  }
-
 }
