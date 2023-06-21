@@ -20,7 +20,7 @@ class LoadSingleBySqlStatement(ICommand[SelectSingleSqlResult]):
             return SelectSingleSqlResult(
                 operation="selectSingle",
                 result=result,
-                errors=None
+                errors=""
             )
         except Exception as e:
             return SelectSingleSqlResult(

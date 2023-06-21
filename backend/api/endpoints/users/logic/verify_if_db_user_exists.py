@@ -20,6 +20,7 @@ class VerifyIfDbUserExists(ICommand[GetUserResponse]):
             await self._db.load_single_by_sql(payload, db, statement)
             return GetUserResponse(exists=True)
         except Exception as e:
+            traceback.print_exc()
             if "permission denied for table address" in str(e):
                 return GetUserResponse(exists=True)
             return GetUserResponse(exists=False)

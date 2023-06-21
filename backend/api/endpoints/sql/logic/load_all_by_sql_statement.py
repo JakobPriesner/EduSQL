@@ -18,7 +18,7 @@ class LoadAllBySqlStatement(ICommand[SelectAllSqlResult]):
             return SelectAllSqlResult(
                 operation="selectAll",
                 result=result,
-                errors=None
+                errors=""
             )
         except Exception as e:
             return SelectAllSqlResult(

@@ -20,7 +20,7 @@ class InsertBySqlStatement(ICommand[InsertSqlResult]):
             return InsertSqlResult(
                 operation="insert",
                 result=_id,
-                errors=None
+                errors=""
             )
         except Exception as e:
             return InsertSqlResult(

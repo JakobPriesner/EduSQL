@@ -20,7 +20,7 @@ class DeleteBySqlStatement(ICommand[DeleteSqlResult]):
             return DeleteSqlResult(
                 operation="delete",
                 result={"affectedRows": row_count},
-                errors=None
+                errors=""
             )
         except Exception as e:
             return DeleteSqlResult(

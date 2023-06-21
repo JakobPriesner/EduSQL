@@ -20,7 +20,7 @@ class UpdateBySqlStatement(ICommand[UpdateSqlResult]):
             return UpdateSqlResult(
                 operation="update",
                 result={"affectedRows": row_count},
-                errors=None
+                errors=""
             )
         except Exception as e:
             return UpdateSqlResult(
