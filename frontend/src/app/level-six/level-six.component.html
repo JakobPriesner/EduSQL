@@ -56,7 +56,7 @@
                 </div>
                 <app-db-interaction></app-db-interaction>
             </div>
-            <app-validate-btn (click)="validateCreateRestrictionTask('6.3', stepper)"></app-validate-btn>
+            <app-validate-btn [errorMessage]="errorMessage" (click)="validateCreateRestrictionTask('6.3', stepper)"></app-validate-btn>
         </mat-step>
     </mat-stepper>
 </div>

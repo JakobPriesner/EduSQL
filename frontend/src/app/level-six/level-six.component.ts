@@ -49,14 +49,14 @@ export class LevelSixComponent {
   validateCreateRestrictionTask(to: string, stepper: MatStepper) {
     if (this.userDataStore.firstName == "" || this.userDataStore.lastName == "")
     {
-      this.errorMessage += "Looks like you are not signed in!";
+      this.errorMessage += "Looks like you didn´t create a Student!";
       return;
     }
     let payload: { [key: string]: any } = {
       firstname: this.userDataStore.firstName,
       lastname: this.userDataStore.lastName
     };
-    this.validationService.validateTaskWithPayload(6, 2, payload).subscribe(result => {
+    this.validationService.validateTaskWithPayload(6, 3, payload).subscribe(result => {
       if(result.isValid)
       {
         if (this.highestValidatedLevel.localeCompare(to)) {
@@ -65,16 +65,8 @@ export class LevelSixComponent {
         this.errorMessage = "";
         stepper.next();
       }
+      else
+        this.errorMessage = "Unfortunately, the permission has not yet been created. Please check your entry again.";
     });
-  }
-
-  validateDbUserLoginTask(stepper: MatStepper) { // todo: tmp delete
-    // let dbUser: string = (this.userDataStore.firstName.at(0) + "_" + this.userDataStore.lastName).toLowerCase();
-    let dbUser: string = "p_braun";
-    let validationResult = this.localDbUserValidator.validateLoggedInAsUser(2, 2, dbUser);
-    this.errorMessage = validationResult.message;
-    if (validationResult.isValid) {
-      this.updateHighestValidationStep(validationResult.level, stepper);
-    }
   }
 }
