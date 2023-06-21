@@ -9,61 +9,49 @@
                 you have reached level 7 and are now a professor. That gives you certain rights.<br>
                 You have the permission to access semester-specific lectures, exam attempts, and the lecture schedule.<br>
                 This allows you to manage lectures, conduct exams and update the lecture schedule.<br><br>
-                In level one you created a new student. So you already learned how to create a new entry in a specific table in the database.<br>
-                In this specific task you want to create your own lecture. It is quite similar.<br><br>
-                The name of the table is <b>"lecture"</b>.<br>
-                A lecture has a name, a description, a modul number, a number of required etcs and earned etcs, is held in a specific semester and has a type.<br><br>
-                The modul number has a maximum length of 20 digits.<br>
+                Now you want to create your own lecture.<br><br>
+                <b>Additional information about lectures:</b><br><br>
                 The required etcs define how many etcs a student needs to be allowed to participate in this lecture.<br>
                 The earned etcs define how many etcs a students gets, if he passes the exam of this lecture.<br>
-                The lecture needs to be held in a semester higher than zero and lower than twelve.<br><br>
-                <b>The lecture type needs to be one of the following:</b><br>
-                1. "AWPF" - this means the lecture is a general education elective<br>
-                2. "FWPM" - this means the lecture is an elective course<br>
-                3. "VL" - this means it is a normal lecture<br>
-                3. "SU" - this means the lecture is held as a seminar class<br>
-                3. "P" - this means the lecture is a project<br>
-                3. "Exercise" - this means the lecture is a exercise<br><br>
-                You want to create an <b>elective course</b> called <b>"IT Security"</b>. The description is: <b>"Aspects of secure systems"</b>. The modul number is: <b>"5104211"</b><br>
+                The lecture type needs to be one of the following:<br>
+                <ul>
+                    <li>"AWPF" - this means the lecture is a general education elective</li>
+                    <li>"FWPM" - this means the lecture is an elective course</li>
+                    <li>"VL" - this means it is a normal lecture</li>
+                    <li>"SU" - this means the lecture is held as a seminar class</li>
+                    <li>"P" - this means the lecture is a project</li>
+                    <li>"Exercise" - this means the lecture is a exercise</li>
+                </ul><br>
+                You want to create an <b>elective course</b> called <b>"IT Security"</b>, teaching <b>"Aspects of secure systems"</b>. The modul number is: <b>"5104211"</b><br>
                 Students participating in this lecture need to be in the <b>sixth semester</b> and have a minimum number of <b>125</b> etcs. Students passing the exam of this lecture earn <b>5</b> etcs.<br><br>
-            </div>
-            <div style="height: 10rem">
-                <app-code-editor (onCodeChangeEvent)="$event"></app-code-editor>
             </div>
             <app-db-interaction></app-db-interaction>
             <app-validate-btn (click)="updateHighestValidationStep('7.1', stepper)"></app-validate-btn>
-
         </mat-step>
 
         <mat-step label="Junction Table" [completed]="highestValidatedLevel.localeCompare('7.2') >= 0">
             <div class="description">
                 <h3>Hey, {{userDataStore.firstName}}!</h3>
-                did you know that when you have a many-to-many relationship between tables, meening two tables and a set of records in the first table needs to be linked with a set of records in the second table, the connection between those two tables is established by a junction table.<br>
+                did you know that when you have a many-to-many relationship between tables, the connection between those two tables is established by a junction table.<br>
                 This junction table includes the primary keys of both tables as foreign keys and may also store additional information specific to the relationship between the two tables.<br><br>
-                Your created lecture "IT Security" can have multiple restrictions. Those restrictions need to be stored in the table <b>"Restriction"</b>.<br>
                 One lecture can have multiple restriction and a single restriction can be linked to multiple lectures. This meens that there is a many-to-many relationship beween the two tables <b>"Lecture"</b> and <b>"Restriction"</b>.<br>
-                The connection between those two tables is established by a junction table called <b>"LectureToRestriction"</b>.<br>
-                The table <b>"LectureToRestriction"</b> includes the primary keys of a lecture and a restriction. Those two attributes are called <b>"LectureId"</b> and <b>"RestrictionId"</b>.<br><br>
-                You first want to get the <b>ID of your new created lecture</b>.<br><br>
-            </div>
-            <div style="height: 10rem">
-                <app-code-editor (onCodeChangeEvent)="$event"></app-code-editor>
+                The connection between those two tables is established by a junction table called <b>"LectureToRestriction"</b>.<br><br>
+                You first want to get the <b>ID</b> of the <b>lecture</b> <b>"IT Security"</b>.<br><br>
             </div>
             <app-db-interaction></app-db-interaction>
             <div class="description">
                 <br>
-                Second, you want to get the <b>ID</b> of a <b>restriction</b> with the <b>description "Gute Englisch-Kenntnisse"</b>.<br><br>
-            </div>
-            <div style="height: 10rem">
-                <app-code-editor (onCodeChangeEvent)="$event"></app-code-editor>
+                Second, you want to create a <b>restriction</b> with the <b>description "Good english skills"</b>.<br><br>
             </div>
             <app-db-interaction></app-db-interaction>
             <div class="description">
                 <br>
-                <b>Now you want to link your new created lecture to this specific restriction.</b><br><br>
+                Third, you want to get the <b>ID</b> of the <b>restriction</b> with the description <b>"Good english skills"</b>.<br><br>
             </div>
-            <div style="height: 10rem">
-                <app-code-editor (onCodeChangeEvent)="$event"></app-code-editor>
+            <app-db-interaction></app-db-interaction>
+            <div class="description">
+                <br>
+                Now you want to link the <b>lecture </b> <b>"IT Security"</b> to the <b>restriction</b> with the description <b>"Good english skills"</b>.<br><br>
             </div>
             <app-db-interaction></app-db-interaction>
             <app-validate-btn (click)="updateHighestValidationStep('7.2', stepper)"></app-validate-btn>

@@ -31,6 +31,8 @@ import { ValidateBtnComponent } from './validate-btn/validate-btn.component';
 import { ValidationErrorsComponent } from './validation-errors/validation-errors.component';
 import {FlexLayoutModule} from "@angular/flex-layout";
 import { LevelThreeComponent } from './level-three/level-three.component';
+import { LevelSevenComponent } from './level-seven/level-seven.component';
+import { LevelEightComponent } from './level-eight/level-eight.component';
 import { DbInteractionComponent } from './db-interaction/db-interaction.component';
 import { UserSqlInputComponent } from './db-interaction/user-sql-input/user-sql-input.component';
 import {MatTableModule} from "@angular/material/table";
@@ -54,6 +56,8 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
         ValidateBtnComponent,
         ValidationErrorsComponent,
         LevelThreeComponent,
+        LevelSevenComponent,
+        LevelEightComponent,
         DbInteractionComponent,
         UserSqlInputComponent,
         LevelSixComponent
