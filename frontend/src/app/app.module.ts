@@ -44,6 +44,8 @@ import {LevelFourComponent} from "./level-four/level-four.component";
 import { LevelThirteenComponent } from './level-thirteen/level-thirteen.component';
 import { LevelTenComponent } from './level-ten/level-ten.component';
 import {MonacoEditorModule} from "ngx-monaco-editor-v2";
+import {LevelNineComponent} from "./level-nine/level-nine.component";
+import {LevelElevenComponent} from "./level-eleven/level-eleven.component";
 
 @NgModule({
     declarations: [
@@ -66,7 +68,9 @@ import {MonacoEditorModule} from "ngx-monaco-editor-v2";
         SelectAllResultTableComponent,
         LevelFourComponent,
         LevelThirteenComponent,
-        LevelTenComponent
+        LevelTenComponent,
+        LevelNineComponent,
+        LevelElevenComponent
     ],
     imports: [
         HttpClientModule,
