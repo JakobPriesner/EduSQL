@@ -53,7 +53,7 @@ class PostgresqlConnection(IPostgresqlConnection):
         async with await aiopg.connect(self.get_connection_string(user, db)) as conn:
             async with conn.cursor() as cur:
                 await cur.execute(sql, args)
-                return await cur.fetchone()
+                return dict(await cur.fetchone())
 
     async def create_by_sql(self, user: DbUser, db: str, sql: str, args: tuple = ()) -> int:
         return await self._execute_sql(user, db, sql, args)
