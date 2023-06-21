@@ -3,6 +3,7 @@ from typing import Type
 from injector import inject, Injector
 
 from api.endpoints.levels.logic.validation.strategies.concrete_validation_interface import IConcreteValidation
+from api.endpoints.levels.logic.validation.strategies.level_nine_task_two import LevelNineTaskTwoValidator
 from api.endpoints.levels.logic.validation.strategies.level_one_task_five import LevelOneTaskFiveValidator
 from api.endpoints.levels.logic.validation.strategies.level_one_task_four import LevelOneTaskFourValidator
 from api.endpoints.levels.logic.validation.strategies.level_one_task_six import LevelOneTaskSixValidator
@@ -18,6 +19,8 @@ from command_interface import ICommand
 from database.db_user_handler import DbUserHandler
 from database.postgresql_connection_interface import IPostgresqlConnection
 from log.logger_interface import ILogger
+
+
 
 
 class ValidateTask(ICommand[LevelValidationResult]):
@@ -56,5 +59,6 @@ class ValidateTask(ICommand[LevelValidationResult]):
             LevelSevenTaskOneValidator,
             LevelSevenTaskTwoValidator,
             LevelEightTaskOneValidator,
-            LevelEightTaskTwoValidator
+            LevelEightTaskTwoValidator,
+            LevelNineTaskTwoValidator
         ]
