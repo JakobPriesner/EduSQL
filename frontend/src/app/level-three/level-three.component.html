@@ -3,14 +3,19 @@
 
     <mat-stepper linear #stepper>
 
+        <mat-step label="Login" [completed]="highestValidatedLevel.localeCompare('3.0') >= 0">
+            <div class="description">
+                <h3>Hey, {{userDataStore.firstName}}!</h3>
+                log dich mit folgenden Daten ein: p_braun, d5pND8nqT5BbZiUC
+            </div>
+            <app-login (onSuccessfulLogin)="onSuccessfulLogin(stepper)"></app-login>
+            <app-validate-btn (click)="validateDbUserLoginTask(stepper)" [errorMessage]="errorMessage"></app-validate-btn>
+        </mat-step>
+
         <mat-step label="Select Business Hours" [completed]="highestValidatedLevel.localeCompare('3.1') >= 0">
             <div class="description">
                 <h3>Hey, {{userDataStore.firstName}}!</h3>
                 you want to go to college to study. What are the daily business hours of the location with the id 2 on Monday?
-            </div>
-
-            <div>
-                <app-code-editor (onCodeChangeEvent)="$event"></app-code-editor>
             </div>
 
             <app-db-interaction></app-db-interaction>
@@ -23,53 +28,26 @@
                 <mat-form-field>
                     <mat-label>Öffnungszeiten</mat-label>
                     <mat-select [(ngModel)]="dailyBusinessHours">
-                        <mat-option value="one">8:30-12:00</mat-option>
-                        <mat-option value="two">12:00-16:00</mat-option>
-                        <mat-option value="three">8:30-14:00</mat-option>
-                        <mat-option value="four">Geschlossen</mat-option>
+                        <mat-option value="08:30:00-12:00:00">8:30-12:00</mat-option>
+                        <mat-option value="12:00:00-16:00:00">12:00-16:00</mat-option>
+                        <mat-option value="08:30:00-14:00:00">8:30-14:00</mat-option>
+                        <mat-option value="00:00:00-00:00:00">Geschlossen</mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
             <app-validate-btn (click)="selectBusinessHours('3.1', stepper, dailyBusinessHours)"></app-validate-btn>
         </mat-step>
 
-        <mat-step label="Select Locations" [completed]="highestValidatedLevel.localeCompare('3.3') >= 0">
+
+        <mat-step label="Level Complete" [completed]="highestValidatedLevel.localeCompare('3.4') >= 0">
             <div class="description">
-                <h3>Hey, {{userDataStore.firstName}}!</h3>
-                Hey, you want to find literature for your seminar paper. At which locations could you go to the library and research for your term paper?
+                <h3>Congratulation {{userDataStore.firstName}}!</h3>
+                Du hast das Level geschafft. Aber nicht verzagen, weiter leveln..
             </div>
-            <div>
-                <app-code-editor (onCodeChangeEvent)="$event"></app-code-editor>
-            </div>
-
-            <app-db-interaction></app-db-interaction>
-
             <div class="description">
-                Hier kannst du dein Ergebnis auswählen und abschicken
+                Zum level 4 Einfach auf next klicken :D
             </div>
-
-            <section class="example-section">
-                <span class="example-list-section">
-                    <mat-checkbox class="example-margin"
-                        [checked]="allComplete"
-                        [color]="task.color"
-                        [indeterminate]="someComplete()"
-                        (change)="setAll($event.checked)">
-                        {{task.name}}
-                    </mat-checkbox>
-                </span>
-                <span class="example-list-section">
-                    <ul *ngFor="let subtask of task.subtasks">
-                        <mat-checkbox [(ngModel)]="subtask.completed"
-                                      [color]="subtask.color"
-                                      (ngModelChange)="updateAllComplete()">
-                            {{subtask.name}}
-                        </mat-checkbox>
-                    </ul>
-                </span>
-            </section>
-
-            <app-validate-btn (click)="selectLocationsWithLibary('3.3', stepper, checkedTasks)"></app-validate-btn>
+            <app-validate-btn text="next" (click)="updateHighestValidationStep('3.4', stepper)"></app-validate-btn>
         </mat-step>
 
     </mat-stepper>
