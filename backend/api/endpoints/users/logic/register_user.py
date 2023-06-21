@@ -25,27 +25,30 @@ class RegisterUser(ICommand[RegisterUserResponse]):
     async def handle(self, payload: RegisterUserPayload) -> RegisterUserResponse:
         user_uuid: str = uuid.uuid4().hex
         await self._create_database(user_uuid)
+        await self._create_user(user_uuid)
+        await self._create_roles(user_uuid)
         return RegisterUserResponse(user_uuid=user_uuid)
 
     async def _create_database(self, user_uuid: str) -> None:
         await self._db.create_database(self._admin_user, "postgres", user_uuid)
-        # await self._create_roles(user_uuid)
-        # await self._create_users(user_uuid)
 
     async def _create_user(self, user_uuid: str) -> None:
-        await self._db.execute_without_response(self._admin_user, user_uuid, f"CREATE USER \"{user_uuid}\" WITH LOGIN PASSWORD 's5HHdC3SKK7q9T';")
+        await self._db.execute_without_response(self._admin_user, user_uuid,
+                                                f"CREATE USER \"{user_uuid}\" WITH LOGIN PASSWORD 's5HHdC3SKK7q9T';")
         await self._db.execute_without_response(self._admin_user, user_uuid, f"GRANT student TO \"{user_uuid}\";")
-        await self._db.execute_without_response(self._admin_user, user_uuid, self.__get_sql_statement_for_sequence_schema(user_uuid))
-
+        await self._db.execute_without_response(self._admin_user, user_uuid,
+                                                self.__get_sql_statement_for_sequence_schema(user_uuid))
 
     async def _create_roles(self, user_uuid: str) -> None:
         for statement in await self._load_sql_statements("create_roles_for_new_schema.sql"):
             if not statement.startswith("--") and statement != "":
-                await self._db.execute_without_response(self._admin_user, user_uuid, statement.replace("<db_name>", f"'{user_uuid}'"))
+                await self._db.execute_without_response(self._admin_user, user_uuid,
+                                                        statement.replace("<db_name>", f"'{user_uuid}'"))
 
     async def _create_users(self, user_uuid: str) -> None:
         await asyncio.gather(*[
-            self._db.execute_without_response(self._admin_user, user_uuid, statement.replace("<db_name>", f"\"{user_uuid}\""))
+            self._db.execute_without_response(self._admin_user, user_uuid,
+                                              statement.replace("<db_name>", f"\"{user_uuid}\""))
             for statement in await self._load_sql_statements("create_users_for_new_schema.sql")
             if not statement.startswith("--") and statement != ""
         ])
