@@ -1,0 +1,48 @@
+<div class="level-body">
+    <h1>Level 3</h1>
+    <mat-stepper linear #stepper>
+
+        <mat-step label="Login" [completed]="highestValidatedLevel.localeCompare('12.1') >= 0">
+            <div class="description">
+                <h3>Hey, {{userDataStore.firstName}}!</h3>
+                jetzt kriegst du ein fettes Update. Du bist jetzt ein toller DBAdmin:
+                log dich mit folgenden Daten ein: m_rott, C9WS2sHyarDjA8dz
+            </div>
+            <app-login (onSuccessfulLogin)="onSuccessfulLogin(stepper)"></app-login>
+            <app-validate-btn (click)="validateDbUserLoginTask(stepper)" [errorMessage]="errorMessage"></app-validate-btn>
+        </mat-step>
+
+        <mat-step label="Select Business Hours" [completed]="highestValidatedLevel.localeCompare('12.2') >= 0">
+            <div class="description">
+                <h3>Hey, {{userDataStore.firstName}}!</h3>
+                Da die Hochschule an dem Standort mit der ID 2 aufgelöst und zu einem Tierheim wird, da Tier in Not unsere Hilfe brauchen, muss die Datenbank angepasst werden.
+                Aus diesem Grund musst du als tierlieber DBAdmin den Standort aus der DB löschen und nicht vergessen auch die zugehörigen BusinessHours und die Adresse.
+            </div>
+
+            <app-db-interaction></app-db-interaction>
+
+            <div class="description">
+                Hier kannst du dein Ergebnis auswählen und abschicken
+            </div>
+            <div>
+                <mat-slide-toggle (change)="toggle($event)">Erfolgreich gelöscht?</mat-slide-toggle>
+            </div>
+
+
+            <app-validate-btn (click)="deleteSqlExecute('12.2', stepper)"></app-validate-btn>
+        </mat-step>
+
+
+        <mat-step label="Level Complete" [completed]="highestValidatedLevel.localeCompare('12.3') >= 0">
+            <div class="description">
+                <h3>Congratulation {{userDataStore.firstName}}!</h3>
+                Du hast das Level geschafft. Aber nicht verzagen, weiter leveln..
+            </div>
+            <div class="description">
+                Zum level 4 Einfach auf next klicken :D
+            </div>
+            <app-validate-btn text="next" (click)="updateHighestValidationStep('12.3', stepper)"></app-validate-btn>
+        </mat-step>
+
+    </mat-stepper>
+</div>

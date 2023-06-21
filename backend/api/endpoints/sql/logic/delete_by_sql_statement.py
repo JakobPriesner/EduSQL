@@ -17,14 +17,15 @@ class DeleteBySqlStatement(ICommand[DeleteSqlResult]):
     async def handle(self, payload: SqlExecutionPayload, uuid: str) -> DeleteSqlResult:
         try:
             row_count: int = await self._db.delete_by_sql(DbUser(payload.username, payload.password), uuid, payload.sql_statement)
+            print(row_count)
             return DeleteSqlResult(
                 operation="delete",
-                result={"affectedRows": row_count},
+                result=row_count,
                 errors=""
             )
         except Exception as e:
             return DeleteSqlResult(
                 operation="delete",
-                result={},
+                result=None,
                 errors=str(e)
             )

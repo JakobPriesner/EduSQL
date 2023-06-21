@@ -3,18 +3,18 @@ from typing import Type
 from injector import inject, Injector
 
 from api.endpoints.levels.logic.validation.strategies.concrete_validation_interface import IConcreteValidation
-from api.endpoints.levels.logic.validation.strategies.level_five_task_two import LevelFiveTaskTwoValidator
 from api.endpoints.levels.logic.validation.strategies.level_nine_task_two import LevelNineTaskTwoValidator
 from api.endpoints.levels.logic.validation.strategies.level_one_task_five import LevelOneTaskFiveValidator
 from api.endpoints.levels.logic.validation.strategies.level_one_task_four import LevelOneTaskFourValidator
 from api.endpoints.levels.logic.validation.strategies.level_one_task_six import LevelOneTaskSixValidator
 from api.endpoints.levels.logic.validation.strategies.level_six_task_three import LevelSixTaskThreeValidator
-from api.endpoints.levels.logic.validation.strategies.level_ten_task_one import LevelTenTaskOneValidator
 from api.endpoints.levels.logic.validation.strategies.level_three_task_one import LevelThreeTaskOneValidator
 from api.endpoints.levels.logic.validation.strategies.level_four_task_two import LevelFourTaskTwoValidator
+from api.endpoints.levels.logic.validation.strategies.level_twelve_task_two import LevelTwelveTaskTwoValidator
 from api.endpoints.levels.logic.validation.strategies.level_two_task_three import LevelTwoTaskThreeValidator
 from api.endpoints.levels.logic.validation.strategies.level_seven_task_one import LevelSevenTaskOneValidator
 from api.endpoints.levels.logic.validation.strategies.level_seven_task_two import LevelSevenTaskTwoValidator
+from api.endpoints.levels.logic.validation.strategies.level_seven_task_three import LevelSevenTaskThreeValidator
 from api.endpoints.levels.logic.validation.strategies.level_eight_task_one import LevelEightTaskOneValidator
 from api.endpoints.levels.logic.validation.strategies.level_eight_task_two import LevelEightTaskTwoValidator
 from api.endpoints.levels.models.level_validation_result import LevelValidationResult
@@ -60,9 +60,9 @@ class ValidateTask(ICommand[LevelValidationResult]):
             LevelSixTaskThreeValidator,
             LevelSevenTaskOneValidator,
             LevelSevenTaskTwoValidator,
+            LevelSevenTaskThreeValidator,
             LevelEightTaskOneValidator,
             LevelEightTaskTwoValidator,
             LevelNineTaskTwoValidator,
-            LevelTenTaskOneValidator,
-            LevelFiveTaskTwoValidator
+            LevelTwelveTaskTwoValidator
         ]

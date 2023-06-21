@@ -1,7 +1,7 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {Component} from '@angular/core';
 import {SqlService} from "../../lib/services/api/sql.service";
 import {SqlResult} from "../../lib/models/sqlResult";
-import {SelectAllSqlResult} from "../../lib/models/selectAllSqlResult";
+
 
 @Component({
   selector: 'app-db-interaction',
