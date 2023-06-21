@@ -1,28 +1,27 @@
 <div class="level-body">
-    <h1>Level 4</h1>
 
     <mat-stepper linear #stepper>
 
-        <mat-step label="Login" [completed]="highestValidatedLevel.localeCompare('4.1') >= 0">
-            <div class="description">
-                <h3>Hey, {{userDataStore.firstName}}!</h3>
-                log dich mit folgenden Daten ein: p_braun, d5pND8nqT5BbZiUC
-            </div>
-            <app-login (onSuccessfulLogin)="onSuccessfulLogin(stepper)"></app-login>
-            <app-validate-btn (click)="validateDbUserLoginTask(stepper)" [errorMessage]="errorMessage"></app-validate-btn>
-        </mat-step>
+<!--        <mat-step label="Login" [completed]="highestValidatedLevel.localeCompare('4.1') >= 0">-->
+<!--            <div class="description">-->
+<!--                <h3>Hey, {{userDataStore.firstName}}!</h3>-->
+<!--                log in with the following data: p_braun, d5pND8nqT5BbZiUC-->
+<!--            </div>-->
+<!--            <app-login (onSuccessfulLogin)="onSuccessfulLogin(stepper)"></app-login>-->
+<!--            <app-validate-btn (click)="validateDbUserLoginTask(stepper)" [errorMessage]="errorMessage"></app-validate-btn>-->
+<!--        </mat-step>-->
 
 
         <mat-step label="Select Locations" [completed]="highestValidatedLevel.localeCompare('4.2') >= 0">
             <div class="description">
                 <h3>Hey, {{userDataStore.firstName}}!</h3>
-                Hey, you want to find literature for your seminar paper. At which locations could you go to the library and research for your term paper?
+                you want to find literature for your seminar paper. At which locations could you go to the library and research for your term paper?
             </div>
 
             <app-db-interaction></app-db-interaction>
 
             <div class="description">
-                Hier kannst du dein Ergebnis auswählen und abschicken
+                Here you can select and submit your result
             </div>
 
             <section class="example-section">
@@ -52,10 +51,10 @@
         <mat-step label="Level Complete" [completed]="highestValidatedLevel.localeCompare('4.3') >= 0">
             <div class="description">
                 <h3>Congratulation {{userDataStore.firstName}}!</h3>
-                Du hast das Level geschafft. Aber nicht verzagen, weiter leveln..
+                You have completed the level. But don't despair, keep leveling...
             </div>
             <div class="description">
-                Zum level 5 Einfach auf next klicken :D
+                To level 5 Just click next :D
             </div>
             <app-validate-btn text="next" (click)="updateHighestValidationStep('4.3', stepper)"></app-validate-btn>
         </mat-step>

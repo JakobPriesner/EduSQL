@@ -1,15 +1,14 @@
 <div class="level-body">
-    <h1>Level 3</h1>
     <mat-stepper linear #stepper>
 
-        <mat-step label="Login" [completed]="highestValidatedLevel.localeCompare('3.0') >= 0">
-            <div class="description">
-                <h3>Hey, {{userDataStore.firstName}}!</h3>
-                log dich mit folgenden Daten ein: p_braun, d5pND8nqT5BbZiUC
-            </div>
-            <app-login (onSuccessfulLogin)="onSuccessfulLogin(stepper)"></app-login>
-            <app-validate-btn (click)="validateDbUserLoginTask(stepper)" [errorMessage]="errorMessage"></app-validate-btn>
-        </mat-step>
+<!--        <mat-step label="Login" [completed]="highestValidatedLevel.localeCompare('3.0') >= 0">-->
+<!--            <div class="description">-->
+<!--                <h3>Hey, {{userDataStore.firstName}}!</h3>-->
+<!--                log in with the following data: p_braun, d5pND8nqT5BbZiUC-->
+<!--            </div>-->
+<!--            <app-login (onSuccessfulLogin)="onSuccessfulLogin(stepper)"></app-login>-->
+<!--            <app-validate-btn (click)="validateDbUserLoginTask(stepper)" [errorMessage]="errorMessage"></app-validate-btn>-->
+<!--        </mat-step>-->
 
         <mat-step label="Select Business Hours" [completed]="highestValidatedLevel.localeCompare('3.1') >= 0">
             <div class="description">
@@ -20,17 +19,17 @@
             <app-db-interaction></app-db-interaction>
 
             <div class="description">
-                Hier kannst du dein Ergebnis auswählen und abschicken
+                Here you can select and submit your result
             </div>
 
             <div class="section">
                 <mat-form-field>
-                    <mat-label>Öffnungszeiten</mat-label>
+                    <mat-label>Business hours</mat-label>
                     <mat-select [(ngModel)]="dailyBusinessHours">
                         <mat-option value="08:30:00-12:00:00">8:30-12:00</mat-option>
                         <mat-option value="12:00:00-16:00:00">12:00-16:00</mat-option>
                         <mat-option value="08:30:00-14:00:00">8:30-14:00</mat-option>
-                        <mat-option value="00:00:00-00:00:00">Geschlossen</mat-option>
+                        <mat-option value="00:00:00-00:00:00">Closed</mat-option>
                     </mat-select>
                 </mat-form-field>
             </div>
@@ -41,10 +40,10 @@
         <mat-step label="Level Complete" [completed]="highestValidatedLevel.localeCompare('3.4') >= 0">
             <div class="description">
                 <h3>Congratulation {{userDataStore.firstName}}!</h3>
-                Du hast das Level geschafft. Aber nicht verzagen, weiter leveln..
+                You have completed the level. But don't despair, keep leveling...
             </div>
             <div class="description">
-                Zum level 4 Einfach auf next klicken :D
+                To level 4 Just click next :D
             </div>
             <app-validate-btn text="next" (click)="updateHighestValidationStep('3.4', stepper)"></app-validate-btn>
         </mat-step>
