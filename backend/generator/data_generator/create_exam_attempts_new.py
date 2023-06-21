@@ -301,6 +301,21 @@ async def __load_all_stundents_async() -> list[Student]:
             ]
 
 
+async def __update_exam_attempt_grade_with_first_id_async() -> None:
+    exam_attempt: ExamAttempt
+    sql: str = "SELECT id, grade from examattempt ORDER BY id LIMIT 1;"
+    async with await psycopg.AsyncConnection.connect(get_connection_string()) as conn:
+        async with conn.cursor() as cur:
+            await cur.execute(sql)
+            _id, grade = await cur.fetchone()
+    sql: str = "UPDATE examattempt SET grade = 2.0 where id = " + str(_id) + ";"
+    async with await psycopg.AsyncConnection.connect(get_connection_string()) as conn:
+        async with conn.cursor() as cur:
+            await cur.execute(sql)
+            await conn.commit()
+            # todo: ect_score von student updaten
+
+
 async def create_exam_attempts() -> None:
     students: list[Student] = await __load_all_stundents_async()
     batch_size: int = 5
@@ -311,6 +326,7 @@ async def create_exam_attempts() -> None:
         await exam_attempts.__async_init__()
         await exam_attempts.generate_all_exam_attempts_async()
     # do some cool stuff
+    await __update_exam_attempt_grade_with_first_id_async()
 
 if __name__ == "__main__":
     if platform.system() == 'Windows':
