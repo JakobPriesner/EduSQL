@@ -1,0 +1,62 @@
+<div class="level-body">
+    <h1>Level 8</h1>
+
+    <mat-stepper linear #stepper>
+
+        <mat-step label="Create Exam" [completed]="highestValidatedLevel.localeCompare('8.1') >= 0">
+            <div class="description">
+                <h3>Hey, {{userDataStore.firstName}}!</h3>
+                in the previous level you have created your own lecture <b>"IT Security"</b>.<br>
+                In this level you want to create a <b>exam</b> to this specific lecture. Students will be allowed to try to pass the exam three times.<br>
+                Please take a look at the ERM diagram to get all the information you need to accomplish this task.<br>
+                In the navbar on the right side, you will find a button
+                <button mat-icon-button color="accent"><mat-icon fontIcon="account_tree"></mat-icon></button>.<br>
+                By clicking on it, you can display the entire ERM diagram at any time to examine the structure of the database.<br>
+                By scrolling you can change the intensity of the zoom.<br><br>
+            </div>
+            <app-db-interaction></app-db-interaction>
+            <app-validate-btn (click)="updateHighestValidationStep('8.1', stepper)"></app-validate-btn>
+        </mat-step>
+
+        <mat-step label="Create Exam Attempts" [completed]="highestValidatedLevel.localeCompare('8.2') >= 0">
+            <div class="description">
+                <h3>Hey, {{userDataStore.firstName}}!</h3>
+                it is time for the students in your lecture <b>"IT Security"</b> to participate in the created exam.<br>
+                As a professor you need to validate all exam attempts of the participating students. The results of your validation will be stored in the table <b>"ExamAttempt"</b>.<br><br>
+                In this task you want to create three exam attempts in only one sql statement.<br><br>
+                <b>Necessary information about your exam and the three exam attempts:</b><br>
+                <ul>
+                    <li>Your exam will be written in the Room <b>"H.1.1"</b>.</li>
+                    <li>As you might remember from level seven, your lecture is held in the <b>sixth semester</b>.</li>
+                    <li>The <b>starttime</b> of the exam is <b>"2023-07-14T10:00:00"</b>.</li>
+                    <li>The exam will be <b>scanned at "2023-07-14T09:50:00"</b>.</li>
+                    <li>The <b>endtime</b> of the exam is <b>"2023-07-14T11:30:00"</b>.</li>
+                    <li>The students will get <b>90</b> minutes to pass the exam.</li>
+                    <li>The exam will be a <b>"Written"</b> exam.</li>
+                    <li>Your three exam attempts will be from the students with the matriculation numbers <b>"3000718"</b>, <b>"4005213"</b> and <b>"5002417"</b>.</li>
+                    <li>The student with the matriculation number 3000718 will achieve a score of <b>100</b> points and get the resulting grade <b>1.7</b>.</li>
+                    <li>The student with the matriculation number 4005213 will achieve a score of <b>110</b> points and get the resulting grade <b>1.3</b>.</li>
+                    <li>The student with the matriculation number 5002417 will achieve a score of <b>60</b> points and get the resulting grade <b>5.0</b>.</li>
+                </ul><br>
+                Please take a look at the ERM diagram to get all the information you need to accomplish this task.<br>
+                In the navbar on the right side, you will find a button
+                <button mat-icon-button color="accent"><mat-icon fontIcon="account_tree"></mat-icon></button>.<br>
+                By clicking on it, you can display the entire ERM diagram at any time to examine the structure of the database.<br>
+                By scrolling you can change the intensity of the zoom.<br><br>
+                To create three records simultaneously in a single SQL query, you can use the INSERT INTO statement with a VALUES block containing the values for the new records.<br><br>
+                Here is an example:<br><br>
+                <mat-card>
+                    <mat-card-content>
+                        INSERT INTO table_name ( 1._attribute_name  ,  2._attribute_name  ,  3._attribute_name )<br>
+                        VALUES<br>
+                        (  1.entry_valueOf_1._attribute  ,  1.entry_valueOf_2._attribute  ,  1.entry_valueOf_3._attribute  ),<br>
+                        (  2.entry_valueOf_1._attribute  ,  2.entry_valueOf_2._attribute  ,  2.entry_valueOf_3._attribute  ),<br>
+                        (  3.entry_valueOf_1._attribute  ,  3.entry_valueOf_2._attribute  ,  3.entry_valueOf_3._attribute  );
+                    </mat-card-content>
+                </mat-card><br><br>
+            </div>
+            <app-db-interaction></app-db-interaction>
+            <app-validate-btn (click)="updateHighestValidationStep('8.2', stepper)"></app-validate-btn>
+        </mat-step>
+    </mat-stepper>
+</div>
