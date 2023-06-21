@@ -63,7 +63,6 @@ export class LevelThreeComponent {
       answer: this.checkedTasksNames
     };
     this.validationService.validateTaskWithPayload(3, 2, payload).subscribe(result => {
-      console.log(result)
       if(result.isValid)
       {
         if (this.highestValidatedLevel.localeCompare(to)) {

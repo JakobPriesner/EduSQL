@@ -43,7 +43,6 @@ export class LevelNineComponent {
       answer: answer
     };
     this.validationService.validateTaskWithPayload(9, 2, payload).subscribe(result => {
-      console.log(result)
       if(result.isValid)
       {
         if (this.highestValidatedLevel.localeCompare(to)) {

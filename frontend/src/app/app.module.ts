@@ -41,11 +41,11 @@ import { SelectAllResultTableComponent } from './db-interaction/select-all-resul
 import {MatExpansionModule} from "@angular/material/expansion";
 import {MatTabsModule} from "@angular/material/tabs";
 import {LevelFourComponent} from "./level-four/level-four.component";
-import { LevelThirteenComponent } from './level-thirteen/level-thirteen.component';
 import { LevelTenComponent } from './level-ten/level-ten.component';
 import {MonacoEditorModule} from "ngx-monaco-editor-v2";
 import {LevelNineComponent} from "./level-nine/level-nine.component";
 import {LevelElevenComponent} from "./level-eleven/level-eleven.component";
+import { LevelFiveComponent } from './level-five/level-five.component';
 
 @NgModule({
     declarations: [
@@ -67,10 +67,10 @@ import {LevelElevenComponent} from "./level-eleven/level-eleven.component";
         LevelSixComponent,
         SelectAllResultTableComponent,
         LevelFourComponent,
-        LevelThirteenComponent,
         LevelTenComponent,
         LevelNineComponent,
-        LevelElevenComponent
+        LevelElevenComponent,
+        LevelFiveComponent
     ],
     imports: [
         HttpClientModule,

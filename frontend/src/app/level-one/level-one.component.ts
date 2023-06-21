@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {CookieService} from "../../lib/services/cookie.service";
 import {ValidationService} from "../../lib/services/api/validation.service";
-import {AbstractControl} from '@angular/forms';
 import {STEPPER_GLOBAL_OPTIONS} from "@angular/cdk/stepper";
 import {MatStepper} from "@angular/material/stepper";
 import {LocalDbUserValidator} from "../../lib/validator/local-db-user.validator";
@@ -20,7 +19,7 @@ import {UserDataStore} from "../../lib/stores/user-data.store";
 })
 export class LevelOneComponent implements OnInit{
   errorMessage: string = "";
-  highestValidatedLevel: string;
+  highestValidatedLevel: string = this.cookieService.getCookie("highestValidatedLevel") ?? "0.0";
 
   constructor(private cookieService: CookieService,
               private validationService: ValidationService,
@@ -30,26 +29,30 @@ export class LevelOneComponent implements OnInit{
   }
 
   ngOnInit() {
-
   }
 
-  cookieValidator(control: AbstractControl): { [key: string]: any } | null {
-    const formValue = control.value;
-    const cookieValue = this.cookieService.getCookie('cookieName');
-    if (cookieValue == null) {
-      return { 'cookieExists': false };
-    }
-    return cookieValue.localeCompare(formValue) >= 0 ? null : { 'stepValidated': false };
-  }
-
-  validateStep(task: number, stepper: MatStepper) : void {
+  validateTask(task: number, stepper: MatStepper) : void {
     this.validationService.validateTask(1, task).subscribe(result => {
-      if (result.isValid && this.highestValidatedLevel.localeCompare(result.level)) {
-        this.highestValidatedLevel =  result.level;
-      }
+      this.errorMessage = result.message;
       if (result.isValid) {
-        this.errorMessage = "";
+        this.highestValidatedLevel = result.level;
         stepper.next();
+        this.errorMessage = "";
+      }
+    });
+  }
+
+  validateWithPersonInfoAsPayload(task: number, stepper: MatStepper) : void {
+    let payload: { [key: string]: any } = {
+      firstName: this.userDataStore.firstName,
+      lastName: this.userDataStore.lastName
+    };
+    this.validationService.validateTaskWithPayload(1, task, payload).subscribe(result => {
+      this.errorMessage = result.message;
+      if (result.isValid) {
+        this.highestValidatedLevel = result.level;
+        stepper.next();
+        this.errorMessage = "";
       }
     });
   }
@@ -70,8 +73,8 @@ export class LevelOneComponent implements OnInit{
     stepper.next();
   }
 
-    onSuccessfulLogin(stepper: MatStepper) : void {
-      this.errorMessage="";
-      stepper.next();
-    }
+  onSuccessfulLogin(stepper: MatStepper) : void {
+    this.errorMessage="";
+    stepper.next();
+  }
 }

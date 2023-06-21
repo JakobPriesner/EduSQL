@@ -7,7 +7,7 @@ from database.models.db_user import DbUser
 from database.postgresql_connection_interface import IPostgresqlConnection
 
 
-class LevelOneTaskSixValidator(IConcreteValidation):
+class LevelTenTaskOneValidator(IConcreteValidation):
     @inject
     def __init__(self, db: IPostgresqlConnection, db_user_handler: DbUserHandler):
         self._db: IPostgresqlConnection = db
@@ -16,21 +16,26 @@ class LevelOneTaskSixValidator(IConcreteValidation):
 
     async def handle(self, user_uuid: str, **kwargs) -> LevelValidationResult:
         payload: dict = kwargs.get("payload")
-        first_name: str = payload.get("firstName")
-        last_name: str = payload.get("lastName")
+        matriculation_number: int = payload.get("matriculationNumber")
+        average_grade: float = payload.get("averageGrade")
         statement: str = """
-                         SELECT Student.PersonId, Person.FirstName, Person.LastName
-                         FROM Student
-                         JOIN Person ON Student.PersonId = Person.Id
-                         WHERE Person.FirstName = %s AND Person.LastName = %s;
-                         """
-        person_in_db: dict = await self._db.load_single_by_sql(self._admin_user, user_uuid, statement, (first_name, last_name))
-        if not person_in_db:
-            return LevelValidationResult(level="1.6",
+SELECT s.MatriculationNumber as MatNumber, AVG(e.Grade) AS GradeAverage
+FROM Student s
+JOIN ExamAttempt e ON s.MatriculationNumber = e.StudentMatriculationNumber
+GROUP BY s.MatriculationNumber
+ORDER BY GradeAverage ASC
+LIMIT 1;
+"""
+        result: dict = await self._db.load_single_by_sql(self._admin_user, user_uuid, statement)
+        if not result["matnumber"] == matriculation_number or not result["gradeaverage"] == average_grade:
+            return LevelValidationResult(level="10.1",
                                          is_valid=False,
-                                         message=f"Person \"{first_name} {last_name}\" does not exist in the Table \"Person\".")
-        return LevelValidationResult(level="1.6", is_valid=True, message="")
+                                         message=f"Invalid Matriculation Number or Average Grade was provided.")
+        return LevelValidationResult(level="10.1", is_valid=True, message="")
 
     @classmethod
     def can_handle(cls, level_number: int, task_number: int) -> bool:
-        return level_number == 1 and task_number == 6
+        return level_number == 10 and task_number == 1
+
+
+
