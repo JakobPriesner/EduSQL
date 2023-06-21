@@ -1,0 +1,23 @@
+<div class="level-body">
+    <div class="description">
+        Inspired by the students' achievements, you decide to recognize the top-performing student with the best average grade. By utilizing SQL commands, you identify the student with the highest average grade and retrieve their unique student ID.
+    </div>
+    <app-db-interaction></app-db-interaction>
+    <form [formGroup]="validationFormGroup">
+        <mat-form-field>
+            <mat-label>Matriculation number</mat-label>
+            <input matInput type="number" formControlName="matriculationNumber">
+            <mat-error>
+                Matriculation number is required
+            </mat-error>
+        </mat-form-field>
+        <mat-form-field>
+            <mat-label>Average grade</mat-label>
+            <input matInput type="number" formControlName="averageGrade">
+            <mat-error>
+                Average grade is required
+            </mat-error>
+        </mat-form-field>
+    </form>
+</div>
+
