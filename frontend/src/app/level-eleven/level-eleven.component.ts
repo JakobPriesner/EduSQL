@@ -20,7 +20,7 @@ export class LevelElevenComponent {
   }
 
   updateHighestValidationStep(to: string, stepper: MatStepper) : void {
-    if (this.highestValidatedLevel.localeCompare(to)) {
+    if (this.highestValidatedLevel.localeCompare(to) <= 0) {
       this.highestValidatedLevel =  to;
     }
     this.errorMessage = "";

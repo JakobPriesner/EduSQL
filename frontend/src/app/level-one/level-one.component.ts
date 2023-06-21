@@ -72,7 +72,7 @@ export class LevelOneComponent implements OnInit{
       this.inboxService.addMessage({message:
             "Access data for the secretaryare as follows:\n" +
             "Username = s_krause\n" +
-            "Password = uZN3G6eMR5yr9pyq", isSelected: false});
+            "Password = uZN3G6eMR5yr9pyq", isSelected: true});
     }
     if (this.highestValidatedLevel.localeCompare(to) <= 0) {
       this.highestValidatedLevel =  to;

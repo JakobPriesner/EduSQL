@@ -37,7 +37,7 @@ export class LevelTwoComponent {
   }
 
   updateHighestValidationStep(to: string, stepper: MatStepper) : void {
-    if (this.highestValidatedLevel.localeCompare(to)) {
+    if (this.highestValidatedLevel.localeCompare(to) <= 0) {
       this.highestValidatedLevel =  to;
     }
     this.errorMessage = "";
@@ -45,7 +45,7 @@ export class LevelTwoComponent {
   }
 
   updateHighestValidationStepWithInbox(to: string, stepper: MatStepper) : void {
-    if (this.highestValidatedLevel.localeCompare(to)) {
+    if (this.highestValidatedLevel.localeCompare(to) <= 0) {
       this.highestValidatedLevel =  to;
     }
     this.errorMessage = "";

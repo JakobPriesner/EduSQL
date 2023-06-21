@@ -59,7 +59,7 @@ export class LevelTwelveComponent {
       console.log(result)
       if(result.isValid)
       {
-        if (this.highestValidatedLevel.localeCompare(to)) {
+        if (this.highestValidatedLevel.localeCompare(to) <= 0) {
           this.highestValidatedLevel =  to;
         }
         this.errorMessage = "";
@@ -82,7 +82,7 @@ export class LevelTwelveComponent {
   }
 
   updateHighestValidationStep(to: string, stepper: MatStepper) : void {
-    if (this.highestValidatedLevel.localeCompare(to)) {
+    if (this.highestValidatedLevel.localeCompare(to) <= 0) {
       this.highestValidatedLevel =  to;
     }
     this.errorMessage = "";

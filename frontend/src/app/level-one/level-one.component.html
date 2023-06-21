@@ -1,15 +1,10 @@
 <div class="level-body">
-  <h1>Level 1</h1>
-
   <mat-stepper linear #stepper>
 
     <mat-step label="Welcome" [completed]="highestValidatedLevel.localeCompare('1.1') >= 0">
       <div class="description">
         <h3>Welcome, {{userDataStore.firstName}}!</h3>
         You applied to study at THWS and were accepted. Now it's time to be enrolled into the system. However, in this university, the enrollment process is not entirely digital. It requires the manual action of a secretary who handles the task using pure SQL.
-      </div>
-      <div class="description">
-        So let's change the view from the student's perspective to that of the secretary...
       </div>
       <app-validate-btn text="next" (click)="updateHighestValidationStep('1.1', stepper)"></app-validate-btn>
     </mat-step>
@@ -35,8 +30,16 @@
 
     <mat-step label="Login" [completed]="highestValidatedLevel.localeCompare('1.3') >= 0">
       <div class="description">
-        Please login as the secretary with the username "s_krause"
+        To enroll a student you have to login as a person of the secretary. So let's change the view from the student's perspective to that of the secretary and login as the one with the username "s_krause". You should have gotten a message with the username and password in you inbox.
       </div>
+      <app-alert type="info" title="Tip">
+        <div>
+          <div>
+            If there is a new user available to login, you get a message with the regarding login data. Use the
+            <button mat-icon-button color="accent"><mat-icon fontIcon="inbox"></mat-icon></button>.
+          </div>
+        </div>
+      </app-alert>
       <app-login (onSuccessfulLogin)="onSuccessfulLogin(stepper)"></app-login>
       <app-validate-btn (click)="validateDbUserLoginTask(stepper)" [errorMessage]="errorMessage"></app-validate-btn>
     </mat-step>

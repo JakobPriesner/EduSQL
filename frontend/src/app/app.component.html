@@ -2,11 +2,14 @@
   <mat-toolbar-row class="toolbar">
     <span class="nav-items">Learn SQL</span>
     <span class="nav-items" *ngIf="this.cookieService.getCookie('uuid') != null">Your UUID: {{this.cookieService.getCookie('uuid')}}</span>
-    <button mat-icon-button color="accent" (click)="openInboxDialog()">
-      <mat-icon>inbox</mat-icon>
-      <span class="badge" [matBadge]="newMessageCount" matBadgePosition="before" matBadgeColor="accent" *ngIf="newMessageCount !== 0"></span>
-    </button>
-    <button mat-icon-button color="accent" (click)="openErmDialog()"><mat-icon fontIcon="account_tree"></mat-icon></button>
+    <div>
+      <button mat-icon-button color="accent" (click)="openInboxDialog()">
+        <mat-icon>inbox</mat-icon>
+        <span class="badge" [matBadge]="newMessageCount" matBadgePosition="before" matBadgeColor="accent" *ngIf="newMessageCount !== 0"></span>
+      </button>
+      <button mat-icon-button color="accent" (click)="openErmDialog()"><mat-icon fontIcon="account_tree"></mat-icon></button>
+    </div>
+
   </mat-toolbar-row>
 </mat-toolbar>
 
