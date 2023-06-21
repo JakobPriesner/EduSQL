@@ -13,6 +13,7 @@ import {DbUser} from "../../lib/models/dbUser";
 export class LoginComponent {
   invalidLoginData: boolean = false;
   loggedInAs?: DbUser = undefined;
+  showLoginFrame: boolean = true;
 
   @Output() onSuccessfulLogin: EventEmitter<any> = new EventEmitter<any>();
 
@@ -34,6 +35,7 @@ export class LoginComponent {
     this.usersService.checkIfDbUserExists({username: username, password: password}).subscribe(result => {
       if (result.exists) {
         this.loggedInAs = {username: username, password: password};
+        this.showLoginFrame = false;
         this.dbUserStore.username = username;
         this.dbUserStore.password = password;
         this.onSuccessfulLogin.emit();
