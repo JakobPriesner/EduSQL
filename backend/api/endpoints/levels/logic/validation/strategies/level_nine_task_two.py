@@ -16,13 +16,13 @@ class LevelNineTaskTwoValidator(IConcreteValidation):
 
     async def handle(self, user_uuid: str, **kwargs) -> LevelValidationResult:
         payload: dict = kwargs.get("payload")
-        statement: str = "SELECT COUNT(*) AS Anzahl " \
+        statement: str = "SELECT COUNT(*) AS anzahl " \
                          "FROM Student S " \
                          "JOIN Person P ON S.personid = p.id " \
                          "WHERE P.firstname LIKE 'Max%';"
         result: dict = await self._db.load_single_by_sql(self._admin_user, user_uuid, statement)
 
-        if result.get('Anzahl') != payload.get('answer'):
+        if result.get('anzahl') != payload.get('answer'):
             return LevelValidationResult(level="9.2",
                                          is_valid=False,
                                          message="False Count")

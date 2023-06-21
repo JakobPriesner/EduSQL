@@ -16,13 +16,13 @@ class LevelFourTaskTwoValidator(IConcreteValidation):
 
     async def handle(self, user_uuid: str, **kwargs) -> LevelValidationResult:
         payload: dict = kwargs.get("payload")
-        statement: str = "SELECT A.addressaddition as Name " \
+        statement: str = "SELECT A.addressaddition as name " \
                          "FROM Location L " \
                          "JOIN Address A ON L.addressid = a.id " \
                          "WHERE L.library = true;"
         result: dict = await self._db.load_single_by_sql(self._admin_user, user_uuid, statement)
 
-        if result.get('Name') != payload.get('answer')[0]:
+        if result.get('name') != payload.get('answer')[0]:
             return LevelValidationResult(level="4.2",
                                          is_valid=False,
                                          message="False Locations")
