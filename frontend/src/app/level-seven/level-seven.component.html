@@ -36,22 +36,12 @@
                 This junction table includes the primary keys of both tables as foreign keys and may also store additional information specific to the relationship between the two tables.<br><br>
                 One lecture can have multiple restriction and a single restriction can be linked to multiple lectures. This meens that there is a many-to-many relationship beween the two tables <b>"Lecture"</b> and <b>"Restriction"</b>.<br>
                 The connection between those two tables is established by a junction table called <b>"LectureToRestriction"</b>.<br><br>
-                You first want to get the <b>ID</b> of the <b>lecture</b> <b>"IT Security"</b>.<br><br>
-            </div>
-            <app-db-interaction></app-db-interaction>
-            <div class="description">
-                <br>
-                Second, you want to create a <b>restriction</b> with the <b>description "Good english skills"</b>.<br><br>
-            </div>
-            <app-db-interaction></app-db-interaction>
-            <div class="description">
-                <br>
-                Third, you want to get the <b>ID</b> of the <b>restriction</b> with the description <b>"Good english skills"</b>.<br><br>
-            </div>
-            <app-db-interaction></app-db-interaction>
-            <div class="description">
-                <br>
-                Now you want to link the <b>lecture </b> <b>"IT Security"</b> to the <b>restriction</b> with the description <b>"Good english skills"</b>.<br><br>
+                <ol>
+                    <li> Get the <b>ID</b> of the <b>lecture</b> <b>"IT Security"</b></li>
+                    <li> Create a <b>restriction "Language Skills"</b> with the <b>description "Good english skills"</b></li>
+                    <li> Get the <b>ID</b> of the <b>restriction</b> with the description <b>"Good english skills"</b></li>
+                    <li> Link the <b>lecture </b> <b>"IT Security"</b> to the <b>restriction</b> with the description <b>"Good english skills"</b></li>
+                </ol><br><br>
             </div>
             <app-db-interaction></app-db-interaction>
             <app-validate-btn (click)="updateHighestValidationStep('7.2', stepper)"></app-validate-btn>
