@@ -26,9 +26,12 @@
                     <br>
                     To satisfy your curiosity, write an SQL query to retrieve the total count of professors at THWS. This will give you a better understanding of the academic community you're a part of.
                 </div>
-                <div style="height: 10rem">
-                    <app-code-editor (onCodeChangeEvent)="$event"></app-code-editor>
+                <div>
+                    <h2 >A small hint!</h2> <br>
+                    In the staff table there is an attribute called stafftype which can only contain the following values:<br>
+                    Professor', 'ExternalAssistant', 'ResearchAssistant', 'StudentAssistant'.
                 </div>
+                <app-db-interaction></app-db-interaction>
                 <div>
                     <mat-form-field>
                         <mat-label>Number of Professors</mat-label>

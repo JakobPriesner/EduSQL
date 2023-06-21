@@ -43,6 +43,7 @@ import {MatExpansionModule} from "@angular/material/expansion";
 import {MatTabsModule} from "@angular/material/tabs";
 import {LevelFourComponent} from "./level-four/level-four.component";
 import {LevelNineComponent} from "./level-nine/level-nine.component";
+import { LevelElevenComponent } from './level-eleven/level-eleven.component';
 
 @NgModule({
     declarations: [
@@ -64,7 +65,8 @@ import {LevelNineComponent} from "./level-nine/level-nine.component";
         LevelSixComponent,
         SelectAllResultTableComponent,
         LevelFourComponent,
-        LevelNineComponent
+        LevelNineComponent,
+        LevelElevenComponent
     ],
     imports: [
         HttpClientModule,

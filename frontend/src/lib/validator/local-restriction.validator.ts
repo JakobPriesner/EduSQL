@@ -11,7 +11,7 @@ export class LocalRestrictionValidator {
                 private cookieService: CookieService) {
     }
 
-    validateRestriction(level: number, task: number, expectedRestrictionState: string) : LevelValidationResult {
+    validateGetRestriction(level: number, task: number, expectedRestrictionState: string) : LevelValidationResult {
         if ("false" == expectedRestrictionState) {
             this.cookieService.createCookie("highestValidatedLevel", level + "." + task, 365);
             return {level: level + "." + task, isValid: true, message: ""};

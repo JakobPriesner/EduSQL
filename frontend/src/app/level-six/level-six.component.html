@@ -3,22 +3,29 @@
 
     <mat-stepper linear #stepper>
 
-        <mat-step label="Student´s Perspective" [completed]="highestValidatedLevel.localeCompare('6.1') >= 0">
+        <mat-step label="Intro" [completed]="highestValidatedLevel.localeCompare('6.1') >= 0">
             <div class="description">
                 <h3>Great Job!</h3>
-                As a professor, you have access to various rooms and facilities on campus. However, you need to ensure that you have the necessary permissions to reserve a specific room, labeled "xy." If not, you must add the required permission.
+                As a professor, you have access to various rooms and facilities on campus. However, you need to ensure that you have the necessary permissions to reserve a specific room, labeled "H.1.1". If not, you must add the required permission.
             </div>
             <app-validate-btn text="next" (click)="updateHighestValidationStep('6.1', stepper)"></app-validate-btn>
         </mat-step>
+
+<!--        todo: tmp delete whole step-->
+<!--        <mat-step label="tmp Login" [completed]="highestValidatedLevel.localeCompare('2.2') >= 0">-->
+<!--            <app-login (onSuccessfulLogin)="stepper.next()"></app-login>-->
+<!--            <app-validate-btn (click)="validateDbUserLoginTask(stepper)" [errorMessage]="errorMessage"></app-validate-btn>-->
+<!--        </mat-step>-->
 
         <mat-step label="Get Restriction" [completed]="highestValidatedLevel.localeCompare('6.2') >= 0">
             <div fxLayout="column" class="step-body">
                 <div>
                     Write an SQL query to check if you have the necessary permissions to reserve the room with the name "H.1.1".
                 </div>
-                <div style="height: 10rem">
-                    <app-code-editor (onCodeChangeEvent)="$event"></app-code-editor>
+                <div>
+
                 </div>
+                <app-db-interaction></app-db-interaction>
                 <div>
 
                     <mat-form-field>
@@ -35,27 +42,21 @@
                     </mat-form-field>
                 </div>
             </div>
-            <app-validate-btn [errorMessage]="errorMessage" (click)="validateRestrictionTask('6.3', stepper)"></app-validate-btn>
+            <app-validate-btn [errorMessage]="errorMessage" (click)="validateGetRestrictionTask('6.2', stepper)"></app-validate-btn>
         </mat-step>
 
         <mat-step label="Use The Information Obtained" [completed]="highestValidatedLevel.localeCompare('6.3') >= 0">
-<!--            <div fxLayout="column" class="step-body">-->
-<!--                <div>-->
-<!--                    While navigating the campus, you realize the importance of professors in your education. You're curious to know the total count of professors at THWS.-->
-<!--                    <br>-->
-<!--                    To satisfy your curiosity, write an SQL query to retrieve the total count of professors at THWS. This will give you a better understanding of the academic community you're a part of.-->
-<!--                </div>-->
-<!--                <div style="height: 10rem">-->
-<!--                    <app-code-editor (onCodeChangeEvent)="$event"></app-code-editor>-->
-<!--                </div>-->
-<!--                <div>-->
-<!--                    <mat-form-field>-->
-<!--                        <mat-label>Number of Professors</mat-label>-->
-<!--                        <input matInput type="number" id="profCount" name="profCount">-->
-<!--                    </mat-form-field>-->
-<!--                </div>-->
-<!--            </div>-->
-<!--            <app-validate-btn text="next" (click)="validateRestrictionTask('6.3', stepper)"></app-validate-btn>-->
+            <div fxLayout="column" class="step-body">
+                <div>
+                    Good Job! Now you can continue to work with the newly gained information.
+                    <br>
+                    As you know that you do not have a permit for room "H.1.1", create a new permit in the DB.
+                    <br>
+                    Write a SQL query to give you permissions for room "H.1.1".
+                </div>
+                <app-db-interaction></app-db-interaction>
+            </div>
+            <app-validate-btn (click)="validateCreateRestrictionTask('6.3', stepper)"></app-validate-btn>
         </mat-step>
     </mat-stepper>
 </div>

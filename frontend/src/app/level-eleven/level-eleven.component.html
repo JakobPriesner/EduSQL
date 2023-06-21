@@ -1,0 +1,27 @@
+<div class="level-body">
+    <h1>Level 11</h1>
+
+    <mat-stepper linear #stepper>
+
+        <mat-step label="Intro" [completed]="highestValidatedLevel.localeCompare('11.1') >= 0">
+            <div class="description">
+                A student was not satisfied with his grade and applied to retake the exam. <br>
+                He passed the exam with a grade of 1.7 and thus improved by 0.3. <br>
+                This grade improvement must now also be transferred to the database in the table "ExamAttempt".
+            </div>
+            <app-validate-btn text="next" (click)="updateHighestValidationStep('11.1', stepper)"></app-validate-btn>
+        </mat-step>
+
+        <mat-step label="Update ExamAttempt" [completed]="highestValidatedLevel.localeCompare('11.2') >= 0">
+            <div fxLayout="column" class="step-body">
+                <div>
+                    Write an SQL query to change the grade of a particular ExamAttempt from 2.0 to 1.7. <br>
+                    Use the ExamAttempt with the <strong>lowest</strong> ID.
+                </div>
+                <app-db-interaction></app-db-interaction>
+            </div>
+            <app-validate-btn [errorMessage]="errorMessage" (click)="validateUpdateExamAttemptGradeTask('11.2', stepper)"></app-validate-btn>
+        </mat-step>
+
+    </mat-stepper>
+</div>

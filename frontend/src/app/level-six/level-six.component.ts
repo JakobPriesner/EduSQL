@@ -10,33 +10,19 @@ import {LocalRestrictionValidator} from "../../lib/validator/local-restriction.v
 @Component({
   selector: 'app-level-six',
   templateUrl: './level-six.component.html',
-  styleUrls: ['./level-six.component.css']
+  styleUrls: ['./level-six.component.scss']
 })
 export class LevelSixComponent {
   errorMessage: string = "";
   highestValidatedLevel: string = "0.0";
-  boolValue: boolean[] = [
-      true, false
-  ]
   restrictionGuess?: string = undefined;
 
   constructor(private cookieService: CookieService,
               private validationService: ValidationService,
-              private localRestrichtionValidator: LocalRestrictionValidator) {
+              public localDbUserValidator: LocalDbUserValidator, // todo: tmp delete
+              private localRestrichtionValidator: LocalRestrictionValidator,
+              private userDataStore: UserDataStore) {
 
-  }
-
-  ngOnInit() {
-
-  }
-
-  cookieValidator(control: AbstractControl): { [key: string]: any } | null {
-    const formValue = control.value;
-    const cookieValue = this.cookieService.getCookie('cookieName');
-    if (cookieValue == null) {
-      return { 'cookieExists': false };
-    }
-    return cookieValue.localeCompare(formValue) >= 0 ? null : { 'stepValidated': false };
   }
 
   updateHighestValidationStep(to: string, stepper: MatStepper) : void {
@@ -47,13 +33,45 @@ export class LevelSixComponent {
     stepper.next();
   }
 
-  validateRestrictionTask(to: string, stepper: MatStepper) {
+  validateGetRestrictionTask(to: string, stepper: MatStepper) { // todo: evtl. PersonId angeben oder prüfen ob man Zugriff darauf hat
     if (this.restrictionGuess == undefined)
     {
       this.errorMessage += "The input field is empty!";
       return;
     }
-    let validationResult = this.localRestrichtionValidator.validateRestriction(6, 2, this.restrictionGuess);
+    let validationResult = this.localRestrichtionValidator.validateGetRestriction(6, 2, this.restrictionGuess);
+    this.errorMessage = validationResult.message;
+    if (validationResult.isValid) {
+      this.updateHighestValidationStep(validationResult.level, stepper);
+    }
+  }
+
+  validateCreateRestrictionTask(to: string, stepper: MatStepper) {
+    if (this.userDataStore.firstName == "" || this.userDataStore.lastName == "")
+    {
+      this.errorMessage += "Looks like you are not signed in!";
+      return;
+    }
+    let payload: { [key: string]: any } = {
+      firstname: this.userDataStore.firstName,
+      lastname: this.userDataStore.lastName
+    };
+    this.validationService.validateTaskWithPayload(6, 2, payload).subscribe(result => {
+      if(result.isValid)
+      {
+        if (this.highestValidatedLevel.localeCompare(to)) {
+          this.highestValidatedLevel =  to;
+        }
+        this.errorMessage = "";
+        stepper.next();
+      }
+    });
+  }
+
+  validateDbUserLoginTask(stepper: MatStepper) { // todo: tmp delete
+    // let dbUser: string = (this.userDataStore.firstName.at(0) + "_" + this.userDataStore.lastName).toLowerCase();
+    let dbUser: string = "p_braun";
+    let validationResult = this.localDbUserValidator.validateLoggedInAsUser(2, 2, dbUser);
     this.errorMessage = validationResult.message;
     if (validationResult.isValid) {
       this.updateHighestValidationStep(validationResult.level, stepper);

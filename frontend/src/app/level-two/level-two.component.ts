@@ -10,11 +10,11 @@ import {LevelValidationResult} from "../../lib/models/levelValidationResult";
 @Component({
   selector: 'app-level-two',
   templateUrl: './level-two.component.html',
-  styleUrls: ['./level-two.component.css']
+  styleUrls: ['./level-two.component.scss']
 })
 export class LevelTwoComponent {
   errorMessage: string = "";
-  highestValidatedLevel: string = "0.0";
+  highestValidatedLevel: string = this.cookieService.getCookie("highestValidationLevel") ?? "0.0";
   countProf?: number = undefined;
 
   constructor(private cookieService: CookieService,
@@ -25,15 +25,12 @@ export class LevelTwoComponent {
   }
 
   validateDbUserLoginTask(stepper: MatStepper) {
-    // let dbUser: string = (this.userDataStore.firstName.at(0) + "_" + this.userDataStore.lastName).toLowerCase();
-    let dbUser: string = "p_braun";
+    let dbUser: string = this.cookieService.getCookie("uuid") ?? "";
     let validationResult = this.localDbUserValidator.validateLoggedInAsUser(2, 2, dbUser);
     this.errorMessage = validationResult.message;
     if (validationResult.isValid) {
       this.updateHighestValidationStep(validationResult.level, stepper);
     }
-
-    // this.updateHighestValidationStep("2.2", stepper); // todo: delete
   }
 
   updateHighestValidationStep(to: string, stepper: MatStepper) : void {
@@ -56,11 +53,10 @@ export class LevelTwoComponent {
     this.validationService.validateTaskWithPayload(2, 3, payload).subscribe(result => {
       if(result.isValid)
       {
-        if (this.highestValidatedLevel.localeCompare(to)) {
-          this.highestValidatedLevel =  to;
-        }
         this.errorMessage = "";
         stepper.next();
+      } else {
+        this.errorMessage = result.message;
       }
     });
   }
