@@ -1,10 +1,10 @@
 CREATE USER p_braun WITH LOGIN PASSWORD 'd5pND8nqT5BbZiUC';
-GRANT p_braun TO dekan;
+GRANT dekan TO p_braun;
 CREATE USER m_rott WITH LOGIN PASSWORD 'C9WS2sHyarDjA8dz';
-GRANT m_rott TO db_admin;
+GRANT db_admin TO m_rott;
 CREATE USER s_krause WITH LOGIN PASSWORD 'uZN3G6eMR5yr9pyq';
-GRANT s_krause TO enrollment_secretary;
+GRANT enrollment_secretary TO s_krause;
 CREATE USER t_fischer WITH LOGIN PASSWORD 'Ynfd3C8Xn462cpZT';
-GRANT t_fischer TO secretary;
+GRANT secretary TO t_fischer;
 CREATE USER s_biedermann WITH LOGIN PASSWORD 'KuFzw7uFGvLHe4';
-GRANT s_biedermann TO professor;
+GRANT professor TO s_biedermann;

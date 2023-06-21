@@ -1,3 +1,5 @@
 export interface SqlResult{
-    operation: string
+    operation: string;
+    result?: Array<{ [key: string]: any }> | number;
+    errors: string;
 }

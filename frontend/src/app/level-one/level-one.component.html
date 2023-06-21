@@ -34,7 +34,7 @@
     </mat-step>
 
     <mat-step label="Login" [completed]="highestValidatedLevel.localeCompare('1.3') >= 0">
-      <app-login (onSuccessfulLogin)="stepper.next()"></app-login>
+      <app-login (onSuccessfulLogin)="onSuccessfulLogin(stepper)"></app-login>
       <app-validate-btn (click)="validateDbUserLoginTask(stepper)" [errorMessage]="errorMessage"></app-validate-btn>
     </mat-step>
 

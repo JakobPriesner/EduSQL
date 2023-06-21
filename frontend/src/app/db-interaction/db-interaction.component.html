@@ -1,14 +1,19 @@
 <div *ngFor="let entry of history">
-    <div>{{entry[0]}}</div>
-    <div *ngIf="entry[1].operation == 'selectAll'">
-        <table mat-table [dataSource]="history">
-<!--            <ng-container *ngFor="let key of entry[1]."-->
-            <ng-container matColumnDef="demo-position">
-                <th mat-header-cell *matHeaderCellDef>  </th>
-                <td mat-cell *matCellDef="let element"> {{element.position}} </td>
-            </ng-container>
-        </table>
-    </div>
+    <div>{{ entry[0] }}</div>
+
+    <ng-container>
+        {{ entry[1].result }}
+    </ng-container>
+
+    <ng-container *ngIf="entry[1].operation === 'insert'">
+        <div>Successfully inserted the entry. The new entry takes the id {{ entry[1].result }}.</div>
+    </ng-container>
+    <ng-container *ngIf="entry[1].operation === 'update'">
+        <div>Successfully updated {{ entry[1].result }} entries.</div>
+    </ng-container>
+    <ng-container>
+        {{ entry[1].errors }}
+    </ng-container>
 </div>
 
 <app-code-editor (onCodeChangeEvent)="code = $event"></app-code-editor>

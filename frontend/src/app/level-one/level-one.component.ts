@@ -69,4 +69,9 @@ export class LevelOneComponent implements OnInit{
     this.errorMessage = "";
     stepper.next();
   }
+
+    onSuccessfulLogin(stepper: MatStepper) : void {
+      this.errorMessage="";
+      stepper.next();
+    }
 }
