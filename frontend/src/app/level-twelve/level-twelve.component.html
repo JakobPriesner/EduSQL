@@ -1,12 +1,11 @@
 <div class="level-body">
-    <h1>Level 3</h1>
     <mat-stepper linear #stepper>
 
         <mat-step label="Login" [completed]="highestValidatedLevel.localeCompare('12.1') >= 0">
             <div class="description">
                 <h3>Hey, {{userDataStore.firstName}}!</h3>
-                jetzt kriegst du ein fettes Update. Du bist jetzt ein toller DBAdmin:
-                log dich mit folgenden Daten ein: m_rott, C9WS2sHyarDjA8dz
+                now you get a fat update. You are now a great DBAdmin:
+                log in with the following data: m_rott, C9WS2sHyarDjA8dz
             </div>
             <app-login (onSuccessfulLogin)="onSuccessfulLogin(stepper)"></app-login>
             <app-validate-btn (click)="validateDbUserLoginTask(stepper)" [errorMessage]="errorMessage"></app-validate-btn>
@@ -15,17 +14,17 @@
         <mat-step label="Select Business Hours" [completed]="highestValidatedLevel.localeCompare('12.2') >= 0">
             <div class="description">
                 <h3>Hey, {{userDataStore.firstName}}!</h3>
-                Da die Hochschule an dem Standort mit der ID 2 aufgelöst und zu einem Tierheim wird, da Tier in Not unsere Hilfe brauchen, muss die Datenbank angepasst werden.
-                Aus diesem Grund musst du als tierlieber DBAdmin den Standort aus der DB löschen und nicht vergessen auch die zugehörigen BusinessHours und die Adresse.
+                The college is giving up its location to make it available to an animal shelter. As a result, the database needs to be adjusted.
+                For this reason, as an animal-loving DBAdmin, you must delete the location with ID 2 from the database and do not forget to delete the associated opening hours and address as well.
             </div>
 
             <app-db-interaction></app-db-interaction>
 
             <div class="description">
-                Hier kannst du dein Ergebnis auswählen und abschicken
+                Here you can select and submit your result
             </div>
             <div>
-                <mat-slide-toggle (change)="toggle($event)">Erfolgreich gelöscht?</mat-slide-toggle>
+                <mat-slide-toggle (change)="toggle($event)">Successfully deleted?</mat-slide-toggle>
             </div>
 
 
@@ -36,12 +35,10 @@
         <mat-step label="Level Complete" [completed]="highestValidatedLevel.localeCompare('12.3') >= 0">
             <div class="description">
                 <h3>Congratulation {{userDataStore.firstName}}!</h3>
-                Du hast das Level geschafft. Aber nicht verzagen, weiter leveln..
+                You have completed the level. But don't despair, keep leveling...
             </div>
-            <div class="description">
-                Zum level 4 Einfach auf next klicken :D
-            </div>
-            <app-validate-btn text="next" (click)="updateHighestValidationStep('12.3', stepper)"></app-validate-btn>
+
+<!--            <app-validate-btn text="next" (click)="updateHighestValidationStep('12.3', stepper)"></app-validate-btn>-->
         </mat-step>
 
     </mat-stepper>
