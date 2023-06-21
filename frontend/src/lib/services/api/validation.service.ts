@@ -14,6 +14,7 @@ export class ValidationService {
   validateTask(level: number, task: number): Observable<LevelValidationResult> {
     return this.httpClient.get<LevelValidationResult>("/api/levels/" + level + "/tasks/" + task + "/validate?uuid="+this.cookieService.getCookie("uuid")).pipe(
       tap((response: LevelValidationResult) => {
+        console.log(response);
         if (response.isValid) {
           let highestLevel = response.level != "1.1" ? this.cookieService.getCookie("highestValidatedLevel") : "0.0";
           if (highestLevel == null) highestLevel = "0.0";
@@ -28,6 +29,7 @@ export class ValidationService {
   validateTaskWithPayload(level: number, task: number, payload: {[key: string]: any }): Observable<LevelValidationResult> {
     return this.httpClient.post<LevelValidationResult>("/api/levels/" + level + "/tasks/" + task + "/validate?uuid="+this.cookieService.getCookie("uuid"), {...payload}).pipe(
         tap((response: LevelValidationResult) => {
+          console.log(response);
           if (response.isValid) {
             let highestLevel = response.level != "1.1" ? this.cookieService.getCookie("highestValidatedLevel") : "0.0";
             if (highestLevel == null) highestLevel = "0.0";
@@ -38,5 +40,4 @@ export class ValidationService {
         })
     )
   }
-
 }

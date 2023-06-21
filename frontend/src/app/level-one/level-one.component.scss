@@ -9,3 +9,26 @@
 mat-stepper {
   margin-top: 2rem;
 }
+
+.address-container {
+  width: 99%;
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: #f9f9f9;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+
+
+  .address-detail {
+    display: flex;
+    margin-bottom: 10px;
+
+    .address-label {
+      margin-right: 1.5rem;
+    }
+
+    .address-value {
+      font-weight: bold;
+    }
+  }
+}

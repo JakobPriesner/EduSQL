@@ -1,4 +1,6 @@
 <div class="level-body">
+  <h1>Level 1</h1>
+
   <mat-stepper linear #stepper>
 
     <mat-step label="Welcome" [completed]="highestValidatedLevel.localeCompare('1.1') >= 0">
@@ -40,16 +42,51 @@
       <div>
         If you've familiarized yourself with ERM, you've probably noticed that a student requires PersonId. However, to generate a person, there must also be an address for that person in the database. So start by creating a new address in the database. Please write the generated id of the address down, so you can use it in further steps.
       </div>
+      <div class="address-container">
+        <h2>Address Details:</h2>
+        <div class="address-detail">
+          <span class="address-label">Street:</span>
+          <span class="address-value">Münzstraße</span>
+        </div>
+        <div class="address-detail">
+          <span class="address-label">House Number:</span>
+          <span class="address-value">16</span>
+        </div>
+        <div class="address-detail">
+          <span class="address-label">City:</span>
+          <span class="address-value">Würzburg</span>
+        </div>
+        <div class="address-detail">
+          <span class="address-label">Postal Code:</span>
+          <span class="address-value">97071</span>
+        </div>
+        <div class="address-detail">
+          <span class="address-label">Country:</span>
+          <span class="address-value">Deutschland</span>
+        </div>
+      </div>
+
       <app-db-interaction></app-db-interaction>
-      <app-validate-btn (click)="updateHighestValidationStep('1.4', stepper)"></app-validate-btn>
+      <app-validate-btn (click)="validateTask(4, stepper)"></app-validate-btn>
     </mat-step>
 
     <mat-step label="Create Person" [completed]="highestValidatedLevel.localeCompare('1.5') >= 0">
       <div>
         Now you have to create a person with the id of the address you just generated. Please write the generated id of the person down, so you can use it in further steps.
       </div>
+      <div class="address-container">
+        <h2>Person Details:</h2>
+        <div class="address-detail">
+          <span class="address-label">First Name:</span>
+          <span class="address-value">{{userDataStore.firstName}}</span>
+        </div>
+        <div class="address-detail">
+          <span class="address-label">Last Name:</span>
+          <span class="address-value">{{userDataStore.lastName}}</span>
+        </div>
+      </div>
       <app-db-interaction></app-db-interaction>
-      <app-validate-btn (click)="updateHighestValidationStep('1.5', stepper)"></app-validate-btn>
+      <app-validate-btn (click)="validateWithPersonInfoAsPayload(5, stepper)"></app-validate-btn>
     </mat-step>
 
     <mat-step label="Create Student" [completed]="highestValidatedLevel.localeCompare('1.6') >= 0">
@@ -61,7 +98,7 @@
         </ul>
       </div>
       <app-db-interaction></app-db-interaction>
-      <app-validate-btn (click)="updateHighestValidationStep('1.6', stepper)"></app-validate-btn>
+      <app-validate-btn (click)="validateWithPersonInfoAsPayload(6, stepper)"></app-validate-btn>
     </mat-step>
   </mat-stepper>
 </div>

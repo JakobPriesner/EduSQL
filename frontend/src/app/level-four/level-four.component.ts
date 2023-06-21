@@ -45,7 +45,6 @@ export class LevelFourComponent {
       answer: this.checkedTasksNames
     };
     this.validationService.validateTaskWithPayload(4, 2, payload).subscribe(result => {
-      console.log(result)
       if(result.isValid)
       {
         if (this.highestValidatedLevel.localeCompare(to)) {
