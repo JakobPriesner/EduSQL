@@ -43,6 +43,7 @@ export class LevelThreeComponent {
       answer: answer
     };
     this.validationService.validateTaskWithPayload(3, 1, payload).subscribe(result => {
+      this.errorMessage = result.message;
       if(result.isValid)
       {
         if (this.highestValidatedLevel.localeCompare(to) <= 0) {

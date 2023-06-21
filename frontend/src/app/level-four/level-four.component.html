@@ -45,7 +45,7 @@
                 </span>
             </section>
 
-            <app-validate-btn (click)="selectLocationsWithLibary('4.2', stepper)"></app-validate-btn>
+            <app-validate-btn (click)="selectLocationsWithLibary('4.2', stepper)" [errorMessage]="errorMessage"></app-validate-btn>
         </mat-step>
 
         <mat-step label="Level Complete" [completed]="highestValidatedLevel.localeCompare('4.3') >= 0">

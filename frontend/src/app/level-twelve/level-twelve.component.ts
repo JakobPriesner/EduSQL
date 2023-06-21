@@ -56,7 +56,7 @@ export class LevelTwelveComponent {
       answer: this.useDefault
     };
     this.validationService.validateTaskWithPayload(12, 2, payload).subscribe(result => {
-      console.log(result)
+      this.errorMessage = result.message;
       if(result.isValid)
       {
         if (this.highestValidatedLevel.localeCompare(to) <= 0) {

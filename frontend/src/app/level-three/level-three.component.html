@@ -33,7 +33,7 @@
                     </mat-select>
                 </mat-form-field>
             </div>
-            <app-validate-btn (click)="selectBusinessHours('3.1', stepper, dailyBusinessHours)"></app-validate-btn>
+            <app-validate-btn [errorMessage]="errorMessage" (click)="selectBusinessHours('3.1', stepper, dailyBusinessHours)" ></app-validate-btn>
         </mat-step>
 
 

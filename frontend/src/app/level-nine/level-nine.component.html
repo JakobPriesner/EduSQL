@@ -31,7 +31,7 @@
                 </mat-form-field>
             </div>
 
-            <app-validate-btn (click)="countStudentsWithMax('9.2', stepper, countStudents)"></app-validate-btn>
+            <app-validate-btn (click)="countStudentsWithMax('9.2', stepper, countStudents)" [errorMessage]="errorMessage"></app-validate-btn>
         </mat-step>
 
         <mat-step label="Level Complete" [completed]="highestValidatedLevel.localeCompare('9.3') >= 0">
