@@ -25,8 +25,6 @@ export class LevelTwelveComponent {
 
   errorMessage: string = "";
   highestValidatedLevel: string = "0.0";
-  dailyBusinessHours: string = "";
-  locationLibary: string[] = [];
 
   useDefault: boolean = false;
   toggle(event: MatSlideToggleChange) {
