@@ -9,8 +9,8 @@ export class DbUserStore {
   private _password: string = "";
 
   constructor(private cookieService: CookieService) {
-    let usernameCookie = cookieService.getCookie("firstName");
-    let passwordCookie = cookieService.getCookie("lastName");
+    let usernameCookie = cookieService.getCookie("dbUserName");
+    let passwordCookie = cookieService.getCookie("dbPassword");
     if (usernameCookie) {
       this._username = usernameCookie;
     }
@@ -24,6 +24,7 @@ export class DbUserStore {
   }
 
   set username(value: string) {
+    this.cookieService.createCookie("dbUserName", value, 365)
     this._username = value;
   }
 
@@ -32,6 +33,7 @@ export class DbUserStore {
   }
 
   set password(value: string) {
+    this.cookieService.createCookie("dbPassword", value, 365)
     this._password = value;
   }
 }

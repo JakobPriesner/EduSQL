@@ -27,13 +27,11 @@ export class ErmDialogComponent {
 
   zoomIn() {
     this.zoom *= 1.1;
-    console.log(this.zoom);
     this.applyZoom();
   }
 
   zoomOut() {
     this.zoom *= 0.9;
-    console.log(this.zoom);
     this.applyZoom();
   }
 
