@@ -34,4 +34,4 @@ class LevelSixTaskThreeValidator(IConcreteValidation):
 
     @classmethod
     def can_handle(cls, level_number: int, task_number: int) -> bool:
-        return level_number == 6 and task_number == 1
+        return level_number == 6 and task_number == 3
