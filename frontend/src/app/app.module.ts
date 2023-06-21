@@ -47,6 +47,7 @@ import {LevelNineComponent} from "./level-nine/level-nine.component";
 import {LevelElevenComponent} from "./level-eleven/level-eleven.component";
 import { LevelTwelveComponent } from './level-twelve/level-twelve.component';
 import { LevelFiveComponent } from './level-five/level-five.component';
+import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 
 @NgModule({
     declarations: [
@@ -103,7 +104,8 @@ import { LevelFiveComponent } from './level-five/level-five.component';
         MatCheckboxModule,
         MatExpansionModule,
         MatCheckboxModule,
-        MatTabsModule
+        MatTabsModule,
+        MatSlideToggleModule
     ],
     providers: [],
     bootstrap: [AppComponent]
