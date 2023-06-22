@@ -3,6 +3,7 @@ from typing import Type
 from injector import inject, Injector
 
 from api.endpoints.levels.logic.validation.strategies.concrete_validation_interface import IConcreteValidation
+from api.endpoints.levels.logic.validation.strategies.level_eleven_task_two import LevelElevenTaskTwoValidator
 from api.endpoints.levels.logic.validation.strategies.level_nine_task_two import LevelNineTaskTwoValidator
 from api.endpoints.levels.logic.validation.strategies.level_one_task_five import LevelOneTaskFiveValidator
 from api.endpoints.levels.logic.validation.strategies.level_one_task_four import LevelOneTaskFourValidator
@@ -64,5 +65,6 @@ class ValidateTask(ICommand[LevelValidationResult]):
             LevelEightTaskOneValidator,
             LevelEightTaskTwoValidator,
             LevelNineTaskTwoValidator,
+            LevelElevenTaskTwoValidator,
             LevelTwelveTaskTwoValidator
         ]
