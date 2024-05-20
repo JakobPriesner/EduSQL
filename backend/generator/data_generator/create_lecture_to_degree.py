@@ -1,5 +1,3 @@
-import asyncio
-import platform
 from dataclasses import fields
 from typing import Optional
 
@@ -52,7 +50,8 @@ class GenerateLectureToDegree:
             if degree.name == degree_name:
                 return LectureToDegree(degree.id, lecture_id)
 
-    async def __load_all_lectures_async(self) -> list[Lecture]:
+    @staticmethod
+    async def __load_all_lectures_async() -> list[Lecture]:
         sql: str = "SELECT * from lecture"
         results: list[tuple] = await DbHandler.query_all(sql)
         return [
@@ -61,7 +60,8 @@ class GenerateLectureToDegree:
             results
         ]
 
-    async def __load_all_degrees_async(self) -> list[Degree]:
+    @staticmethod
+    async def __load_all_degrees_async() -> list[Degree]:
         sql: str = "SELECT * from degree"
         results: list[tuple] = await DbHandler.query_all(sql)
         return [
@@ -69,7 +69,8 @@ class GenerateLectureToDegree:
             for id, name, location_id, total_etc, degree_type, semester_count in results
         ]
 
-    async def __store_all_lecture_to_degrees_async(self, lecture_to_degrees_to_store: list[LectureToDegree]):
+    @staticmethod
+    async def __store_all_lecture_to_degrees_async(lecture_to_degrees_to_store: list[LectureToDegree]):
         if len(lecture_to_degrees_to_store) == 0:
             return
         sql: str = f"""
@@ -85,8 +86,3 @@ async def create_lecture_to_degrees() -> None:
     degrees = GenerateLectureToDegree()
     await degrees.__init_async__()
     await degrees.__generate_all_lecture_to_degrees__()
-
-if __name__ == "__main__":
-    if platform.system() == 'Windows':
-        asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
-    asyncio.run(create_lecture_to_degrees())

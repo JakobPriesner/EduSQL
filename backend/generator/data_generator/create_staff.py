@@ -1,19 +1,11 @@
-
-# create an async function or class with async function that creates a staff.
-
 import asyncio
 import random
 from dataclasses import fields
 from datetime import date
 
-import psycopg
-
 from generator.data.csv_loader import load_csv_file_as_generator
 from generator.data_generator.create_person import GeneratePerson
 from generator.database.db_handler import DbHandler
-from generator.database.connection_string import get_connection_string
-# from generator.data_generator.create_room import GenerateRoom
-# from generator.models.room import Room
 from generator.models.staff import Staff
 
 
@@ -72,8 +64,3 @@ class GenerateStaff:
 async def create_staffs() -> None:
     generator: GenerateStaff = GenerateStaff()
     await generator.generate_all_staffs()
-
-
-if __name__ == "__main__":
-    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
-    asyncio.run(create_staffs())

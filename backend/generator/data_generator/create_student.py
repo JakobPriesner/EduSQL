@@ -1,6 +1,3 @@
-
-# create an async function or class with async function that creates a student.
-
 import asyncio
 import platform
 import random
@@ -78,9 +75,3 @@ async def create_students() -> None:
     generator: GenerateStudent = GenerateStudent()
     await generator.__async_init__()
     await generator.generate_all_students()
-
-
-if __name__ == "__main__":
-    if platform.system() == 'Windows':
-        asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
-    asyncio.run(create_students())

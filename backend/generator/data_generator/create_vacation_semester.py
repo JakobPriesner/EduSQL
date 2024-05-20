@@ -1,9 +1,5 @@
-
-# create an async function or class with async function that creates a vacation_semester.
-
 import asyncio
 import random
-import time
 
 from generator.data.csv_loader import load_csv_file_as_generator
 from generator.data_generator.create_student import GenerateStudent
@@ -53,8 +49,3 @@ class GenerateVacationSemester:
 async def create_vacation_semesters() -> None:
     generator: GenerateVacationSemester = GenerateVacationSemester()
     await generator.generate_all_vacation_semesters()
-
-
-if __name__ == "__main__":
-    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
-    asyncio.run(create_vacation_semesters())

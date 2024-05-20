@@ -38,8 +38,8 @@ class DbHandler:
                         _id, = await cursor.fetchone()
                         return _id
                     return cursor.lastrowid
-                except Exception as e:
-                    pass
+                except Exception:
+                    traceback.print_exc()
 
     @classmethod
     async def query(cls, query, *args):

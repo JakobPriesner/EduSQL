@@ -8,7 +8,6 @@ from typing import Optional
 
 import psycopg
 
-# from generator.data.csv_loader import load_csv_file_as_generator
 from generator.database.connection_string import get_connection_string
 from generator.models.enums.exam_type_enum import ExamType
 from generator.models.exam import Exam
@@ -27,7 +26,6 @@ class GenerateExamAttempt:
         self.exams: list[Exam] = await self.__load_all_exams_async()
         self.rooms: list[Room] = await self.__load_all_rooms_async()
         self.lectures: list[Lecture] = await self.__load_all_lectures_async()
-        # self.module_number_to_minimum_semester: dict[str, int] = await self.__load_all_module_number_to_minimum_semester()
 
     async def generate_all_exam_attempts_async(self) -> None:
         for student in self.students:
@@ -78,30 +76,18 @@ class GenerateExamAttempt:
         min_semester: int = next(le.semester for le in self.lectures if exam.lecture_id == le.id)
         return self.__get_written_in_semester(student.enrolled_at, min_semester)
 
-    # @staticmethod
-    # async def __get_exam_semester_by_lecture_async(exam_id: int) -> int:
-    #     sql: str = f"""
-    #                 SELECT semester FROM exam
-    #                 LEFT JOIN lecture l on exam.lectureid = l.id
-    #                 WHERE exam.id = ?
-    #                 """
-    #     async with await psycopg.AsyncConnection.connect(get_connection_string()) as conn:
-    #         async with conn.cursor() as cur:
-    #             await cur.execute(sql, (exam_id,))
-    #             _id, = await cur.fetchone()
-    #             return _id
-
-    def __semester_to_date(self, semester: str) -> datetime:
+    @staticmethod
+    def __semester_to_date(semester: str) -> datetime:
         if len(semester) == 4:
             semester = f"20{semester}"
-        month: int = 11 if semester[5:] == "ws" else 4  # todo: testen mit 11 und 4
+        month: int = 11 if semester[5:] == "ws" else 4
         return datetime(year=int(semester[:4]), month=month, day=1)
 
     @staticmethod
     def __get_written_in_semester(old_semester: datetime, offset: int) -> str:
         min_date_written_in: datetime = old_semester + timedelta(days=offset * 3 * 61)
         # 6 Monate / 2 = 3 Monate -> * 2 Monate was 61 Tage entspricht und nochmal * 2 damit der Prüfungsversuch erst im nächsten Semester ist
-        if min_date_written_in.month < 10:  # todo: testen ob 11 passt -> müsste das nicht 9 sein?
+        if min_date_written_in.month < 10:
             return f"{str(min_date_written_in.year)}ss"
         else:
             return f"{str(min_date_written_in.year)}ws"
@@ -327,8 +313,3 @@ async def create_exam_attempts() -> None:
         await exam_attempts.generate_all_exam_attempts_async()
     # do some cool stuff
     await __update_exam_attempt_grade_with_first_id_async()
-
-if __name__ == "__main__":
-    if platform.system() == 'Windows':
-        asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
-    asyncio.run(create_exam_attempts())

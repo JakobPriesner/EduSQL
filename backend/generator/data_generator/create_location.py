@@ -89,8 +89,3 @@ class GenerateLocation:
 async def create_locations() -> None:
     generator: GenerateLocation = GenerateLocation()
     await generator.generate_all_locations()
-
-
-if __name__ == "__main__":
-    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
-    asyncio.run(create_locations())

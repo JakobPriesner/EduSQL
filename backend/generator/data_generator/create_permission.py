@@ -1,6 +1,3 @@
-
-# create an async function or class with async function that creates a permission.
-
 import asyncio
 from dataclasses import fields
 
@@ -30,7 +27,7 @@ class GeneratePermission:
         )
 
     async def store_permission(self, permissions: list[Permission]) -> None:
-        sql: str = f""" 
+        sql: str = f"""
                     INSERT INTO permission
                     (alias, description)
                     VALUES {', '.join('(%s, %s)' for _ in permissions)};

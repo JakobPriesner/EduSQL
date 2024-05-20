@@ -1,6 +1,5 @@
 import asyncio
 import random
-import time
 from typing import Optional
 
 from generator.data.csv_loader import load_csv_file_as_generator

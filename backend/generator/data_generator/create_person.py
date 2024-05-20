@@ -1,17 +1,11 @@
-
-# create an async function or class with async function that creates a person.
-
 import asyncio
 import random
 from dataclasses import fields
 from datetime import date
 
-import psycopg
-
 from generator.data.csv_loader import load_csv_file_as_generator
 from generator.data_generator.create_address import GenerateAddress
 from generator.database.db_handler import DbHandler
-from generator.database.connection_string import get_connection_string
 from generator.models.person import Person
 
 
@@ -67,8 +61,3 @@ class GeneratePerson:
 async def create_persons() -> None:
     generator: GeneratePerson = GeneratePerson()
     await generator.generate_all_persons()
-
-
-if __name__ == "__main__":
-    # asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
-    asyncio.run(create_persons())

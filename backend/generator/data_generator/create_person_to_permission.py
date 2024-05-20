@@ -1,6 +1,3 @@
-
-# create an async function or class with async function that creates a person_to_permission.
-
 import asyncio
 import random
 from dataclasses import fields

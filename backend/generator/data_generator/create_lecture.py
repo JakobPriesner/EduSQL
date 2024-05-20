@@ -13,9 +13,6 @@ from generator.models.lecture import Lecture
 from generator.models.restriction import Restriction
 from generator.processing.process_handler import ProcessHandler
 
-
-# 40 auf 1.2 sekunden
-
 class LectureGenerator:
     def __init__(self):
         self.lectures: list[Lecture] = []
@@ -138,19 +135,3 @@ class LectureGenerator:
 async def create_lectures() -> None:
     generator: LectureGenerator = LectureGenerator()
     await generator.generate_all_lectures_async()
-
-
-async def main():
-    start_time = time.time()
-
-    await create_lectures()
-
-    end_time = time.time()
-    elapsed_time = end_time - start_time
-
-    print(f"The function took {elapsed_time} seconds to complete")
-
-
-if __name__ == '__main__':
-    load_dotenv()
-    asyncio.run(main())

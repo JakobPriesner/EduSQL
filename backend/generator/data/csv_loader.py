@@ -20,9 +20,3 @@ def load_csv_file(file_name: str, skip_column_definition: bool = True) -> list[t
         if skip_column_definition:
             next(csv_reader)
         return [tuple(line) for line in csv_reader]
-
-
-if __name__ == "__main__":
-    for _, _, earned_etcs, _, _, _, _, _, _, semester, name, restrictions, _, _, modulenumbers, typeofclass, description, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _, _ \
-            in load_csv_file_as_generator("moduledescription.csv"):
-        print(restrictions)

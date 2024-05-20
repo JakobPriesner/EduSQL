@@ -3,7 +3,6 @@ from .create_degree import create_degrees
 from .create_exam import create_exams
 from .create_exam_attempts_new import create_exam_attempts
 from .create_lecture import create_lectures
-from .create_lecture_plan import create_lecture_plan
 from .create_location import create_locations
 from .create_permission import create_permissions
 from .create_person import create_persons

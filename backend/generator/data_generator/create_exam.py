@@ -16,7 +16,8 @@ class CreateExam:
         exams: list[Exam] = [self.__generate_new_exam(lecture) for lecture in self.lectures]
         await self.__store_all_exams_async(exams)
 
-    def __generate_new_exam(self, lecture: Lecture) -> Exam:
+    @staticmethod
+    def __generate_new_exam(lecture: Lecture) -> Exam:
         if lecture.type == LectureType.Awpf:
             exam: Exam = Exam(lecture_id=lecture.id, allowed_attempts=2147483647)   # sys.maxsize ist größer als INT
         else:
