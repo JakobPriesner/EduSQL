@@ -75,25 +75,14 @@ Due to the nature of the project, several performance challenges were encountere
    cd lern-sql
    ```
 
-2. Backend Setup:
+2. Start the docker-container
    ```bash
-   cd backend
    docker compose up
-   # keep in mind, that the data generation process will be started if there are no data within the db yet.
-   ```
-
-3. Frontend Setup:
-   ```bash
-   cd frontend
-   # Install dependencies
-   npm install
-   # Run the frontend server
-   npm start
    ```
 
 ### Usage
 
-Access the website at `http://localhost:3000` and follow the guided steps to learn SQL using the provided dataset.
+Access the website at `http://localhost:4200` and follow the guided steps to learn SQL using the provided dataset.
 
 ## License
 
